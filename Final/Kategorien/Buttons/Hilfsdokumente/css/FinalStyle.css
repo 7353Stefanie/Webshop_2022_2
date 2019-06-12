@@ -1,0 +1,187 @@
+
+
+/*Menue Formatierung */   
+
+ .container-fluid 
+ {
+     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);    
+      margin-top: 20px;  
+
+      padding-right: 15px;
+	    padding-left: 15px;
+	    margin-right: auto;
+	    margin-left: auto;
+	   
+ 	    background: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      color: black;
+
+ } 
+
+ /* Hintergrund der Buttons wird schwarz */
+
+.navbar-default .navbar-nav > li > a    
+{
+	 color:black;
+}
+
+/* Hintergrund des Logos wird schwarz*/
+
+.navbar-default .navbar-brand {
+    color: black;
+}
+
+/*carousell Abstand von oben*/
+.carousel img {
+    width: 120%;
+}
+
+
+ .carousel-inner > .item > img,
+ .carousel-inner > .item > a > img {
+   
+     max-width: 105%;
+     height: 400px !important;
+ }
+
+
+.container-fluid .carousel-inner
+{
+  	max-width: 110%;
+    -webkit-box-shadow: none;  
+    margin-top: none;  
+   		
+ 	  background: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+}
+
+
+/*buecher carousel*/
+
+header .carouselbuecher
+{
+  padding-top: 20px;
+  height: 400px;
+  width: 1400px;
+  margin-left: auto;
+  margin-right: auto; 
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);   
+
+  margin-top: 20px;  
+  border-radius: 20 20 20px 20px; 
+  padding: 15px 15px 25px 15px;
+}
+
+
+#bild3
+{
+  width:100px;
+  height:150px;
+  margin-top: 75px;
+  margin-right: 50px;
+  margin-left: 65px;
+
+  float: left;
+  
+  box-shadow :                         
+                  10px -10px 0px black, 
+                  9px -9px 1px black,
+                  8px -8px 8px black,
+                  7px -7px 1px black,
+                  6px -6px 6px black,
+                  5px -5px 1px black,
+                  4px -4px 4px black,
+                  3px -3px 1px black,
+                  2px -2px 2px black,
+                  1px -1px 1px grey;    
+}
+
+.reihe
+{
+  float: left;  
+}
+
+#my-slider
+{ 
+  padding-right: 30px ;
+  padding-left: 50px;
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  float: left; 
+  width: 1200px; 
+  height: 250px; 
+}
+
+#my-slider2
+{ 
+  padding-right: 30px ;
+  padding-left: 50px;
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
+  float: left; 
+  width: 1200px; 
+  height: 250px; 
+}
+
+
+/* collapse*/
+
+
+
+
+
+      /* button    */      
+
+.collapse.width {
+    height: auto;
+    -webkit-transition: width 0.35s ease;
+    -moz-transition: width 0.35s ease;
+    -o-transition: width 0.35s ease;
+    transition: width 0.35s ease;
+}
+
+.collapse {
+  height: auto;
+  width: auto;
+}
+
+.collapse.height {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 0.35s ease;
+  -moz-transition: height 0.35s ease;
+  -o-transition: height 0.35s ease;
+  transition: height 0.35s ease;
+}
+
+.collapse.width {
+  position: relative;
+  width: 0;
+  overflow: hidden;
+  -webkit-transition: width 0.35s ease;
+  -moz-transition: width 0.35s ease;
+  -o-transition: width 0.35s ease;
+  transition: width 0.35s ease;
+}
+
+.collapse.in.width {
+  width: auto;
+}
+
+.collapse.in.height {
+  height: auto;
+}
+
+.accordion div div br{
+display: none;
+
+}
+.hideing
+{
+  
+display: none;
+}

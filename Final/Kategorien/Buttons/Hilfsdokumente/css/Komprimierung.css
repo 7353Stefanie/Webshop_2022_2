@@ -1,0 +1,161 @@
+
+/*suche und SucheDetails*/
+.ueberschrift
+{width:auto; 
+ margin-left: 15px; 
+ height:auto; 
+ margin-right: 15px; 
+ margin-top: 10px; 
+ padding-left: 10px; margin-bottom: 10px; border-width: 1px; border-style: solid; border-radius: 4px;}
+
+ .InhaltKleidung
+ {width:30%; min-width: 30%;margin-left:5px; float:right; margin-top: 20px;min-height: 260px; margin-bottom:20px;margin-right: 35px; border-width: 1px; border-style: solid; border-radius: 4px;}
+ 
+ .ArtikelInhalte
+ {
+ 	float:left; margin-top:10px;
+ }
+ .ArtikelInhalteFormat
+ {
+ 	text-align:left; margin-top:10px;
+ }
+ .VorschaubildFormat
+ {
+ 	padding-right:10px; margin-bottom: -13px; margin-top: -13px;
+ }
+  .VorschaubildFormat_Kleidung
+ {
+  margin-top: -70px; padding-right:10px; padding-bottom: 20px; margin-left: -50px;
+ }
+ .InhaltBuecher
+ {
+ 	width:30%; min-width: 30%;margin-left:65px;  margin-top: 20px;min-height: 330px; border-width: 1px; border-style: solid; border-radius: 4px;
+ }
+ .Kurzbeschreibung
+ {
+ 	margin-left: 20px; margin-top: 20px;min-height: 330px; border-width: 1px; border-style: solid; border-radius: 4px; margin-bottom: 20px; text-align: left;
+ }
+ .mittig
+ {
+ 	text-align: center;
+ }
+ .BildAbstand
+ {
+ 	margin-left: 15px;
+ }
+ .my-col
+ {width: 35%;  height: auto;float:left;}
+
+ .panelFarbe
+ {
+   color:black;
+   border-color: #337ab7;
+ }
+
+ .dauerHide
+ {
+  display: none;
+ }
+
+
+ .hideME
+ {
+  display: none;
+ }
+
+.hideAdresse
+{
+   display: none;
+}
+
+.AuswahlAdresseHide
+{
+  /* display: none;*/
+}
+
+  .panelFarbe2 > .panel-heading
+ {
+   color:white;
+   background-color: #337ab7;
+   border-color: #337ab7;
+ }
+
+   .panelFarbe2
+ {
+   color:black;
+   
+   border-color: #337ab7;
+ }
+
+ /*glyphe für Merken entfernen+*/
+
+@font-face {
+  font-family: 'brokenhart';
+  src:  url('../fonts/brokenhart.eot?agqfgb');
+  src:  url('../fonts/brokenhart.eot?agqfgb#iefix') format('embedded-opentype'),
+    url('../fonts/brokenhart.ttf?agqfgb') format('truetype'),
+    url('../fonts/brokenhart.woff?agqfgb') format('woff'),
+    url('../fonts/brokenhart.svg?agqfgb#brokenhart') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'brokenhart' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-music:before {
+  content: "\e911";
+}
+.icon-heart-broken:before {
+  content: "\e9db";
+}
+
+.icon-paypal:before {
+  content: "\ead8";
+}
+/*Lupe start*/
+
+#effekt {
+    width: 26em;
+    min-height:15em;
+    margin: 1em auto;
+    position: relative;
+  /*  border: 5px solid #eee;
+    box-shadow: 1px 1px 5px 2px #777;*/
+    cursor: none;
+}
+
+#lupe {
+    width: 16.94em;
+    height: 14.31em;
+    left: -6px;
+    top: -5px;
+    position: absolute;
+}
+
+#lupen {
+    width: 14em;
+    height: 14em;
+    border-radius: 50%;
+    box-shadow: 3px 3px 5px #111; 
+    position: absolute;
+    display: none;
+     background-size: 1300px 1000px;
+       background-attachment: fixed;
+   
+  background-repeat: no-repeat;
+}

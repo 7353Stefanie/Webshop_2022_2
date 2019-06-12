@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'paypal';
+  src:  url('../fonts/paypal.eot?5wbo6k');
+  src:  url('../fonts/paypal.eot?5wbo6k#iefix') format('embedded-opentype'),
+    url('../fonts/paypal.ttf?5wbo6k') format('truetype'),
+    url('../fonts/paypal.woff?5wbo6k') format('woff'),
+    url('../fonts/paypal.svg?5wbo6k#paypal') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'paypal' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-paypal:before {
+  content: "\ead8";
+}

@@ -1,0 +1,76 @@
+      /* hier kommen die styles für die Nav bar     */
+      
+      .navbar-form
+      {
+         margin-right: 50%;
+      }      
+      
+
+
+
+      /* button    */      
+      
+.left
+{
+    padding: 10px 0 10px 20px;
+}
+
+.item {
+  padding: 25px;
+}
+
+.collapse
+{
+  padding: 10px 0 10px 20px;
+}
+
+.collapse.width {
+    height: auto;
+    -webkit-transition: width 0.35s ease;
+    -moz-transition: width 0.35s ease;
+    -o-transition: width 0.35s ease;
+    transition: width 0.35s ease;
+}
+
+.collapse {
+  height: auto;
+  width: auto;
+}
+
+.collapse.height {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 0.35s ease;
+  -moz-transition: height 0.35s ease;
+  -o-transition: height 0.35s ease;
+  transition: height 0.35s ease;
+}
+
+.collapse.width {
+  position: relative;
+  width: 0;
+  overflow: hidden;
+  -webkit-transition: width 0.35s ease;
+  -moz-transition: width 0.35s ease;
+  -o-transition: width 0.35s ease;
+  transition: width 0.35s ease;
+}
+
+.collapse.in.width {
+  width: auto;
+}
+
+.collapse.in.height {
+  height: auto;
+}
+
+.accordion div div br{
+display: none;
+
+}
+.hideing
+{
+  
+display: none;
+}

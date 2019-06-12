@@ -1,0 +1,6 @@
+div .none
+{
+  border-style-bottom:none ;
+  border-width:5px;
+  border-color:white;
+}

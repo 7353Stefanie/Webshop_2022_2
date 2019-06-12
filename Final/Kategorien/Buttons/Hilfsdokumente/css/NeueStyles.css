@@ -1,0 +1,17 @@
+
+#kurzbeschreibungHead
+{float:left;}
+
+#preisHead
+{
+  float:left;
+}
+.nebeneinander
+{
+  float: left;
+}
+
+.col-md-2
+{
+	float: left;
+}

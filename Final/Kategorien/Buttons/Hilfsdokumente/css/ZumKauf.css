@@ -1,0 +1,12 @@
+
+
+
+.content-secondary2 {
+  .make-lg-column(1);
+ 
+}
+
+tr.border_bottom td {
+  border-bottom:1pt solid black;
+}
+

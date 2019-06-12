@@ -1,0 +1,216 @@
+
+/*Menue Formatierung */   
+
+
+
+ .extra
+ {
+     margin-top: 20px;  
+
+      margin-right: auto;
+      margin-left: auto;
+     
+      background: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      color: black;
+ }
+
+ .groesse
+ {
+   margin-left: -15px;
+  margin-right: -15px;
+
+ }
+
+ .extra2
+ {
+       -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);    
+      margin-top: 20px;  
+
+      margin-right: auto;
+      margin-left: auto;
+     
+      background: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      color: black;
+
+ }
+
+
+ .UeberschriftKategorie
+ {
+
+  height: 50px;
+  width: max-width;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  color: white;
+  background-color: black;
+  margin-left: -15px;
+  margin-right: -15px;
+padding-top: 5px;
+padding-left: 15px;
+
+ }
+
+ .UeberschriftKategorie2
+ {
+
+  height: 50px;
+  width: max-width;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  color: white;
+  background-color: black;
+  margin-left: -35px;
+  margin-right: -30px;
+padding-top: 5px;
+padding-left: 15px;
+
+ }
+
+ /* Hintergrund der Buttons wird schwarz */
+
+.navbar-default .navbar-nav > li > a    
+{
+	 color:black;
+}
+
+/* Hintergrund des Logos wird schwarz*/
+
+.navbar-default .navbar-brand {
+    color: black;
+}
+
+/*carousell Abstand von oben*/
+.carousel img {
+    width: 120%;
+}
+
+
+ .carousel-inner > .item > img,
+ .carousel-inner > .item > a > img {
+   
+     max-width: 100%;
+     height: 400px !important;
+ }
+
+
+.container-fluid .carousel-inner
+{
+    max-width: 100%;
+    -webkit-box-shadow: none;  
+    margin-top: none;  
+      
+    background: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+}
+
+.bild2
+  {margin-top: 75px;
+  margin-bottom: 20px;
+  float: left;
+  padding-left: auto;
+  padding-right: auto;
+  margin-left: 20px;
+}
+
+.bild3
+{
+  width:110px;
+  height:165px;
+  margin-top: 45px;
+  margin-bottom: 20px;
+  float: left;
+  padding-left: auto;
+  padding-right: auto;
+  margin-left: 20px;
+  
+  box-shadow :                         
+                  10px -10px 0px black, 
+                  9px -9px 1px black,
+                  8px -8px 8px black,
+                  7px -7px 1px black,
+                  6px -6px 6px black,
+                  5px -5px 1px black,
+                  4px -4px 4px black,
+                  3px -3px 1px black,
+                  2px -2px 2px black,
+                  1px -1px 1px grey;    
+}
+
+.bild
+{
+ 
+  margin-top: 75px;
+  float: left;
+  padding-left: auto;
+  padding-right: auto;
+ background-color: white;
+  
+  box-shadow :                         
+                  10px -10px 0px black, 
+                  9px -9px 1px black,
+                  8px -8px 8px black,
+                  7px -7px 1px black,
+                  6px -6px 6px black,
+                  5px -5px 1px black,
+                  4px -4px 4px black,
+                  3px -3px 1px black,
+                  2px -2px 2px black,
+                  1px -1px 1px grey;    
+}
+
+#my-slider
+{ 
+  float: left; 
+  width: 100%; 
+ 
+}
+
+
+
+      /* button    */      
+
+.collapse.width {
+    height: auto;
+    -webkit-transition: width 0.35s ease;
+    -moz-transition: width 0.35s ease;
+    -o-transition: width 0.35s ease;
+    transition: width 0.35s ease;
+}
+
+.collapse {
+  height: auto;
+  width: auto;
+}
+
+.collapse.height {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 0.35s ease;
+  -moz-transition: height 0.35s ease;
+  -o-transition: height 0.35s ease;
+  transition: height 0.35s ease;
+}
+
+.collapse.width {
+  position: relative;
+  width: 0;
+  overflow: hidden;
+  -webkit-transition: width 0.35s ease;
+  -moz-transition: width 0.35s ease;
+  -o-transition: width 0.35s ease;
+  transition: width 0.35s ease;
+}
+
+.collapse.in.width {
+  width: auto;
+}
+
+.collapse.in.height {
+  height: auto;
+}
+
