@@ -450,9 +450,9 @@ function Select($mysqli)
                       <div class="form-group row">
                       <div class=" col-sm-16">
                          <div class="input-group" >  
-                           <label  for="Preis" class="col-sm-1  control-label" style="padding-top: 5px; "> Restwert (Verkaufswert ohne Versand) </label>
+                           <label  for="Preis" class="col-sm-2 col-md-offset-2 control-label" style="padding-top: 5px; "> Restwert (Verkaufswert ohne Versand) </label>
                           
-                                    <div class="col-sm-2 col-md-offset-1">
+                                    <div class="col-sm-3 ">
                                                 <div class="input-group" >
                                                                           <div class="input-group-addon">€</div><input class="form-control"  id="Preis" name="Preis">
                                                </div><!-- col.3-->                                    
@@ -472,14 +472,7 @@ function Select($mysqli)
                                 </div><!-- input-->
                           </div><!-- col-->
                           <div class="col-sm-3 ">
-                           <label  for="Menge" class="col-sm-4  control-label" style="padding-top: 5px; "> Menge </label>
                           
-                                               <div class=" col-sm-4"  >
-                                                <div class="input-group" >
-                                                                          <div class="input-group-addon">St.</div><input class="form-control" style="width: 150%;" id="Menge" name="Menge">
-                                               </div><!-- col.3-->                                    
-                                               </div><!-- col.3-->
-                          </div><!-- input-->
                       </div><!-- col.8-->
                       </div><!-- row--> 
                     </div>
@@ -579,6 +572,8 @@ $('#abschicken').click(function(){
          var form1laenge =document.form1.elements; 
          var form2laenge =document.form2.elements; 
          var form3laenge =document.form3.elements;
+
+         console.log(form2laenge);
 
        
    var g = 0;         
@@ -693,12 +688,12 @@ function BuecherUebertragen()
         
         formData.append("Restwert", form2laenge[3].value); 
         formData.append("Zustand", form2laenge[4].value); 
-        formData.append("Menge", form2laenge[5].value); 
+        
 
-        if(form2laenge[6].checked) 
-        {formData.append("Kaufen", form2laenge[6].value); }
-        if(form2laenge[7].checked)
-        {formData.append("Tauschen", form2laenge[7].value); }
+        if(form2laenge[5].checked) 
+        {formData.append("Kaufen", form2laenge[5].value); }
+        if(form2laenge[6].checked)
+        {formData.append("Tauschen", form2laenge[6].value); }
 
        
          formData.append("Beschreibung", form3laenge[0].value); 
@@ -717,7 +712,7 @@ function BuecherUebertragen()
 
                             console.log( xhr.responseText);
 
-                            window.document.location.href = "/../Final/Kategorien/Warenkorb.php";                           
+                            //window.document.location.href = "/../Final/Kategorien/Warenkorb.php";                           
                         } 
         }; // schliesse onload
         xhr.send(formData);// ende forfinal/

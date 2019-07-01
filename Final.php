@@ -1,13 +1,14 @@
 <?php
- define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons');
+ define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/Hilfsdokumente');
 require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
 
  session_start();
 
 
+    $Suche = new Suche();
+    $Erg = $Suche->suche();
 
-
-    $Suche = new Suche_Artikel();
+    //$Suche = new Suche_Artikel();
 
 ?>
 

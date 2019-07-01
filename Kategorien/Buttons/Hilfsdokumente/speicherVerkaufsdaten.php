@@ -302,15 +302,16 @@ function Verkaeuferposition($mysqli,$Zeit,$idArtikel)
   else{$tausch = '0';}
 
 
-  var_dump($_SESSION['idBenutzer'], $_POST['Menge'],$_SESSION['Buch'],$_POST['Zustand'],$_POST['Beschreibung'],$kauf,$tausch );
+  var_dump($_SESSION['idBenutzer'], $_SESSION['Buch'],$_POST['Zustand'],$_POST['Beschreibung'],$kauf,$tausch );
 
 
               $query2 = sprintf("INSERT INTO Verkaeuferposition (idBenutzer, Verkaufsmenge, idArtikel, Zustand, Artikelbeschreibung, Verfuegbarkeitsstatus, Kauf, Tausch, Verkaufspositionsdatum, Aenderungsdatum)
-                                 VALUES ('%s', '%s','%s', '%s','%s','1','%s','%s','%s','0')" ,   
+                                 VALUES ('%s', '','%s', '%s','%s','1','%s','%s','%s','0')" ,   
+
 
                   $mysqli->real_escape_string($_SESSION['idBenutzer']),
                   
-                  $mysqli->real_escape_string($_POST['Menge']),
+                  
                   $mysqli->real_escape_string($idArtikel), // idARtikel
                   $mysqli->real_escape_string($_POST['Zustand']),
                   $mysqli->real_escape_string($_POST['Beschreibung']),                   
@@ -339,14 +340,14 @@ function VerkaeuferpositionNeuesBild($mysqli, $idArtikel,$Zeit)
     {$tausch = '1';}
   else{$tausch = '0';}
 
-   var_dump($_SESSION['idBenutzer']. 'Benutzer'. $_POST['Menge']. 'Menge'. $_SESSION['Buch'] . $_POST['Zustand'] . 'Zustand'. $_POST['Beschreibung'],$kauf,$tausch );
+   var_dump($_SESSION['idBenutzer']. 'Benutzer'.  $_SESSION['Buch'] . $_POST['Zustand'] . 'Zustand'. $_POST['Beschreibung'],$kauf,$tausch );
 
               $query2 = sprintf("INSERT INTO Verkaeuferposition (idBenutzer, Verkaufsmenge, idArtikel, Zustand, Artikelbeschreibung, Verfuegbarkeitsstatus, Kauf, Tausch, Verkaufspositionsdatum, Aenderungsdatum)
-                                 VALUES ('%s', '%s','%s', '%s','%s','1','%s','%s','%s', '0')" ,   
+                                 VALUES ('%s', '','%s', '%s','%s','1','%s','%s','%s', '0')" ,   
 
                   $mysqli->real_escape_string($_SESSION['idBenutzer']),
                      
-                  $mysqli->real_escape_string($_POST['Menge']),
+                 
                   $mysqli->real_escape_string($idArtikel),
                   $mysqli->real_escape_string($_POST['Zustand']),
                   $mysqli->real_escape_string($_POST['Beschreibung']),                   
