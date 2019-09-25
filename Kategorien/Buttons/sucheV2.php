@@ -118,6 +118,8 @@ session_start();
     <?php
 
     $Suche = new Suche_Artikel();
+    $ArtikelAllg = Array();
+
 
     if($_POST!=null)
     {
@@ -129,10 +131,57 @@ session_start();
 
     //var_dump($_POST);
     $erg = $Suche->suche_allg($_SESSION['Kategorie'] ,$_SESSION['suchen']);
+
+    //wenn kategorie Kleidung dann preis größe und Marke ausgeben
                   
                     // var_dump($kaufart);
+   // var_dump($erg);
 
-  var_dump($erg);
+  $AnzahlderVariablen = count($erg);
+  
+
+// $AnzahlArtikel =  count($erg, $erg["Titelbild"]);
+ // berechnung Anzahl Artikel
+
+ $AnzahlArtikel =$Suche->AnzahlderArrayVariablenzumSplitten('Titelbild', $erg);
+ $Kleidung =$Suche->AnzahlderArrayVariablenzumSplitten('Marke', $erg);
+ $Verfuegbarkeitsstatus =$Suche->AnzahlderArrayVariablenzumSplitten('Verfuegbarkeitsstatus', $erg);
+ $Kaufarten =$Suche->AnzahlderArrayVariablenzumSplitten('Kaufarten', $erg);
+
+
+
+
+
+//AlleListen
+
+
+$ArtikelArray = ( array_slice($erg, 0, $AnzahlArtikel, true)); // schreibt alle Artikel von 0 bis x in ein Array; Artikel
+
+$KleidungArray = ( array_slice($erg, $AnzahlArtikel, $Kleidung, true)); // Kleidung
+
+$StatusArray = ( array_slice($erg, $Kleidung+$AnzahlArtikel, $Verfuegbarkeitsstatus, true));
+
+$KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlArtikel, $Kaufarten, true));
+
+//var_dump($ArtikelArray);
+//echo '---------------------------------------------------------------------------------------------------------------------------------------------------------';
+
+//var_dump($KleidungArray);
+
+//echo '---------------------------------------------------------------------------------------------------------------------------------------------------------';
+
+//var_dump($StatusArray);
+
+//echo '---------------------------------------------------------------------------------------------------------------------------------------------------------';
+
+//var_dump($KaufartenArray);
+
+//array_merge($ArtikelArray$KleidungArray);
+
+
+
+
+//var_dump(array_count_values($erg['0']));
 
 
                     $s = 'src="'; $e = '"';  $a = 'alt="';$i = 0;                  
@@ -155,7 +204,7 @@ session_start();
                            <div class="row full-width-row" >
                             <div class="col-sm-12">  
                               <div class="format">
-                                <div id="my-slider" class="carousel slide" data-ride="carousel" data-interval="20000" style="z-index: 200; margin-bottom:-20px;" >';
+                                <div id="my-slider" class="carousel slide" data-ride="carousel" data-interval="false" style="z-index: 200; margin-bottom:-20px;" >';
 
                                 // nach 8 Büchern soll das slide wechseln
                                 $z=0;
@@ -164,9 +213,9 @@ session_start();
                                 $buecher =0;
                                 $kleidung = 0;
 
-                               $z = count($erg);
+                               $z = count($ArtikelAllg);
                            
-                            foreach($erg as $key)
+                            foreach($ArtikelAllg as $key)
                                    {
                                       if($key['Kategorien'] == 'Buecher')
                                       {
@@ -203,7 +252,7 @@ session_start();
                                     $q = 0;
 
 
-                                 foreach( $erg as $key)
+                                 foreach( $ArtikelArray as $key)
                                         {
                                           $durchgaenge++;
                                           if($durchgaenge > 8)
@@ -259,7 +308,7 @@ session_start();
                             <div class="row full-width-row" >
                             <div class="col-sm-12">  
                               <div class="format">
-                                <div id="my-slider_head" class="carousel slide" data-ride="carousel" data-interval="20000" style="z-index: 200;" >';
+                                <div id="my-slider_head" class="carousel slide" data-ride="carousel" data-interval="false" style="z-index: 200;" >';
                                
                                 $v =0;
                                 $p = 0;
@@ -291,29 +340,123 @@ session_start();
                                     $q = 0;
                                     
 
-                                 foreach( $erg as $key)
-                                        {   
+                                    //Schreibe alle idArtikel heraus die zu Kleidung gehören
+                                    //suche die idArtikel aus ArrayStatus heraus  und ermittel die id Verkäuferpsotition und Verfügbarkeit
+                                    // mache aus den genannten Variablen ein Array
+                                      $Kleidungsids = Array();
+                                      //zeige diee Artikeldeteils an der ersten id
+                                     // $idArtikel = Array();
+                                     // $idVerkaeuferposition =Array();
+
+
+
+                                      $liste = array_keys($KleidungArray);
+
+                                   
+
+                                     $idArtikelKey= Array();
+
+
+                                     //
+
+                                    //var_dump($idArtikelKey);
+
+                                    for ($i=0; $i < count($KleidungArray) ; $i++) { 
+                                          # code...
+
+                                              $Kleidungsids[$i]=  $KleidungArray[$liste[$i]]['idArtikel'];
+
+                                              //var_dump($Kleidungsids[$i]);                                         
+                                        }
+
+                                        $liste2 = array_keys($StatusArray);
+
+                                        // Wenn der Ferfügbarkeitstatus 0 oder 1  // also zur Verfügung oder im Warenkorb ist dann in idArtikelKey schreiben
+                                           $v= 0;
+
+                                        foreach ($StatusArray as $key => $value) {
+                                         
+                                          if( $value['Verfuegbarkeitsstatus'] != 2  )
+
+                                             { $idArtikelKey[$value['idArtikel']] = $value['idVerkaeuferposition'];
+                                                $idVerkaeuferpos[$v++] = $value['idVerkaeuferposition'];
+                                                
+                                              }
+
+                                            }  
+
+
+                                       
+
+                                        $schluessel = Array();
+
+                                       $schluessel =  array_keys($idArtikelKey);
+
+                                       //var_dump($schluessel);
+
+                                        //Gebe alle Kleidungsdetails zur idArray Array_Keys  an
+                                        // Speicher  alle Kaufarten zur Artikelnr bzw. Verkäuferposition in einem Array
+
+                                     //  array_search ( $Kleidungsids[$i] , $ArrayStatus);
+
+// wenn Array_Keys() $KleidungArray
+                                        $kleidungsKey = array_keys($KleidungArray);
+                                        $KaufaratenKey = array_keys($KaufartenArray);
+
+                                        $durchlaufvariable =  $kleidungsKey['0'];
+                                        $durchlaufvariableKaufarten =  $KaufaratenKey ['0'];
+
+                                 foreach( $ArtikelArray as $key)
+                                        { 
+
+
+
                                             $durchgaenge++;
 
-                                                  if($durchgaenge > 6)
+                                                   if($durchgaenge > 6)
                                                 {
                                                    echo' </div> '; 
                                                    echo ' <div class="item" style="margin-left:120px; margin-bottom:120px;" >  <!-- slide when we open the web page-->';
                                                    
                                                    $durchgaenge = 0;                                                   
                                                 }                                     
+                                                                                               
                                             
                                               if( $key['Kategorien'] == 'Kleidung' )
-                                                {                                               
+                                                { 
+                                                  
+                                                    
+
                                                     echo'<div class="" style="border-width: 1px; text-align:center; border-style: solid; border-radius: 4px; float:left; padding-left:20px; border-color:black; margin-bottom:10px;  margin-top:10px; margin-right:20px; padding-right:20px; padding-top: 20px; padding-bottom:20px;">';
 
                                                     echo'<button style="   background: transparent;  color: white;  border: none; "  type="submit" name="idArtikel" value="'.$key['idArtikel'].'"><img style="margin-top:10px; z-index:10; width:180px; height: 170px;   "'; echo $s . $key['Titelbild'] . $e ;  echo $a . $key['Bezeichnung'] .$e.'  /></button>
                                                     
                                                     <div style="">'; 
-                                                    echo '</br> Tauschpreis: <b>'. $kaufart[$q]['0']['Preis']/100 .' € </b> </br> Kaufpreis: <b>'. $kaufart[$q]['1']['Preis']/100 .' €</b> </br> </br>Groesse: '.$key['Groesse'].' </br> Marke: ' . $key['Marke'].'</div></div>';
 
-                                                 }
+                                                    // wenn die id von Kaufarten und die id von  $schluessel(idArtikel) zusammenpassen ist Needel[$schluessel] die idVerkaufsposition 
+                                                    // dann suche im Array $KaufartenArray die idVerkaufsposition mit Rückgabe des Keys
+
+                                                    $PositionVerkaeuferpos = array_search($key['idArtikel'], $schluessel);
+
+                                                   
+                                                    
+                                                   //^1 q $idVerlaeuferpos[$PositionVerkaeuferpos]
+                                                    // neelde enthält idArtikel und idVerkaeuferposition
+                                                      $colors = array_column($KaufartenArray, 'idVerkaeuferposition');
+                                                      
+
+                                                    $PositionVerkaeuferposInKaufarten  = array_search($idVerkaeuferpos[$PositionVerkaeuferpos], $colors);
+                                                    
+                                                    $DiePosition =  $KaufaratenKey[$PositionVerkaeuferposInKaufarten];// gitbt die Position an                                                  
+                                                    
+
+                                                    echo '</br> Tauschpreis: <b>'. $KaufartenArray[$DiePosition]['Preis']/100 .' € </b> </br> Kaufpreis: <b>'. $KaufartenArray[$DiePosition+1]['Preis']/100 .' €</b> </br> </br>Groesse: '.$KleidungArray[$durchlaufvariable]['Groesse'].' </br> Marke: ' . $KleidungArray[$durchlaufvariable]['Marke'].'</div></div>';
+
+                                                 
+                                                 $durchlaufvariable++;}
                                              $q++;
+                                            
+                                           
                                           }//ende if
                                         
                                    echo'  </div>
@@ -357,6 +500,8 @@ session_start();
     <script type="text/javascript">
       
        $(document).ready( function() {
+
+
 
         /*
 

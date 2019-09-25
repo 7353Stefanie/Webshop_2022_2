@@ -341,7 +341,35 @@ function selectKategorie_by_Kategorie_und_ArtikelId_Array($mysqli, $Kategorie, $
 
  function selectKleidung($mysqli, $idArtikel)
  {
-                    $query = sprintf("select * from Artikel a, Kleidung k  where a.idArtikel = k.idArtikel and a.idArtikel = '%s'" ,
+                    $query = sprintf("select * from  Kleidung k  where k.idArtikel = '%s'" ,
+                           $mysqli->real_escape_string($idArtikel) 
+                          ); 
+
+                 $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+                
+
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+
+                     mysqli_free_result( $result ); 
+
+                    // var_dump($rows); 
+
+                   return $rows;
+ }
+
+  function selectKleidungArray($mysqli, $idArtikel)
+ {
+                    $query = sprintf("select * from Kleidung a where idArtikel IN ('$idArtikel')" ,
                            $mysqli->real_escape_string($idArtikel) 
                           ); 
 
@@ -603,6 +631,34 @@ function selectVerkaeuferposition_Zahlungsvorgang($mysqli,$idVerkaeuferposition 
                 return $rows;  
  }
 
+  function SelectVerkaeuferposition_byArtikel_outIdVerkaeuferposition_Verfuegbarkeitsstatus01($mysqli,$idArtikel) //Gib alle idVerkaeuferposition und Verfuegbarkeitsstatus 1 und 0 aus, von der Liste idArtikel
+ {
+
+    $query = sprintf("select idVerkaeuferposition, Verfuegbarkeitsstatus,idArtikel from Verkaeuferposition where idArtikel IN ('$idArtikel')" ,
+                           $mysqli->real_escape_string($idArtikel)  
+                          ); 
+
+                  $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+             
+
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+
+                mysqli_free_result( $result );               
+
+                return $rows;  
+ }
+
+
   function SelectVerkaufsbilder($mysqli,$idVerkaeuferposition)
  {
 
@@ -752,6 +808,32 @@ function selectKaufarten_by_idVerkaeuferposition($mysqli,$idVerkaeuferposition )
 {
 
       $query = sprintf("select * from Kaufarten where idVerkaeuferposition = '%s' ",
+               $mysqli->real_escape_string($idVerkaeuferposition) 
+              );
+
+            $result = $mysqli->query($query);
+
+        
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+      
+             while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                     {
+                            $rows[] = $row;  
+                     }                                                   
+
+                  mysqli_free_result( $result );               
+
+                  return $rows;                 
+}
+
+function selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$idVerkaeuferposition )// Alle Artikel von Kaufarten nach id Verkäuferposition
+{
+
+      $query = sprintf("select * from Kaufarten where idVerkaeuferposition in ('$idVerkaeuferposition') ",
                $mysqli->real_escape_string($idVerkaeuferposition) 
               );
 
