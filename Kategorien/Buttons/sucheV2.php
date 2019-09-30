@@ -130,7 +130,10 @@ session_start();
     //$Erg = $Suche->suche($_POST['Kategorie'] ,$_POST['suchen'],$_POST['suchen']);
 
     //var_dump($_POST);
-    $erg = $Suche->suche_allg($_SESSION['Kategorie'] ,$_SESSION['suchen']);
+
+    $erg = Array();
+    if($erg != '')
+    {$erg = $Suche->suche_allg($_SESSION['Kategorie'] ,$_SESSION['suchen']);}
 
     //wenn kategorie Kleidung dann preis größe und Marke ausgeben
                   
@@ -154,14 +157,28 @@ session_start();
 
 //AlleListen
 
+ 
 
-$ArtikelArray = ( array_slice($erg, 0, $AnzahlArtikel, true)); // schreibt alle Artikel von 0 bis x in ein Array; Artikel
+
+  
+ /* if(preg_match('^[A-z0-9 \.,\/\(\)_-]+$', $meinString))
+{
+// Weitere verarbeitung des Strings
+} else {
+echo 'Der String enth&auml;lt nicht erlaubte Zeichen!';
+}*/
+
+
+if($AnzahlArtikel!= null)
+{$ArtikelArray = ( array_slice($erg, 0, $AnzahlArtikel, true));// schreibt alle Artikel von 0 bis x in ein Array; Artikel
+
 
 $KleidungArray = ( array_slice($erg, $AnzahlArtikel, $Kleidung, true)); // Kleidung
 
 $StatusArray = ( array_slice($erg, $Kleidung+$AnzahlArtikel, $Verfuegbarkeitsstatus, true));
 
 $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlArtikel, $Kaufarten, true));
+}
 
 //var_dump($ArtikelArray);
 //echo '---------------------------------------------------------------------------------------------------------------------------------------------------------';
@@ -295,12 +312,18 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
 
                           </div> </form>' ;
 
+                            
+
                   echo '<div class="extra container-fluid">
 
                         <form action = "Hilfsdokumente/AusgabeAlleBuecher.php" method="post" > 
                           <div class="UeberschriftKategorie">
                               <button type="submit" name="Kategorie" value="Kleidungen" style="background-color:black; border-color:black;" href="alleKleidungen.php">Kleidung</button>   
                           </div> </form>';  
+
+                           if($erg !=null)
+
+                            {
 
                    echo '<form action = "ArtikelDetailsVerkauf.php" method="post" >';                          
 
@@ -348,15 +371,11 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                      // $idArtikel = Array();
                                      // $idVerkaeuferposition =Array();
 
-
-
-                                      $liste = array_keys($KleidungArray);
-
-                                   
+                                      $liste = array_keys($KleidungArray);                                  
 
                                      $idArtikelKey= Array();
 
-
+                                  
                                      //
 
                                     //var_dump($idArtikelKey);
@@ -457,7 +476,7 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                              $q++;
                                             
                                            
-                                          }//ende if
+                                        } //ende if
                                         
                                    echo'  </div>
                                     
@@ -482,8 +501,11 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                            
                              ';
 
-                          echo'</form>  </div>' ;     
-                          }                   
+                          echo'</form>';
+                        }
+                          echo'  </div>' ;    
+                          } 
+                                             
                        
                            ?> 
       

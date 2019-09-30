@@ -21,12 +21,14 @@ class Suche_Artikel // wird in suchev2 verwendet
                    } else {   
 
 
-
+                    //charakerUeberpruefung($Ergebnis);
                     $ErgebnisidArtikel = $this->switchIt($mysqli, $Kategorie, $Abfragen , $Bezeichnung);  
                }   
                  mysqli_close($mysqli);
                 return $ErgebnisidArtikel;
  } // ende function
+
+
 
  function AnzahlderArrayVariablenzumSplitten($VariableZumSplitten, $Array)
  {
@@ -72,6 +74,50 @@ class Suche_Artikel // wird in suchev2 verwendet
                  mysqli_close($mysqli);
                 return $ErgebnisidArtikel;
  } // ende function
+
+ function Ergebnissuche_Alles_Kleidung($mysqli,$Abfragen,$Ergebnis)
+ {
+   foreach( $Ergebnis as $idErg )
+               {
+                  $idListe[$i] = $idErg['idArtikel'];
+                  $i++;
+               } // auslesen der Artikel id 
+
+               $ArtikelElemString = implode("','", $idListe);
+
+
+
+               $AusgabeKleidung= $Abfragen->selectKleidungArray($mysqli,  $ArtikelElemString);
+
+               // auslesen der Artikel id und mit den Daten in tabelle Kleiung vergleichen
+              // echo ('hallo');
+               //var_dump( $ArtikelElemString); 
+
+               //var_dump($AusgabeKleidung);
+
+               //Zeige alle Preise von Kaufarten, für die liste idArtikel, an wo der Verfuegbarkeitsstatus 1 und 0 ist 
+
+               $AusgabeVerfügbarkeit = $Abfragen->SelectVerkaeuferposition_byArtikel_outIdVerkaeuferposition_Verfuegbarkeitsstatus01($mysqli,$ArtikelElemString);
+
+               $i = 0;
+               $ArtikelElemString = Array();
+                $idListe = Array();
+               
+                foreach( $AusgabeVerfügbarkeit as $idErg )
+               {
+                  $idListe[$i] = $idErg['idVerkaeuferposition'];
+                  $i++;
+               }
+
+               $ArtikelElemString = implode("','", $idListe);
+
+                $AusgabePreise = $Abfragen->selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$ArtikelElemString);
+               // ausgabe des Preises
+
+               $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfügbarkeit, $AusgabePreise );
+
+               return $Ergebnis;
+ }
 
 
 
@@ -147,22 +193,68 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
              {
                $Ergebnis= $Abfragen->selectAlleArtikel($mysqli, $Bezeichnung);
 
-               
-              $idListe = Array();
+               if($Ergebnis != null )
+
+              { //$Ergebnis =  Ergebnissuche_Alles_Kleidung($mysqli,$Abfragen, $Erg);
+
+                 $idListe = Array();
+               $AusgabeKleidung = Array();
+               $ArtikelElemString = Array();
+               $AusgabeVerfügbarkeit = Array();
+               $AusgabePreise = Array();
                $i = 0;
 
-               foreach( $Ergebnis['idArtikel'] as $idErg )
+               foreach( $Ergebnis as $idErg )
+               {
+                  $idListe[$i] = $idErg['idArtikel'];
+                  $i++;
+               } // auslesen der Artikel id 
+
+               $ArtikelElemString = implode("','", $idListe);
+
+
+
+               $AusgabeKleidung= $Abfragen->selectKleidungArray($mysqli,  $ArtikelElemString);
+
+               // auslesen der Artikel id und mit den Daten in tabelle Kleiung vergleichen
+              // echo ('hallo');
+               //var_dump( $ArtikelElemString); 
+
+               //var_dump($AusgabeKleidung);
+
+               //Zeige alle Preise von Kaufarten, für die liste idArtikel, an wo der Verfuegbarkeitsstatus 1 und 0 ist 
+
+               $AusgabeVerfügbarkeit = $Abfragen->SelectVerkaeuferposition_byArtikel_outIdVerkaeuferposition_Verfuegbarkeitsstatus01($mysqli,$ArtikelElemString);
+
+               $i = 0;
+               $ArtikelElemString = Array();
+                $idListe = Array();
+               
+                foreach( $AusgabeVerfügbarkeit as $idErg )
+               {
+                  $idListe[$i] = $idErg['idVerkaeuferposition'];
+                  $i++;
+               }
+
+               $ArtikelElemString = implode("','", $idListe);
+
+                $AusgabePreise = $Abfragen->selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$ArtikelElemString);
+               // ausgabe des Preises
+
+              
+                      $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfügbarkeit, $AusgabePreise );
+               
+             
+              //$idListe = Array();
+              // $i = 0;
+
+              /* foreach( $Ergebnis['idArtikel'] as $idErg )
                {
                   $idListe[$i] = $idErg;
 
-               }
+               }*/
 
-               echo ('hallo');
-               var_dump($idErg); 
-
-               var_dump($idListe);
-
-                $Ergebnis  = Array();
+              
 
              // $Ergebnis2 =  $Abfragen->selectKleidungArray($mysqli, $idListe); // Alle Kleidungsergebnisse ohne Preise etc.
 //
@@ -172,12 +264,15 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
                #Wenn Kategorie Kleidung dabei ist muss noch der Preis und die Größe und Marke ermittelt werden
 
                #schleife
+             }
 
                  
              }
               else
              {
                $Ergebnis= $Abfragen->selectAlleArtikel_Alle($mysqli);
+
+              //$Ergebnis =  Ergebnissuche_Alles_Kleidung($mysqli,$Abfragen,$Ergebnis);
 
                $idListe = Array();
                $AusgabeKleidung = Array();

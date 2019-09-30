@@ -369,6 +369,8 @@ function selectKategorie_by_Kategorie_und_ArtikelId_Array($mysqli, $Kategorie, $
 
   function selectKleidungArray($mysqli, $idArtikel)
  {
+                 $rows = null;
+
                     $query = sprintf("select * from Kleidung a where idArtikel IN ('$idArtikel')" ,
                            $mysqli->real_escape_string($idArtikel) 
                           ); 
