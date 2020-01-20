@@ -8,6 +8,126 @@
   public $result;
   public $rows = Array(); 
 // Select#
+
+
+  //gemerkte Artikel
+
+  function VerkaufspositionsInfos($mysqli, $ArraygemerkterArtikel)
+{
+ $query = sprintf("select idVerkaeuferposition, idBenutzer, idArtikel, Zustand , Kauf, Tausch, Verfuegbarkeitsstatus from Verkaeuferposition where idVerkaeuferposition IN ('$ArraygemerkterArtikel')  "
+
+                                                          
+                         ); 
+
+                   
+
+                  $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+               
+                $rows = Array();
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+
+                mysqli_free_result( $result );               
+
+                return $rows; 
+}
+
+
+function Verkaufspositionsstatus($mysqli, $ArraygemerktArtikel)
+{
+ $query = sprintf("select idVerkaeuferposition, Verfuegbarkeitsstatus from Verkaeuferposition where idVerkaeuferposition IN ('$ArraygemerktArtikel')  "
+
+                                                          
+                         ); 
+
+                   
+
+                  $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+               
+                $rows = Array();
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+
+                mysqli_free_result( $result );               
+
+                return $rows; 
+}
+
+
+function liegtImWarenkorb($mysqli)
+{
+   $query = sprintf("select idVerkaeuferposition, idBenutzer from Warenkorb "
+
+                   ); 
+
+                  $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+               
+                $rows = Array();
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+
+                mysqli_free_result( $result );               
+
+                return $rows; 
+}
+
+function selectMerken($mysqli, $idBenutzer)
+{
+
+      $query = sprintf("select * from Merken where idBenutzer = '%s' " ,                                                          
+                                                          
+                         $mysqli->real_escape_string($idBenutzer) ); 
+
+                  $result = $mysqli->query($query);
+
+
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+             
+
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+
+                mysqli_free_result( $result );               
+
+                return $rows; 
+}
+
+
 function selectAdresse_Zahlungsvorgang($mysqli)
 {
 
@@ -452,6 +572,28 @@ function selectKategorie_by_Kategorie_und_ArtikelId_Array($mysqli, $Kategorie, $
                 return $rows;  
 
 } 
+
+function selectBenutzername($mysqli,$idBenutzer)
+{
+
+      $query = sprintf("select idBenutzer, Benutzername from Benutzer where idBenutzer IN ('$idBenutzer') ",
+               $mysqli->real_escape_string($idBenutzer) 
+              );
+
+            $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+      
+              $row = $result->fetch_array(MYSQLI_ASSOC);
+
+                mysqli_free_result( $result );               
+
+                return $row;                     
+}
 
 
 function selectBenutzer_Zahlungsvorgang($mysqli,$idBenutzer)

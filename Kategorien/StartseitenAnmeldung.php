@@ -200,7 +200,7 @@
                                         
                                          <!-- col 4-->                                
                                         <div class="col-md-3" style="width: 180px; height: 180px;">
-                                            <a href="Buttons/gemerkteArtikelAktuallisieren.php" class="BilderDarstellungMenue" >
+                                            <a href="gemerkteArtikel.php" class="BilderDarstellungMenue" >
                                               <span class="glyphicon glyphicon-heart" aria-hidden="true" style=" padding-top: 15%; font-size:100px;  padding-top:10%;"></span>
                                               <h5 style=" text-align: center; padding-bottom: 5%;">gemerkte Artikel</h5>
                                             </a>

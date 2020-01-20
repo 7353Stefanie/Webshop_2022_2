@@ -1,4 +1,6 @@
 <?php
+   define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
+ require_once(__ROOT__.'/gemerkteArtikelAktuallisieren.php');
  session_start();
 
 
@@ -7,6 +9,8 @@
         header('Location: /../final/Final.php');
        exit();
      } 
+
+
 
  function switchIt($Kategorie, $Artikel)
  {
@@ -226,6 +230,34 @@
                                                   $variable = 1;
                                                   $array = array();
 
+                                                  $gemerkteArtikel = new gemerkteArtikel();
+                                                 // 
+                                                 
+
+                                                  $gemerkteArtikeldP = $gemerkteArtikel->AusgabeAllergemerktenArtikelDerPerson();  
+
+                                                    // [0] == Verkäuferpositionsinfos, 
+                                                   /*["idVerkaeuferposition"] ["idBenutzer"] ["idArtikel"] ["Zustand"] ["Kauf"]=> string(1) "1" ["Tausch"]=> string(1) "1" ["Verfuegbarkeitsstatus"]
+
+                                                   // [1] == Artikelliste
+                                                   /*["idArtikel"]  ["Kategorien"] ["Bezeichnung"] ["Titelbild"]
+                                                   */
+                                                   //[2] == Benutzername
+                                                   //["idBenutzer"] ["Benutzername"]
+
+                                                   //[3] == Kaufarten
+                                                   /*["idKaufarten"] ["Preis"] ["Kaufarten"] ["idVerkaeuferposition"] ["ausgewaehlt"]
+                                                   */
+
+
+
+
+                                                     var_dump($gemerkteArtikeldP);
+
+                                                 /* $VerkaufsartikelKom = new VerkaufsartikelKommunikation();
+                                                   $Artikelinfos = $VerkaufsartikelKom::Verkaufsartikel($_SESSION['idBenutzer']); 
+
+
                                                 if(isset($_SESSION['gemerkteArtikelInfos']) && isset($_SESSION['gemerkteArtikel']))
                                                   {
 
@@ -234,6 +266,7 @@
                                                     $gemerkteArtikelInfos = $_SESSION['gemerkteArtikelInfos'];
 
                                                     //var_dump($gemerkteArtikelInfos);
+                                                    */
                                                      
                                                  for($y= 0; $y < $anzahlArtikel; $y++)
                                                   {
@@ -313,7 +346,7 @@
                                                         }                                               
 
                                                    }       
-                                                   }                                                     
+                                                   //}                                                     
                                                     
                                                       ?>
 

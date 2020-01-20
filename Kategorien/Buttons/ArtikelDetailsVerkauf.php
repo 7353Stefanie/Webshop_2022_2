@@ -1,7 +1,7 @@
 
 <?php
- define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/Hilfsdokumente/');
- require_once(__ROOT__.'/SucheUndAnzeige.php');
+ define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
+ require_once(__ROOT__.'Hilfsdokumente/SucheUndAnzeige.php');
 
  session_start();
 
@@ -16,7 +16,14 @@ $Artikel   = $Anzeige->gesamteArtikel();
 
  $AnzArtikel = count($Artikel);
 
- //var_dump($Sammlung);
+ var_dump($Erg);
+ echo '---- ende Erg---';
+ var_dump($Artikel);
+ echo '---- ende Artikel---';
+ var_dump($Sammlung);
+ echo '---- ende Sammlung---';
+ var_dump($Anzeige);
+
 
 
 
@@ -92,7 +99,7 @@ switch ($Kategorie) {
                                 <div class="my-col" style="margin-right:5px; margin-left:55px;  " >   
                                   <div class=" col-xs-2 col-sm-2 col-md-2 outerContent" style="height:75px;width:100px; margin-top:20px;float:left; ">                                   
                                                   <a  href="#" title="...">                
-                                                     <div class="innerContent" name="'.$Erg['0']['Kategorien'].'" id='.  $Erg["0"]["Titelbild"].' style=" background-image: url( '.$Erg["0"]["Titelbild"].')"></div>             
+                                                     <div class="innerContent" name="'.$Artikel['Kategorien'].'" id='.  $Artikel["Titelbild"].' style=" background-image: url( '.$Artikel["Titelbild"].')"></div>             
                                                  </a>                 
                                     </div>'; 
                                     $y =0;
@@ -100,8 +107,8 @@ switch ($Kategorie) {
                                     //
 
 
-
-                                  if($Verkaeuferbild != Null)
+/*
+                                  if($Verkaeuferbild != '')
                                     { 
                                       $anzahl = count($Verkaeuferbild['0']);
                                      // echo $anzahl;
@@ -117,7 +124,8 @@ switch ($Kategorie) {
                                         $y++;
                                      }
 
-                                    }                    
+                                    }    
+                                    */                
                              echo'   </div> 
 
                               <div class="col-md-10 InhaltKleidung"   >                           
@@ -383,9 +391,9 @@ if($Sammlung != null)
                     echo '<class="cd" style="font-weight: bold; ">'.$Sammlung['0'][$laeufer2]['Zustand'] ;
 
                     echo '</td>';
-                    echo '<td style="width:30%;"><h6>';
+                    echo '<td style="width:30%;"><h5>';
                     echo $Sammlung['0'][$laeufer2]['Artikelbeschreibung'];
-                    echo '</h6></td>';
+                    echo '</h5></td>';
 
                     echo '<td style="text-align:left; width:20%;">';
                    // echo $Sammlung[$z][$w]['idVerkaeuferposition'];
