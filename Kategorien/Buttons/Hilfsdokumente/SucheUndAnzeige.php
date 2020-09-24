@@ -1,8 +1,6 @@
 <?php
 
-
-
- require_once(__ROOT__.'Abfragen/Abfragen_Sammlung.php');
+require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php'); 
 
 
 /*
@@ -18,15 +16,12 @@ if(isset($_SESSION["Erg"]) )
 // id Artikel in Session speichern
 
 
-
-
-
 class Anzeige
 {
 
  
 
-  public $Abfragen;
+ // public $Abfragen;
 
 function gemerkteArtikel()
 {

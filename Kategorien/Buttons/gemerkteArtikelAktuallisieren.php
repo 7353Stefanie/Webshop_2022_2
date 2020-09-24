@@ -2,7 +2,7 @@
 
  session_start();
 
-  //define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/Hilfsdokumente/');
+ // define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
  
 
 require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php'); 
@@ -13,7 +13,7 @@ require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php');
  $_SESSION['gemerkteArtikelInfos'] = "";
 
 	  $Zeit =  (date('Y-m-d').' '. $date['hours'].':'.$date['minutes'].':'.$date['seconds']);
-	  var_dump($Zeit . "Zeit");
+	 // var_dump($Zeit . "Zeit");
 
 
 
@@ -26,6 +26,8 @@ require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php');
  class gemerkteArtikel
 
 {
+
+  
 
   function AusgabeAllergemerktenArtikelDerPerson()
   {
@@ -42,6 +44,8 @@ require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php');
                    }
                     else 
                    { 
+
+                    $gemerkteArtikel = $Abfragen->selectMerken($mysqli,$_SESSION['idBenutzer']);
 
                     // 1. finde alle Artikel des Benutzers die er sich gemerkt hat
                     //2. gebe den Namen des Artikels  --> Bezeichnung, Kategorie , Bild == Tabelle Artikel 
@@ -82,29 +86,147 @@ require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php');
 
                        $ArtikelListe = $Abfragen->selectArtikel_by_ArtikelId_Array($mysqli,$ListeIDArtikel);
 
-                       //var_dump($ArtikelListe);
+                      // var_dump($ArtikelListe);
 
                        $Benutzername =  $Abfragen->selectBenutzername($mysqli,$ListeIDBenutzer);
 
-                      // var_dump($Benutzername);
+                        $ArrayBenuzter = Array(); // notwendig durch fehler bei Ausgabe
 
-                       $Kaufarten=  $Abfragen->selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$ArtikelElemString  );
-
-                      // var_dump($Kaufarten);
+                        $ArrayBenuzter['0'] = $Benutzername; //// notwendig durch fehler bei Ausgabe
 
 
-                       $ArrayListe = array_merge($Status,$ArtikelListe,$Benutzername, $Kaufarten);
-                    }
+                       //var_dump($ArtikelListe);
 
-                    $mysqli->close();  
+                        $KategorieDetails = Array();
+                      
+
+                         for($y= 0; $y < count($ArtikelListe); $y++)
+                         {
+
+                            $KategorieDetails[] = $Abfragen->selectKategorie_by_Kategorie_und_ArtikelId($mysqli,$ArtikelListe[$y]['Kategorien'],$ArtikelListe[$y]['idArtikel'] );
+
+                         }
+
+                   
+
+                             // var_dump($KategorieDetails);
+
+                            $Kaufarten=  $Abfragen->selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$ArtikelElemString  );
+                      
+
+                      //var_dump($Kaufarten);
+                     
+
+
+                          if(isset($Status,$ArtikelListe,$ArrayBenuzter, $Kaufarten, $KategorieDetails, $gemerkteArtikel))
+                          {
+
+                          
+
+
+                           $ArrayListe = array_merge($Status,$ArtikelListe,$ArrayBenuzter, $Kaufarten, $KategorieDetails, $gemerkteArtikel);
+                         }
+                         else
+                          {$ArrayListe = null;}
+
+                        $mysqli->close();  
+
+                    //var_dump($ArrayListe);
 
                     return $ArrayListe;
 
                        
-                  }
+                  
+
+                      } // ende else
+        } // ende MEthode
+
+                        function array_Key_count($gemerkteArtikeldP,String $Schluessel)
+{
+                                                  $merkeStart = Array();
+
+                                                  $Start = 0;
+
+                                                  $keys = array_keys($gemerkteArtikeldP);
+
+                                                  foreach ($keys as $key => $value) {
+
+
+                                                  $ErgTest =   array_key_exists($Schluessel, $gemerkteArtikeldP[$key]);
+
+                                                  if($ErgTest == true)
+                                                    {
+                                                      $merkeStart[] = $Start;  // Übergibt den Positionswert dem Array Start
+                                                                                                      
+                                                     }
+
+                                                   $Start++;
+                                                    //var_dump($ErgTest);
+                                                    # code...
+                                                  }
+                                                  return $merkeStart;
+}
+
+
+
+function array_Key_count2($gemerkteArtikeldP,String $Schluessel , String $Schluessel1)
+{
+
+
+                                                  $merkeStart = Array();
+
+                                                  $Start = 0;
+
+                                                  $keys = array_keys($gemerkteArtikeldP);
+
+                                                  
+
+                                                  foreach ($keys as $key => $value) {
+
+                                                
+                                                  $ErgTest =   array_key_exists($Schluessel, $gemerkteArtikeldP[$key]);
+                                                 
+                                                  $ErgTest2 =   array_key_exists($Schluessel1, $gemerkteArtikeldP[$key]);
+
+                                                  if($ErgTest != null && $ErgTest2 != null )
+                                                    {
+                                                      $merkeStart[] = $Start;  // Übergibt den Positionswert dem Array Start                                                                                                      
+                                                    }
+
+                                                  else
+                                                     {
+                                                        set_error_handler(function() { /* ignore errors */ });
+                                                        dns_get_record();
+
+                                                      $ErgTest =   array_key_exists($Schluessel, $gemerkteArtikeldP[$key]['0']);
+                                                      $ErgTest2 =   array_key_exists($Schluessel1, $gemerkteArtikeldP[$key]['0']);
+
+                                                         if($ErgTest == true ||  $ErgTest2 ==true )
+                                                          {
+                                                            $merkeStart[] = $Start;  // Übergibt den Positionswert dem Array Start                                                                                                            
+                                                          }
+                                                      }
+                                                          restore_error_handler();
+
+                                                   $Start++;
+                                                    //var_dump($ErgTest);
+                                                    # code...
+                                                  }
+                                                  return $merkeStart;
+                                
+                    }
+
+                    
+
+
 
   function idListe($gemerkteArtikel, $Inhalt) // schreibt alle ids in eine Liste
   {
+
+    if(isset($gemerkteArtikel) && isset($Inhalt))
+    {#
+       $ArraygemerkterArtikel = Array();
+      
     $i = 0;
 
                         foreach ($gemerkteArtikel as $key => $value) {
@@ -119,6 +241,9 @@ require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php');
                         $ArtikelElemString = implode("','", $ArraygemerkterArtikel);
 
                         return $ArtikelElemString;
+     }
+     else
+     {return null;}                   
   }
 
 
@@ -156,7 +281,7 @@ function DerRest()
 
                 }//ende class
                       
-    ?>              
+             
 
 
 
@@ -192,3 +317,4 @@ function DerRest()
                         // $_SESSION['gemerkteArtikelInfos'] = $Sammlung;    
                          //var_dump($Sammlung);               
                 
+  ?>   

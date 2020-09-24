@@ -134,6 +134,15 @@ session_start();
     $erg = Array();
     if($erg != '')
     {$erg = $Suche->suche_allg($_SESSION['Kategorie'] ,$_SESSION['suchen']);}
+ /* else{
+
+    '<div class="alert alert-info alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Schließen"><span aria-hidden="true">&times;</span></button>
+  <strong>Hinweis!</strong> Bitte gebe einen Suchbefehl ein
+</div>';
+
+   
+  }*/
 
     //wenn kategorie Kleidung dann preis größe und Marke ausgeben
                   

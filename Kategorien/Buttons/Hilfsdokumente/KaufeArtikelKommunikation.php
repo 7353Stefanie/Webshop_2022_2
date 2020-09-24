@@ -77,6 +77,8 @@ class KaufeArtikelK
 
                        $comma_separated = implode("','", $Warenkorbinfos2);
 
+                       //var_dump($comma_separated );
+
                        //var_dump($Warenkorbinfos2);    
 
                        //schleife
@@ -87,32 +89,31 @@ class KaufeArtikelK
                   $doppelt = Array();
                   $n = 0;
 
-                   for($i = 0; $i<  $AnzahlWarenkorbartikel; $i++)
+                   for($i = 0; $i<=  $AnzahlWarenkorbartikel; $i++)
                  {
-                  $idArtikel[$i] = $Kaufinfos[$i]['idArtikel']; 
+                  $idArtikel[$i] = $Kaufinfos[$i+1]['idArtikel']; 
 
-                  if($i+1 >= $AnzahlWarenkorbartikel)
-                  {
-                      if($Kaufinfos[$i]['idArtikel']  == $Kaufinfos[$i+1]['idArtikel'] )
+                  
+                      if($Kaufinfos[$i]['idArtikel']  == $Kaufinfos[$i+2]['idArtikel'] )
                       {
                         $doppelt[$n] = $Kaufinfos[$i]['idArtikel'];
                         $n++;
-                      }
-                  }
+                        $i++;
+                      } 
 
-                 
+                  $i++;
                  } 
 
-
+                // var_dump($idArtikel);
                  $einmal = array_unique($idArtikel);
-                 //var_dump($doppelt);
+                // var_dump($doppelt);
 
                  $idArtikelString = implode("','",$einmal);
 
-               //  echo $idArtikelString ;
+                 //echo $idArtikelString ;
                                                                   
                                                                   $Artikelinfos = $Abfragen->selectArtikel_by_ArtikelId_Array($mysqli, $idArtikelString);
-               //  var_dump($Artikelinfos);
+                 //var_dump($Artikelinfos);
 
                    //ab wo ändert sich die kategorie ?
                    //ausgabe des arrayFeldes und Kategorie in array schreiben                                              
@@ -125,7 +126,7 @@ class KaufeArtikelK
                   //var_dump(count($doppelt));
                   
                    $anz = $AnzahlWarenkorbartikel -count($doppelt);
-                   //echo $anz;
+                  // echo $anz;
                    for($i = 0; $i<  $anz; $i++)
                  {
 
@@ -136,7 +137,7 @@ class KaufeArtikelK
 
                   if($neueKategorie != $alteKategorie)
                   {
-                    echo 'drinnen';
+                    //echo 'drinnen';
                     $t= 0;
                     $ArtikelElemString = implode("','", $ArtikelElem);
 

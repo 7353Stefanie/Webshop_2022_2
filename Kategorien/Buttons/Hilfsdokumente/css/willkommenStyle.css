@@ -21,6 +21,20 @@ head
 
  }
 
+ .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width:auto;
+    min-width: 200px;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+
+    
+}
+
 
  /* Hintergrund der Buttons wird schwarz */
 

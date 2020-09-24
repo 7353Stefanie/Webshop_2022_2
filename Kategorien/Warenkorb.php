@@ -17,7 +17,7 @@
 
     case 'Buecher':
 
-      echo "<b>" .$Kategorie['Bezeichnung'] . "</b>, <br>";
+     // echo "<b>" .$Kategorie['Bezeichnung'] . "</b>, <br>";
       echo  $Artikel['Autor'] . ", ";
       echo  $Artikel['Erscheinungsjahr'] . ", ";
       echo  'Auflage: '.$Artikel['Auflage']; 
@@ -28,7 +28,7 @@
 
     case 'Kleidung':
 
-      echo "<b>" .$Kategorie['Bezeichnung'] . "</b>, <br>" ;
+      //echo "<b>" .$Kategorie['Bezeichnung'] . "</b>, <br>" ;
       echo  $Artikel['Marke'] . ", ";
       echo  $Artikel['Groesse'] . ", ";
       echo  $Artikel['Farbe'];
@@ -36,7 +36,8 @@
      
       # code...
       break;
-    
+
+
     default:
       # code...
       break;
@@ -186,6 +187,14 @@
                       <div class="head2" role="tab" id="ArtikelHead">
                                                           
                                           <li role="Artikel"><a href="MeineVerkaufsartikel.php">Meine Artikel</a></li>
+                           
+                      </div> <!-- head ende -->
+
+                       <!-- head ende -->
+
+                        <div class="head2" role="tab" id="GemerktHead">
+                                                          
+                                          <li role="Artikel"><a href="gemerkteArtikel.php">Meine gemerkten Artikel</a></li>
                            
                       </div> <!-- head ende -->
 

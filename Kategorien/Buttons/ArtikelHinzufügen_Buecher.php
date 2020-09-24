@@ -199,7 +199,7 @@ function Select($mysqli)
                                            <?PHP
                                                            echo   '<li><a href="ArtikelAuswahl.php">';
                                                            echo   'Artikel hinzufügen </a></li>';
-                                                           echo   '<li><a href="StartseitenAnmeldung.php">';
+                                                           echo   '<li><a href="../StartseitenAnmeldung.php">';
                                                            echo   'Willkommen ';
                                                            echo   $_SESSION['benutzername'];
                                                            echo   '</a></li>';                                                          

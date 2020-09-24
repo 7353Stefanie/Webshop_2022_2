@@ -144,6 +144,12 @@
                            
                       </div> <!-- head ende -->
 
+                       <div class="head2" role="tab" id="GemerktHead">
+                                                          
+                                          <li role="Artikel"><a href="gemerkteArtikel.php">Meine gemerkten Artikel</a></li>
+                           
+                      </div> <!-- head ende -->
+
                       <div class="head2" role="tab" id="WatchlistHead">
                                                           
                                           <li role="Watchlist"><a  href="MeineWatchlist.php" >Meine Watchlist</a></li>

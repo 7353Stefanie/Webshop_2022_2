@@ -8,6 +8,93 @@
 
 $Kaufen = new KaufeArtikelK;
 
+
+ function array_keys_recursive($myArray, $MAXDEPTH = INF, $depth = 0, $arrayKeys = array()){
+       if($depth < $MAXDEPTH){
+            $depth++;
+            $keys = array_keys($myArray);
+            foreach($keys as $key){
+                if(is_array($myArray[$key])){
+                    $arrayKeys[$key] = array_keys_recursive($myArray[$key], $MAXDEPTH, $depth);
+                }
+            }
+        }
+      }
+
+function array_Key_count($gemerkteArtikeldP,String $Schluessel)
+{
+                                                  $merkeStart = Array();
+
+                                                  $Start = 0;
+
+                                                  $keys = array_keys($gemerkteArtikeldP);
+
+                                                  foreach ($keys as $key => $value) {
+
+
+                                                  $ErgTest =   array_key_exists($Schluessel, $gemerkteArtikeldP[$key]);
+
+                                                  if($ErgTest == true)
+                                                    {
+                                                      $merkeStart[] = $Start;  // Übergibt den Positionswert dem Array Start
+                                                                                                      
+                                                     }
+
+                                                   $Start++;
+                                                    //var_dump($ErgTest);
+                                                    # code...
+                                                  }
+                                                  return $merkeStart;
+}
+
+
+
+function array_Key_count2($gemerkteArtikeldP,String $Schluessel , String $Schluessel1)
+{
+
+
+                                                  $merkeStart = Array();
+
+                                                  $Start = 0;
+
+                                                  $keys = array_keys($gemerkteArtikeldP);
+
+                                                  
+
+                                                  foreach ($keys as $key => $value) {
+
+                                                
+                                                  $ErgTest =   array_key_exists($Schluessel, $gemerkteArtikeldP[$key]);
+                                                 
+                                                  $ErgTest2 =   array_key_exists($Schluessel1, $gemerkteArtikeldP[$key]);
+
+                                                  if($ErgTest != null && $ErgTest2 != null )
+                                                    {
+                                                      $merkeStart[] = $Start;  // Übergibt den Positionswert dem Array Start                                                                                                      
+                                                    }
+
+                                                  else
+                                                     {
+                                                        set_error_handler(function() { /* ignore errors */ });
+                                                        dns_get_record();
+
+                                                      $ErgTest =   array_key_exists($Schluessel, $gemerkteArtikeldP[$key]['0']);
+                                                      $ErgTest2 =   array_key_exists($Schluessel1, $gemerkteArtikeldP[$key]['0']);
+
+                                                         if($ErgTest == true ||  $ErgTest2 ==true )
+                                                          {
+                                                            $merkeStart[] = $Start;  // Übergibt den Positionswert dem Array Start                                                                                                            
+                                                          }
+                                                      }
+                                                          restore_error_handler();
+
+                                                   $Start++;
+                                                    //var_dump($ErgTest);
+                                                    # code...
+                                                  }
+                                                  return $merkeStart;
+}
+
  
 
  function switchIt( $Artikel, $Kategorie)
@@ -462,6 +549,24 @@ $Kaufen = new KaufeArtikelK;
                                                   $zurueckzaehlen = 1;
 
 
+                                                  $Liste_Pos_Anz_Verkaeuferposition = array_Key_count($Warenkorbartikel,'Zustand');
+
+                                                  $Liste_Pos_Anz_Artikelliste = array_Key_count($Warenkorbartikel,'Titelbild');
+
+                                                  $Liste_Pos_Anz_Benutzername = array_Key_count($Warenkorbartikel,'Benutzername');
+
+                                                  $Liste_Pos_Anz_Kaufarten = array_Key_count($Warenkorbartikel,'Preis');
+
+                                                  $Liste_Pos_Anz_Details = array_Key_count2($Warenkorbartikel,'ISBN','Marke'); // An Kategroieren noch anpassen
+
+                                                  
+
+                                                 // $Liste_Pos_Anz_GemerkteArtikel = array_Key_count($Warenkorbartikel,'idMerken');
+
+                                                  var_dump($Warenkorbartikel);
+                                                  echo($AnzahlWarenkorbartikel);
+
+
 
                                                   $AnzahlVarWarenkobart = count($Warenkorbartikel);
                                                   //echo $AnzahlVarWarenkobart;
@@ -492,8 +597,10 @@ $Kaufen = new KaufeArtikelK;
                                                      echo  $Warenkorbartikel[$y-$zurueckzaehlen]['Bezeichnung'] . "</b>, ";
                                                    // echo $Warenkorbartikel[$f];
 
-                                                    
-                                                      switchIt($Warenkorbartikel[$f][$n-$zurueckzaehlen],$Warenkorbartikel[$y-$zurueckzaehlen]['Kategorien']  );
+                                                     var_dump($Warenkorbartikel[$y]);
+
+                                                    switchIt($Warenkorbartikel[$y][$n-$zurueckzaehlen],$Warenkorbartikel[$y-$zurueckzaehlen]['Kategorien']  );
+                                                     // switchIt($Warenkorbartikel[$f][$n-$zurueckzaehlen],$Warenkorbartikel[$y-$zurueckzaehlen]['Kategorien']  );
 
                                                       echo  "</td>";    
 

@@ -1,7 +1,7 @@
 <?php
    define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
  require_once(__ROOT__.'/gemerkteArtikelAktuallisieren.php');
- session_start();
+// session_start();
 
 
      if(!isset($_SESSION['benutzername']))
@@ -19,17 +19,17 @@
 
     case 'Buecher':
 
-      echo  $Artikel['Autor'] . ", <br>";
-      echo  $Artikel['Erscheinungsjahr'] . ", ";
-      echo  'Auflage: '.$Artikel['Auflage']; 
+      echo  $Artikel['0']['Autor'] . ", <br>";
+      echo  $Artikel['0']['Erscheinungsjahr'] . ", ";
+      echo  'Auflage: '.$Artikel['0']['Auflage']; 
       # code...
       break;
 
     case 'Kleidung':
 
-      echo  $Artikel['Marke'] . ", <br>";
-      echo  $Artikel['Groesse'] . ", ";
-      echo  $Artikel['Farbe'];
+      echo  $Artikel['0']['Marke'] . ", <br>";
+      echo  $Artikel['0']['Groesse'] . ", ";
+      echo  $Artikel['0']['Farbe'];
       # code...
       break;
     
@@ -38,6 +38,10 @@
       break;
   }
  } 
+
+
+
+
 
 ?>
 <html lang="de">
@@ -175,6 +179,12 @@
                            
                       </div> <!-- head ende -->
 
+                       <div class="head2" role="tab" id="GemerktHead">
+                                                          
+                                          <li role="Artikel"><a href="gemerkteArtikel.php">Meine gemerkten Artikel</a></li>
+                           
+                      </div> <!-- head ende -->
+
                       <div class="head2" role="tab" id="WatchlistHead">
                                                           
                                           <li role="Watchlist"><a  href="MeineWatchlist.php" >Meine Watchlist</a></li>
@@ -204,7 +214,7 @@
 <!-- Inhalte -->         
  <div class="tabStyle">
                                                 <br>
-                                                <h4 style="text-align: center; font-weight: bold">gemerkte Artikel</h4>  
+                                                <h4 style="text-align: center; font-weight: bold">Meine gemerkten Artikel</h4>  
                                                 <br>
                                                 
 
@@ -230,12 +240,20 @@
                                                   $variable = 1;
                                                   $array = array();
 
+
                                                   $gemerkteArtikel = new gemerkteArtikel();
-                                                 // 
                                                  
+                                                  $gemerkteArtikeldP = $gemerkteArtikel->AusgabeAllergemerktenArtikelDerPerson(); 
 
-                                                  $gemerkteArtikeldP = $gemerkteArtikel->AusgabeAllergemerktenArtikelDerPerson();  
+                                                   
+                                                     if(count($gemerkteArtikeldP)>1) // überprüft ob die Liste gefüllt ist
+                                                  {
+                                                  
+                                                  
+                                                  
 
+                                                                                
+                                                 
                                                     // [0] == Verkäuferpositionsinfos, 
                                                    /*["idVerkaeuferposition"] ["idBenutzer"] ["idArtikel"] ["Zustand"] ["Kauf"]=> string(1) "1" ["Tausch"]=> string(1) "1" ["Verfuegbarkeitsstatus"]
 
@@ -248,111 +266,196 @@
                                                    //[3] == Kaufarten
                                                    /*["idKaufarten"] ["Preis"] ["Kaufarten"] ["idVerkaeuferposition"] ["ausgewaehlt"]
                                                    */
+                                                // var_dump($gemerkteArtikeldP);
+
+                                                   
+                                                  //echo 'Test ArrrayKey';
+
+                                                  $Liste_Pos_Anz_Verkaeuferposition = $gemerkteArtikel->array_Key_count($gemerkteArtikeldP,'Zustand');
+
+                                                  $Liste_Pos_Anz_Artikelliste = $gemerkteArtikel->array_Key_count($gemerkteArtikeldP,'Titelbild');
+
+                                                  $Liste_Pos_Anz_Benutzername = $gemerkteArtikel->array_Key_count($gemerkteArtikeldP,'Benutzername');
+
+                                                  $Liste_Pos_Anz_Kaufarten = $gemerkteArtikel->array_Key_count($gemerkteArtikeldP,'Preis');
+
+                                                  $Liste_Pos_Anz_Details = $gemerkteArtikel->array_Key_count2($gemerkteArtikeldP,'ISBN','Marke'); // An Kategroieren noch anpassen
+
+                                                  
+
+                                                  $Liste_Pos_Anz_GemerkteArtikel = $gemerkteArtikel->array_Key_count($gemerkteArtikeldP,'idMerken');
+
+                                                  // var_dump($Liste_Pos_Anz_Verkaeuferposition);
+                                                  //  echo 'next \n  ';
+                                                  //  var_dump($Liste_Pos_Anz_Artikelliste);
+                                                  //  echo 'next \n  ';
+                                                  //  var_dump($Liste_Pos_Anz_Benutzername);
+                                                  //  echo 'next \n  ';
+                                                  //  var_dump($Liste_Pos_Anz_Kaufarten);
+
+                                                  //  echo 'next \n  ';
+
+                                                    //var_dump($Liste_Pos_Anz_GemerkteArtikel);
+
+
+                                                 // var_dump($gemerkteArtikeldP);
+
+                                                  //var_dump( $Liste_Pos_Anz_Details);
+                                                   //var_dump($gemerkteArtikeldP['19']['0']);
 
 
 
+                                                   $zaehler = 0;  
+                                                   $zaehler2 = 0;
+                                                   $k = 0;
 
-                                                     var_dump($gemerkteArtikeldP);
-
-                                                 /* $VerkaufsartikelKom = new VerkaufsartikelKommunikation();
-                                                   $Artikelinfos = $VerkaufsartikelKom::Verkaufsartikel($_SESSION['idBenutzer']); 
-
-
-                                                if(isset($_SESSION['gemerkteArtikelInfos']) && isset($_SESSION['gemerkteArtikel']))
+                                                 for($y= 0; $y <= count($Liste_Pos_Anz_Verkaeuferposition)-1; $y++)
                                                   {
-
-                                                    $gemerkteArtikel = $_SESSION['gemerkteArtikel'] ;
-                                                    $anzahlArtikel = count($gemerkteArtikel);
-                                                    $gemerkteArtikelInfos = $_SESSION['gemerkteArtikelInfos'];
-
-                                                    //var_dump($gemerkteArtikelInfos);
-                                                    */
-                                                     
-                                                 for($y= 0; $y < $anzahlArtikel; $y++)
-                                                  {
+                                                    
                                                     // der Hintergrund wird blau wenn sich der Artikel bereits im Warenkorb befindet
                                                     echo '<tr style="font-size: 12px; " >';
                                                     echo "<td style='width:5%;'>";
                                                     echo $var++;
                                                     echo "</td>";
                                                     echo "<td style='width:40%;'><b>";
-                                                    echo  $gemerkteArtikelInfos[$y]['2']['Bezeichnung'] . "</b>, ";
 
-                                                    switchIt($gemerkteArtikelInfos[$y]['2']['Kategorien'], $gemerkteArtikelInfos[$y]['3']);
+                                                      $e= $y;
 
-                                                    echo "</br></br>Anbieter: <b> ".  $_SESSION['benutzername'] . "</b> <br>"; 
+
+                                                          if($y>0)
+                                                          {
+                                                              if($gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]['idArtikel']  == $gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y-1]]['idArtikel'])
+                                                              {
+                                                                if($y>0)
+                                                                  { $zaehler++;
+                                                                    $e = $e - $zaehler;
+                                                                  }
+                                                              }
+                                                              else
+                                                              {
+                                                                $e= $y-$zaehler;
+                                                              }
+                                                          }
+
+                                                         // echo $e;
+
+                                                    echo  $gemerkteArtikeldP[$Liste_Pos_Anz_Artikelliste[$e]]['Bezeichnung'] . "</b>, ";
+
+                                                    //echo $gemerkteArtikeldP[$Liste_Pos_Anz_Artikelliste[$e]]['Kategorien'];
+                                                    //var_dump($gemerkteArtikeldP[$Liste_Pos_Anz_Details[$e]]);
+
+                                                    switchIt($gemerkteArtikeldP[$Liste_Pos_Anz_Artikelliste[$e]]['Kategorien'], $gemerkteArtikeldP[$Liste_Pos_Anz_Details[$e]]);
+
+                                                    $b = $y;
+
+
+                                                 if($y>0)
+                                                { 
+                                                    if($gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]['idBenutzer'] == $gemerkteArtikeldP[$Liste_Pos_Anz_Benutzername[$y-$b]]['idBenutzer'])
+                                                    {
+                                                      $zaehler2++;
+                                                      $b = $b - $zaehler2;
+                                                        
+                                                    }
+                                                    else
+                                                    {
+                                                      $zaehler2 = 0;
+                                                    }
+                                                  }
+                                                
+
+                                                    echo "</br></br>Anbieter: <b> ".  $gemerkteArtikeldP[$Liste_Pos_Anz_Benutzername[$b]]['Benutzername'] . "</b> <br>"; 
 
                                                     echo  "</td>";                                                   
-                                                    echo "<td style='width:12%;'><img id='miniatrubild' style='width:60px; height:80px;' src='Buttons/".$gemerkteArtikelInfos[$y]['2']['Artikelbild']."' alt='titelbild'> </td>";
+                                                    echo "<td style='width:12%;'><img id='miniatrubild' style='width:60px; height:80px;' src='Buttons/".$gemerkteArtikeldP[$Liste_Pos_Anz_Artikelliste[$e]]['Titelbild']."' alt='titelbild'> </td>";
                                                    
                                                     // $rows2 enthällt die Artikeldaten $Row enthällt ein Array mit den einzelnen Buchzuständen 
                                                                                                      
                                                                                                                                     
-                                                                            echo "<td>Menge: <b>".  $gemerkteArtikelInfos[$y]['1']["Verkaufsmenge"] . "</b><br>";
-                                                                            echo " Zustand: <b> ".  $gemerkteArtikelInfos[$y]['1']["Zustand"] ."</b> <br></td>";
+                                                                           // echo "<td>Menge: <b>".  $gemerkteArtikeldP[$y]['1']["Verkaufsmenge"] . "</b><br>";
+                                                                            echo " <td>Zustand: <b> ".  $gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]["Zustand"] ."</b> <br></td>";
                                                                             echo "<td style='width:15%;'>";
                                                                            // var_dump($row2);
-                                                                
+                                        // variable für Kaufarten                         
 
-                                                          if($gemerkteArtikelInfos[$y]['1']['Kauf'] == 1 || $gemerkteArtikelInfos[$y]['1']['Tausch'] == 1 ) // wenn entweder kauf oder nur Tausch angegeben wurde ...
+                                                          if($gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]['Kauf'] == 1 || $gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]['Tausch'] == 1 ) // wenn entweder kauf oder nur Tausch angegeben wurde ...
                                                                      {
-                                                                            if( $gemerkteArtikelInfos[$y]['1']['Kauf'] != 0)
+                                                                            if( $gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]['Tausch'] != 0)
                                                                             {                                                                                 
-                                                                                    echo  $gemerkteArtikelInfos[$y]['1']['Preis']/100 . " € "; 
-                                                                                    echo  $gemerkteArtikelInfos[$y]['1']['Kaufarten'] . "  <br>";         
-                                                                            }
+                                                                                    echo  $gemerkteArtikeldP[$Liste_Pos_Anz_Kaufarten[$y+$k]]['Preis']/100 . " € "; 
+                                                                                    echo  $gemerkteArtikeldP[$Liste_Pos_Anz_Kaufarten[$y+$k]]['Kaufarten'] . "  <br>";         
+                                                                            }                                                                     
 
-                                                                             if($gemerkteArtikelInfos[$y]['1']['Kauf'] == 1 && $gemerkteArtikelInfos[$y]['1']['Tausch'] == 1 )
+                                                                    }
+
+
+                                                           if($gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]['Kauf'] == 1 && $gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]['Tausch'] == 1 )
                                                                                 {
                                                                                    echo " <b>oder</b><br>";
                                                                                 
                                                                                 }
                                                                                            
-                                                                           if( $gemerkteArtikelInfos[$y]['1']['Tausch'] != 0)
+                                                                           if( $gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]['Kauf'] != 0)
                                                                             {                                                                              
-                                                                                    echo  $gemerkteArtikelInfos[$y]['0']['Preis']/100 . " € "; 
-                                                                                    echo  $gemerkteArtikelInfos[$y]['0']['Kaufarten'] . "  <br>";              
-                                                                            }
-                                                                     }     
+                                                                                    echo  $gemerkteArtikeldP[$Liste_Pos_Anz_Kaufarten[$y+1+$k]]['Preis']/100 . " € "; 
+                                                                                    echo  $gemerkteArtikeldP[$Liste_Pos_Anz_Kaufarten[$y+1+$k]]['Kaufarten'] . "  <br>";              
+                                                                            }                                      
+                                                                         
                                 
-                                                   echo "</td>";                                  
+                                                   echo "</td>";  
+
+                                                                             
 
                                                   echo' <td style="width:20%;">
-                                                    <span style="color:red; margin-right:3px;font-size:15px; margin-bottom:5px;" id="'; echo $_SESSION['gemerkteArtikel'][$y]['idMerken'].'ZMerken'; echo'"  onclick="MerkenEintragLoeschen(this.id)"  class="icon-heart-broken" aria-hidden="true"></span> Löschen</br>';
-                                                    
-                                                  echo'  <div id="sofortKaufW'. $gemerkteArtikelInfos[$y]['0']['idVerkaeuferposition'] .'" class="EMSK" ><span style="margin-right:10px; margin-bottom:5px; "class="glyphicon glyphicon-euro" aria-hidden="true"> </span>Sofort kaufen</br></div>';
+                                                    <span style="color:red; cursor: pointer;  margin-right:3px;font-size:15px; margin-bottom:5px;" id="'; echo $gemerkteArtikeldP[$Liste_Pos_Anz_GemerkteArtikel[$y]]['idMerken'].'ZMerken'; echo'"  onclick="MerkenEintragLoeschen(this.id)"  class="icon-heart-broken" aria-hidden="true"></span> Löschen</br>';
+                                                   // echo $gemerkteArtikeldP[$Liste_Pos_Anz_GemerkteArtikel[$y]]['idMerken'];
 
-                                                        if($gemerkteArtikelInfos[$y]['0']['idVerkaeuferposition'] == $gemerkteArtikelInfos[$y]['idVerkaeuferposition'] )
+                                                    
+
+                                                  echo'  <div id="sofortKaufW'. $gemerkteArtikeldP[$Liste_Pos_Anz_Kaufarten[$y+$k]]['idVerkaeuferposition'] .'" class="EMSK" ><span style="margin-right:10px; cursor: pointer;  margin-bottom:5px; "class="glyphicon glyphicon-euro" aria-hidden="true"> </span>Sofort kaufen</br></div>';
+
+                                                        if($gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]['Verfuegbarkeitsstatus'] == 0 )  // 0 = = im Warenkorb eines Kunden
                                                         {
                                                           
-                                                          if($gemerkteArtikelInfos[$y]['idBenutzer'] ==  $_SESSION['idBenutzer'] )  
+                                                          if($gemerkteArtikeldP[$Liste_Pos_Anz_Verkaeuferposition[$y]]['idBenutzer'] ==  $_SESSION['idBenutzer'] )  
                                                            {
-                                                            echo'<span style="margin-right:10px;  margin-bottom:5px; color: #4863a0; "class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><b>Im Warenkorb</b></br>';
+                                                            echo'<span style="margin-right:10px; cursor: pointer;  margin-bottom:5px; color: #4863a0; "class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><b>Im Warenkorb</b></br>';
                                                            echo '</td></tr>';  
                                                             }
                                                             else
                                                             {
-                                                             echo'<span style="margin-right:10px;  margin-bottom:5px; color: #4863a0; "class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><b>Nicht verfügbar</b></br>';
+                                                             echo'<span style="margin-right:10px; cursor: pointer ; margin-bottom:5px; color: #4863a0; "class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span><b>Nicht verfügbar</b></br>';
                                                            echo '</td></tr>';  
                                                             }
 
 
-                                                        }
+                                                         }
                                                         else
                                                         {
+                                                         
 
-                                                          echo'<div id="EinkaufswagenW'. $gemerkteArtikelInfos[$y]['0']['idVerkaeuferposition'] .'"  class="EMSK"><span style="margin-right:10px; margin-bottom:5px;  "class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>in den Warenkorb</br></div>';
+                                                          echo'<div id="EinkaufswagenW'. $gemerkteArtikeldP[$Liste_Pos_Anz_Kaufarten[$y+$k]]['idVerkaeuferposition'] .'"  class="EMSK"><span style="margin-right:10px; cursor: pointer;  margin-bottom:5px;  "class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Zum Warenkorb hinzufügen</br></div>';
                                                             echo '</td></tr>';   
-                                                        }                                               
+                                                        }       
 
-                                                   }       
-                                                   //}                                                     
+
+                                                        $k++;                                        
+
+                                                   } //for 
+
+                                                   } // if ende
+
+                                                 
+                                                if(count($gemerkteArtikeldP)<1)
+                                                  {
+                                                    echo '<div class="container">
+                                                                <h4>Es befinden sich hier derzeit keine gemerkten Artikel. </h4>
+                                                            </div>';
+
                                                     
-                                                      ?>
-
-                                              
-                                              </table> 
-
+                                                  }
+                                                ?>
+</table>
 
                                     </div>                                          
 </div><!-- col-8 -->
@@ -399,7 +502,7 @@
 
                             console.log( xhr.responseText);  
                             
-                           window.document.location.href = "Buttons/gemerkteArtikelAktuallisieren.php";
+                           window.document.location.href = "gemerkteArtikel.php";
                          }                            
                          
         }; // schliesse onload
@@ -428,7 +531,7 @@
         {if (xhttp.readyState ==4 && xhttp.status == 200)
           {
             console.log("it Works");
-            window.document.location.href = "Buttons/gemerkteArtikelAktuallisieren.php";
+           window.document.location.href = "gemerkteArtikel.php";
          
           }
 

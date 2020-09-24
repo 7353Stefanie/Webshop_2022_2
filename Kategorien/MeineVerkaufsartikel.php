@@ -179,6 +179,12 @@
                            
                       </div> <!-- head ende -->
 
+                        <div class="head2" role="tab" id="GemerktHead">
+                                                          
+                                          <li role="Artikel"><a href="gemerkteArtikel.php">Meine gemerkten Artikel</a></li>
+                           
+                      </div> <!-- head ende -->
+
                       <div class="head2" role="tab" id="WatchlistHead">
                                                           
                                           <li role="Watchlist"><a  href="MeineWatchlist.php" >Meine Watchlist</a></li>
@@ -210,9 +216,20 @@
             <div class="tabStyle" >
                            <br>
                              <h4 style="text-align: center; font-weight: bold; position: relative;">Meine Verkaufsartikel</h4> 
-                                <button type="button"  onclick="location.href='Buttons/ArtikelAuswahl.php'" style="font-size: 12px; float:right; " class="btn btn-default" aria-label="Links ausrichten">
-                                 <span id="hinzufügen" class="glyphicon glyphicon-plus" aria-hidden="true"></span> Artikel hinzufügen
-                                 </button> 
+
+                             <form  > 
+
+<a  type="button"  class="btn btn-primary" style="font-size: 12px; float:right; margin-bottom: 10px;margin-right: 10px;" href="Buttons/ArtikelAuswahl.php" role="button"  >   <span id="hinzufügen" class="glyphicon glyphicon-plus" aria-hidden="true" ></span> Artikel hinzufügen</a>
+
+                             
+
+                            
+                              
+                                  
+                              
+                            </form>
+                                
+                                 
                                                 
                                           <div style="box-sizing:border-box;  margin-left: auto; margin-right: auto;  border-radius: 4px; position: relative;  ">
                                                                                                                
@@ -270,8 +287,8 @@
                                                     // $rows2 enthällt die Artikeldaten $Row enthällt ein Array mit den einzelnen Buchzuständen 
                                                                                                      
                                                                                                                                     
-                                                                            echo "<td >Menge: <b>".   $Artikelinfos[$y]["Verkaufsmenge"] . "</b><br>";
-                                                                            echo " Zustand: <b> ".   $Artikelinfos[$y]["Zustand"] ."</b> <br></td>";
+                                                                            //echo "<td >Menge: <b>".   $Artikelinfos[$y]["Verkaufsmenge"] . "</b><br>";
+                                                                            echo " <td >Zustand: <b> ".   $Artikelinfos[$y]["Zustand"] ."</b> <br></td>";
                                                                             echo "<td style='width:17%;'>";
                                                                            // var_dump($row2);
                                                                 

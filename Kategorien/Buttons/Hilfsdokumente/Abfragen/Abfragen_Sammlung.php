@@ -114,17 +114,27 @@ function selectMerken($mysqli, $idBenutzer)
                      die('Ungültige Abfrage: ' . mysqli_error());
                 }
 
-             
-
+                         
 
                 while ($row = $result->fetch_array(MYSQLI_ASSOC))
                    {
                           $rows[] = $row;  
                    }                                                   
 
-                mysqli_free_result( $result );               
+                mysqli_free_result( $result );  
 
-                return $rows; 
+
+
+                 if(isset($rows))
+             {
+
+                 return $rows; 
+              }
+              else{
+                return null;
+              }             
+
+               
 }
 
 
@@ -398,7 +408,16 @@ function selectArtikel_by_ArtikelId_Array($mysqli, $idArtikel ) // alle Artikel 
 
                     // var_dump($rows); 
 
-                   return $rows;
+
+             if(isset($rows))
+             {
+                 return $rows; 
+              }
+              else{
+                return null;
+              }  
+
+                   
     }
 
 
@@ -457,6 +476,8 @@ function selectKategorie_by_Kategorie_und_ArtikelId_Array($mysqli, $Kategorie, $
 
                    return $rows;                   
 }
+
+
 
 
  function selectKleidung($mysqli, $idArtikel)
@@ -995,9 +1016,17 @@ function selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$idVerkaeuferposi
                             $rows[] = $row;  
                      }                                                   
 
-                  mysqli_free_result( $result );               
+                  mysqli_free_result( $result );  
 
-                  return $rows;                 
+                               
+    if(isset($rows))
+             {
+
+                 return $rows; 
+              }
+              else{
+                return null;
+              }                  
 }
 
 

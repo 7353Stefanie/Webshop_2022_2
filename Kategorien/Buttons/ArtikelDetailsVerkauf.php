@@ -11,18 +11,18 @@
  $gemerkteArtikel = $Anzeige->gemerkteArtikel();     
 
 
-$Erg       = $Anzeige->Erg(); // ERgebnis Artikeldetail
-$Artikel   = $Anzeige->gesamteArtikel();
+ $Erg       = $Anzeige->Erg(); // ERgebnis Artikeldetail
+ $Artikel   = $Anzeige->gesamteArtikel();
 
- $AnzArtikel = count($Artikel);
+//  $AnzArtikel = count($Artikel);
 
- var_dump($Erg);
- echo '---- ende Erg---';
- var_dump($Artikel);
- echo '---- ende Artikel---';
- var_dump($Sammlung);
- echo '---- ende Sammlung---';
- var_dump($Anzeige);
+//  var_dump($Erg);
+//  echo '---- ende Erg---';
+//  var_dump($Artikel);
+//  echo '---- ende Artikel---';
+//  var_dump($Sammlung);
+//  echo '---- ende Sammlung---';
+//  var_dump($Anzeige);
 
 
 
@@ -716,7 +716,8 @@ if($Sammlung != null)
 
                               }
                             }  
-                            window.document.location.href = "/../Final/Kategorien/Warenkorb.php";
+
+
                          }                            
                          
         }; // schliesse onload
