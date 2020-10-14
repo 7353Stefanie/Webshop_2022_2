@@ -92,9 +92,9 @@ switch ($Details['Kategorien']) {
                                            <?php
                                                     if(isset($_SESSION['benutzername']))
                                                     {
-                                                           echo   '<li><a href="Kategorien/Buttons/ArtikelAuswahl.php">';
+                                                           echo   '<li><a href="./ArtikelAuswahl.php">';
                                                            echo   'Artikel hinzufügen </a></li>';
-                                                           echo   '<li><a href="Kategorien/StartseitenAnmeldung.php">';
+                                                           echo   '<li><a href="../StartseitenAnmeldung.php">';
                                                            echo   'Willkommen ';
                                                            echo   $_SESSION['benutzername'];
                                                            echo   '</a></li>';  

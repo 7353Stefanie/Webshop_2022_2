@@ -238,6 +238,7 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                 $AnzahlVKPos =0;
                                 $buecher =0;
                                 $kleidung = 0;
+                                $ArtikelArray = Array();
 
                                $z = count($ArtikelAllg);
                            

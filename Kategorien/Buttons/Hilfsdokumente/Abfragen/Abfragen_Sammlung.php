@@ -12,6 +12,18 @@
 
   //gemerkte Artikel
 
+  function inhaltVorhanden($rows)
+                  {
+                           if(isset($rows))
+                               {
+                                   return $rows; 
+                                }
+                                else{
+                                  return null;
+                                }  
+                  }
+
+
   function VerkaufspositionsInfos($mysqli, $ArraygemerkterArtikel)
 {
  $query = sprintf("select idVerkaeuferposition, idBenutzer, idArtikel, Zustand , Kauf, Tausch, Verfuegbarkeitsstatus from Verkaeuferposition where idVerkaeuferposition IN ('$ArraygemerkterArtikel')  "
@@ -124,18 +136,17 @@ function selectMerken($mysqli, $idBenutzer)
                 mysqli_free_result( $result );  
 
 
+               $Ausgabe =  $this->inhaltVorhanden($rows);
 
-                 if(isset($rows))
-             {
+                  
+               return $Ausgabe; 
 
-                 return $rows; 
-              }
-              else{
-                return null;
-              }             
+                        
 
                
 }
+
+
 
 
 function selectAdresse_Zahlungsvorgang($mysqli)
@@ -1018,7 +1029,7 @@ function selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$idVerkaeuferposi
 
                   mysqli_free_result( $result );  
 
-                               
+
     if(isset($rows))
              {
 
@@ -1056,6 +1067,41 @@ function selectKaufarten_by_idKaufarten($mysqli,$idKaufarten)// Alle Artikel von
 
                 return $rows;                    
 }
+
+
+
+function sucheAlleArtikelEinerKategorie($mysqli, $Kategorie, $Abfragen)
+{// ändern
+
+   $query = sprintf("Select *from Buecher b,Artikel a,Verkaeuferposition v where  b.idArtikel = a.idArtikel and  v.idArtikel = a.idArtikel and Verfuegbarkeitsstatus = '0' and Verfuegbarkeitsstatus = '1'  ;
+
+    select * from Bestellposition where idBenutzer = '%s' ",
+               $mysqli->real_escape_string($idBenutzer) 
+              );
+
+            $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+      
+             $rows = Array();
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+
+                mysqli_free_result( $result );
+
+
+
+                return $rows;
+}
+
+
 function selectBestellpostion_by_Benutzerid($mysqli,$idBenutzer)// Alle Artikel von Kaufarten nach id Verkäuferposition
 {
 

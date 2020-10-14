@@ -147,6 +147,9 @@ Ausgabe aus allen Kategorien.
 */
 
 
+function sucheAlleArtikelEinerKategorie($mysqli, $Kategorie, $Abfragen)
+{}
+
  function switchIt($mysqli, $Kategorie, $Abfragen,  $Bezeichnung)
  {
 
@@ -241,8 +244,19 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
                 $AusgabePreise = $Abfragen->selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$ArtikelElemString);
                // ausgabe des Preises
 
-              
+              if(isset($Ergebnis ,$AusgabeKleidung, $AusgabeVerfügbarkeit, $AusgabePreise))
+              {
                       $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfügbarkeit, $AusgabePreise );
+              }
+              else
+              {
+                $Ergebnis = null;
+
+               echo'  <div class="container"><h4>Leider wurden keine Ergebnisse zu Deiner Suchanfrage gefunden.</h4></div>';
+
+                                                                
+                                                            
+              }
                
              
               //$idListe = Array();

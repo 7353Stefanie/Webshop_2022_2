@@ -228,6 +228,7 @@ function array_Key_count2($gemerkteArtikeldP,String $Schluessel , String $Schlue
        $ArraygemerkterArtikel = Array();
       
     $i = 0;
+   
 
                         foreach ($gemerkteArtikel as $key => $value) {
 
