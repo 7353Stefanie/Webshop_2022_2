@@ -1,35 +1,13 @@
 <?php
 
+   define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
+ require_once(__ROOT__.'/hintergrundSuche.php');
+  require_once(__ROOT__.'/Hilfsklasse.php');
+
  session_start();
 
 
-function switchit($Details, $Kaufarten)
-{
- // var_dump($Erg);
-   $s = 'src="'; $e = '"';  $a = 'alt="';$i = 0; 
 
-
-switch ($Details['Kategorien']) {
-    case 'Buecher':
-
-          echo' <button style="   background: transparent;    border: none;"  type="submit" name="idArtikel" value="'.$Details['idArtikel'].'"><img class="bild3" style="z-index:10; width:140px; height: 180px;   "'; echo $s . $Details['Artikelbild']. $e ;  echo $a . $Details['Bezeichnung'] .$e.'  /></button>'; 
-
-    break;
-
-
-    case 'Kleidung':                     
-                                                                    
-                      echo'<div class="" style="border-width: 1px; text-align:center; border-style: solid; border-radius: 4px; float:left; padding-left:20px; border-color:black; margin-bottom:10px;  margin-top:10px; margin-right:20px; padding-right:20px; padding-top: 20px; padding-bottom:20px;">';
-
-                      echo'<button style="   background: transparent;  color: white;  border: none; "  type="submit" name="idArtikel" value="'.$Details['idArtikel'].'"><img style="margin-top:10px; z-index:10; width:180px; height: 170px;   "'; echo $s . $Details['Artikelbild']. $e ;  echo $a . $Details['Bezeichnung'] .$e.'  /></button>
-                                                    
-                       <div style="">'; 
-                      echo '</br> Tauschpreis: <b>'. $Kaufarten['0']['Preis']/100 .' € </b> </br> Kaufpreis: <b>'. $Kaufarten['1']['Preis']/100 .' €</b> </br> </br>Groesse: '.$Details['Groesse'].' </br> Marke: ' . $Details['Marke'].'</div></div>';
-
-    break;
-
-                    }
-  }
 
 ?>
 
@@ -140,21 +118,58 @@ switch ($Details['Kategorien']) {
           </head>
           <body>
             <?php
-               $alleBuecher =  $_SESSION['AlleBuecher'];
+              // $alleBuecher =  $_SESSION['AlleBuecher'];
 
-               $Kaufarten =  $_SESSION['Kaufarten']; 
+              // $Kaufarten =  $_SESSION['Kaufarten']; 
                //var_dump($alleBuecher);
+
+
+
+                        $Suche = new Suche_Artikel();
+
+                        $Hilfsklasse = new Hilfsklasse();
+
+                        $alleBuecher = $Suche->sucheAlleArtikelEinerKategorie( 'Buecher');
+
+                        $Position=  $Hilfsklasse->array_Key_count($alleBuecher, 'Kategorien');
+
+                        /* [0]=> array(5) { ["idArtikel"]
+                                            ["Kategorien"]
+                                            ["Bezeichnung"]
+                                            ["Zeitstempel"] 
+                                            ["Titelbild"]
+
+                                             ["idBuecher"]
+                                             ["ISBN"]
+                                             ["Autor"]
+                                             ["Erscheinungsjahr"]
+                                             ["Auflage"]
+                                             ["Kurzbeschreibung"]
+                                             ["idArtikel"]
+                                             ["Genre"]
+                                             ["Seitenanzahl"]
+                                             ["Mediumart"] 
+
+                                             array(2) { [0]=> int(0) [1]=> int(1)
+
+
+                                            */
+
+                       // var_dump($alleBuecher);
+                       // var_dump($Position);
+
+                         $s = 'src="'; $e = '"';  $a = 'alt="';$i = 0; 
+
+
 
               echo' <div class="extra container-fluid">
                         <div class="UeberschriftKategorie">';
 
-                if(  $alleBuecher['0']['Kategorien'] == 'Kleidung') // Bücher
-                  { echo 'Kleidung';}
-
-                  if(  $alleBuecher['0']['Kategorien'] == 'Buecher') 
-                  {
+             
                     echo 'Bücher';
-                  }
+                 
+
+                
 
               echo' </div> 
                     </div> ';
@@ -165,11 +180,13 @@ switch ($Details['Kategorien']) {
 
               $z = 0;
               echo '<div class="" style="float:left; margin-left:10px;">';
-                foreach($alleBuecher as $key)
+                for($i = 0; $i < count($Position); $i++)                  
                   { 
-                    //var_dump($key);
-                    switchit($key,  $Kaufarten[$z] );  
-                    $z++;                  
+
+                          echo' <button style="   background: transparent;    border: none;"  type="submit" name="idArtikel" value="'.$alleBuecher[$i]['idArtikel'].'"><img class="bild3" style="z-index:10; width:140px; height: 180px;   "'; echo $s .  $alleBuecher[$i]['Titelbild']. $e ;  echo $a . $alleBuecher[$i]['Bezeichnung'] .$e.'  /></button>'; 
+
+                    
+                                  
                   } 
               echo '</div>';
               echo '</form>';

@@ -810,7 +810,7 @@ function selectVerkaeuferposition_Zahlungsvorgang($mysqli,$idVerkaeuferposition 
   function SelectVerkaeuferposition_byArtikel_outIdVerkaeuferposition_Verfuegbarkeitsstatus01($mysqli,$idArtikel) //Gib alle idVerkaeuferposition und Verfuegbarkeitsstatus 1 und 0 aus, von der Liste idArtikel
  {
 
-    $query = sprintf("select idVerkaeuferposition, Verfuegbarkeitsstatus,idArtikel from Verkaeuferposition where idArtikel IN ('$idArtikel')" ,
+    $query = sprintf("select idVerkaeuferposition, Verfuegbarkeitsstatus,idArtikel from Verkaeuferposition where Verfuegbarkeitsstatus = '1' and idArtikel IN ('$idArtikel')" ,
                            $mysqli->real_escape_string($idArtikel)  
                           ); 
 
@@ -1070,16 +1070,14 @@ function selectKaufarten_by_idKaufarten($mysqli,$idKaufarten)// Alle Artikel von
 
 
 
-function sucheAlleArtikelEinerKategorie($mysqli, $Kategorie, $Abfragen)
+function sucheAlleArtikelEinerKategorie($mysqli, $Kategorie)
 {// ändern
 
-   $query = sprintf("Select *from Buecher b,Artikel a,Verkaeuferposition v where  b.idArtikel = a.idArtikel and  v.idArtikel = a.idArtikel and Verfuegbarkeitsstatus = '0' and Verfuegbarkeitsstatus = '1'  ;
-
-    select * from Bestellposition where idBenutzer = '%s' ",
-               $mysqli->real_escape_string($idBenutzer) 
+   $query = sprintf("Select * from Verkaeuferposition v, Artikel a where v.idArtikel= a.idArtikel and Verfuegbarkeitsstatus = '0' and Kategorien = '%s' Group by a.idArtikel",
+                   $mysqli->real_escape_string($Kategorie) 
               );
 
-            $result = $mysqli->query($query);
+   $result = $mysqli->query($query);
 
                   if ( ! $result )
                 {
@@ -1152,6 +1150,39 @@ function selectBuecher_byArtikelid($mysqli, $idArtikel)
 
 }
 
+function selectBuecher_byArtikelid_Liste($mysqli, $idArtikel)
+{
+
+    $query = sprintf("select * from Buecher where idArtikel IN ('$idArtikel')  ",
+               $mysqli->real_escape_string($idArtikel) 
+              );
+
+          
+
+       $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+                 $rows = Array(); 
+
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+                  
+                   mysqli_free_result( $result );  
+
+                   $Ausgabe =  $this->inhaltVorhanden($rows); 
+                   
+ //var_dump($rows);
+                   return $Ausgabe; 
+
+}
+
 
 //SUCHE
 
@@ -1187,7 +1218,35 @@ function selectBuecher_byArtikelid($mysqli, $idArtikel)
 
  function selectAlleArtikel_Alle($mysqli)
  {
-                    $query = sprintf("select * from Artikel  Group by Bezeichnung ");
+                    $query = sprintf("select a.idArtikel, bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                                    And
+                                    Verfuegbarkeitsstatus = 1 Group by Bezeichnung ");
+                            
+
+                 $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+                 $rows = Array(); 
+
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+                  
+                   mysqli_free_result( $result );  
+                   
+ //var_dump($rows);
+                   return $rows;
+ }
+
+  function selectAlleArtikel_Alle_Liste($mysqli, $idArtikel)
+ {
+                    $query = sprintf("select * from Artikel  where idArtikel IN ('$idArtikel') ");
                             
 
                  $result = $mysqli->query($query);

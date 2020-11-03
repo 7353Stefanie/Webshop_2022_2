@@ -1,6 +1,7 @@
 <?php
 
 require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php'); 
+require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Kategorien.php'); 
 
  
 
@@ -27,6 +28,8 @@ class Suche_Artikel // wird in suchev2 verwendet
                  mysqli_close($mysqli);
                 return $ErgebnisidArtikel;
  } // ende function
+
+
 
 
 
@@ -147,8 +150,54 @@ Ausgabe aus allen Kategorien.
 */
 
 
-function sucheAlleArtikelEinerKategorie($mysqli, $Kategorie, $Abfragen)
-{}
+function sucheAlleArtikelEinerKategorie( $Kategorie)
+{
+ # gebe alle  Bücher aus
+   $Abfragen = new Abfragen();
+
+                 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+
+                 if ($mysqli->connect_error) {
+
+                   echo 'Datenbankverbindung fehlgeschlagen: ' . $mysqli->connect_error;
+
+                   } else {   
+
+         $Erg = $Abfragen->sucheAlleArtikelEinerKategorie($mysqli, $Kategorie);
+
+         //var_dump($Erg);
+
+                $i = 0;
+
+               $ArtikelElemString = Array();
+                $idListe = Array();
+               
+                foreach( $Erg as $idArtikel )
+               {
+                  $idListe[$i] = $idArtikel['idArtikel'];
+                  $i++;
+               }
+
+                $ArtikelElemString = implode("','", $idListe);
+
+               // var_dump( $ArtikelElemString);
+
+                $AusgabeBuecher = $Abfragen->selectBuecher_byArtikelid_Liste($mysqli, $ArtikelElemString);
+
+                $AusgabeArtikel = $Abfragen->selectAlleArtikel_Alle_Liste($mysqli, $ArtikelElemString);
+
+                 $Ergebnis = array_merge($AusgabeArtikel, $AusgabeBuecher);
+
+              }
+
+         //speichere alle idArtikel in einer Datei und lasse alle Bücher dieser Artikel aus
+
+          mysqli_close($mysqli);
+
+
+         return  $Ergebnis;
+       }
+
 
  function switchIt($mysqli, $Kategorie, $Abfragen,  $Bezeichnung)
  {
@@ -192,13 +241,25 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
 
  switch ($Kategorie) {
  case 'Alle':
+
+ //Zeige alle verfügbaren Bücher und Kleidungen an. Limit setzten
+
+ //gebe alle Artikel aus die den Verfügbarkeitsstatus 1 haben.
+
+ //gebe anhand der idArtikel die Bücher aus
+
+ //gebe anhand der idArtikel die Kleidung aus und anhand der Kategorie die Kategoriedetails
+
+
+
               if($Bezeichnung !=null)
              {
                $Ergebnis= $Abfragen->selectAlleArtikel($mysqli, $Bezeichnung);
+               //var_dump($Ergebnis);
 
                if($Ergebnis != null )
 
-              { //$Ergebnis =  Ergebnissuche_Alles_Kleidung($mysqli,$Abfragen, $Erg);
+              { //$Ergebnis =  Ergebnissuche_Alles_Kleidung($mysqli,$Abfragen, $Erg); // $Ergebnis enthällt alle Artikel die Verfügbar sind.
 
                  $idListe = Array();
                $AusgabeKleidung = Array();
@@ -207,15 +268,15 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
                $AusgabePreise = Array();
                $i = 0;
 
+              // var_dump($Ergebnis);
+
                foreach( $Ergebnis as $idErg )
                {
                   $idListe[$i] = $idErg['idArtikel'];
                   $i++;
-               } // auslesen der Artikel id 
+               } // auslesen der Artikel id // Alle idArtikel werden in eine Liste gespeichert
 
                $ArtikelElemString = implode("','", $idListe);
-
-
 
                $AusgabeKleidung= $Abfragen->selectKleidungArray($mysqli,  $ArtikelElemString);
 
@@ -286,6 +347,10 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
              {
                $Ergebnis= $Abfragen->selectAlleArtikel_Alle($mysqli);
 
+
+
+              // var_dump($Ergebnis);
+
               //$Ergebnis =  Ergebnissuche_Alles_Kleidung($mysqli,$Abfragen,$Ergebnis);
 
                $idListe = Array();
@@ -315,24 +380,27 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
 
                //Zeige alle Preise von Kaufarten, für die liste idArtikel, an wo der Verfuegbarkeitsstatus 1 und 0 ist 
 
-               $AusgabeVerfügbarkeit = $Abfragen->SelectVerkaeuferposition_byArtikel_outIdVerkaeuferposition_Verfuegbarkeitsstatus01($mysqli,$ArtikelElemString);
+                     if($AusgabeKleidung != null)
+                     {
+                             $AusgabeVerfügbarkeit = $Abfragen->SelectVerkaeuferposition_byArtikel_outIdVerkaeuferposition_Verfuegbarkeitsstatus01($mysqli,$ArtikelElemString);
 
-               $i = 0;
-               $ArtikelElemString = Array();
-                $idListe = Array();
-               
-                foreach( $AusgabeVerfügbarkeit as $idErg )
-               {
-                  $idListe[$i] = $idErg['idVerkaeuferposition'];
-                  $i++;
-               }
+                             $i = 0;
+                             $ArtikelElemString = Array();
+                              $idListe = Array();
+                             
+                              foreach( $AusgabeVerfügbarkeit as $idErg )
+                             {
+                                $idListe[$i] = $idErg['idVerkaeuferposition'];
+                                $i++;
+                             }
 
-               $ArtikelElemString = implode("','", $idListe);
+                             $ArtikelElemString = implode("','", $idListe);
 
-                $AusgabePreise = $Abfragen->selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$ArtikelElemString);
-               // ausgabe des Preises
+                              $AusgabePreise = $Abfragen->selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$ArtikelElemString);
+                             // ausgabe des Preises
 
-               $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfügbarkeit, $AusgabePreise );
+                             $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfügbarkeit, $AusgabePreise );
+                    }
 
                //echo ('ende Liste ---------------------------------------------');
 

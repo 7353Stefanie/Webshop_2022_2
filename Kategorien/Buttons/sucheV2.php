@@ -2,6 +2,7 @@
 
 define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons');
 require_once(__ROOT__.'/hintergrundSuche.php');
+require_once(__ROOT__.'/Hilfsklasse.php');
 
 session_start();
 
@@ -119,6 +120,8 @@ session_start();
 
     $Suche = new Suche_Artikel();
     $ArtikelAllg = Array();
+    $Hilfsmethode = new Hilfsklasse();
+
 
 
     if($_POST!=null)
@@ -136,33 +139,45 @@ session_start();
     {$erg = $Suche->suche_allg($_SESSION['Kategorie'] ,$_SESSION['suchen']);}
  /* else{
 
-    '<div class="alert alert-info alert-dismissible">
+    '<div class="alert alert-info alert-dismissible">Preis
   <button type="button" class="close" data-dismiss="alert" aria-label="Schließen"><span aria-hidden="true">&times;</span></button>
   <strong>Hinweis!</strong> Bitte gebe einen Suchbefehl ein
 </div>';
 
-   
+   gemerkteArtikeldP
   }*/
 
+
+    $anzPosArtikel =   $Hilfsmethode->array_Key_count($erg,'Kategorien'); // Gibt die Array Positionen aus in denen Kategorie vorkommt
+    $anzPosKleidung =  $Hilfsmethode->array_Key_count($erg,'idKleidung');
+    $anzPosStatus =    $Hilfsmethode->array_Key_count($erg,'Verfuegbarkeitsstatus');// evtl. nicht notwendig
+    $anzPosKosten =    $Hilfsmethode->array_Key_count($erg,'Preis');
+
+   // var_dump($anzPosKleidung);
+
+
+
+    
     //wenn kategorie Kleidung dann preis größe und Marke ausgeben
                   
                     // var_dump($kaufart);
    // var_dump($erg);
 
+/*
   $AnzahlderVariablen = count($erg);
   
 
 // $AnzahlArtikel =  count($erg, $erg["Titelbild"]);
  // berechnung Anzahl Artikel
 
- $AnzahlArtikel =$Suche->AnzahlderArrayVariablenzumSplitten('Titelbild', $erg);
- $Kleidung =$Suche->AnzahlderArrayVariablenzumSplitten('Marke', $erg);
- $Verfuegbarkeitsstatus =$Suche->AnzahlderArrayVariablenzumSplitten('Verfuegbarkeitsstatus', $erg);
- $Kaufarten =$Suche->AnzahlderArrayVariablenzumSplitten('Kaufarten', $erg);
+ $AnzahlArtikel =           $Suche->AnzahlderArrayVariablenzumSplitten('Titelbild', $erg);
 
 
+ $Kleidung =                $Suche->AnzahlderArrayVariablenzumSplitten('Marke', $erg);
+ $Verfuegbarkeitsstatus =   $Suche->AnzahlderArrayVariablenzumSplitten('Verfuegbarkeitsstatus', $erg);
+ $Kaufarten =               $Suche->AnzahlderArrayVariablenzumSplitten('Kaufarten', $erg);
 
-
+*/
 
 //AlleListen
 
@@ -178,7 +193,7 @@ echo 'Der String enth&auml;lt nicht erlaubte Zeichen!';
 }*/
 
 
-if($AnzahlArtikel!= null)
+/*if($AnzahlArtikel!= null)
 {$ArtikelArray = ( array_slice($erg, 0, $AnzahlArtikel, true));// schreibt alle Artikel von 0 bis x in ein Array; Artikel
 
 
@@ -187,7 +202,7 @@ $KleidungArray = ( array_slice($erg, $AnzahlArtikel, $Kleidung, true)); // Kleid
 $StatusArray = ( array_slice($erg, $Kleidung+$AnzahlArtikel, $Verfuegbarkeitsstatus, true));
 
 $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlArtikel, $Kaufarten, true));
-}
+}*/
 
 //var_dump($ArtikelArray);
 //echo '---------------------------------------------------------------------------------------------------------------------------------------------------------';
@@ -236,28 +251,24 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                 $z=0;
                                // $counter =0;
                                 $AnzahlVKPos =0;
-                                $buecher =0;
-                                $kleidung = 0;
+                                
                                 $ArtikelArray = Array();
 
                                $z = count($ArtikelAllg);
                            
-                            foreach($ArtikelAllg as $key)
-                                   {
-                                      if($key['Kategorien'] == 'Buecher')
-                                      {
-                                             $buecher++    ;               
-                                      } 
-                                      if($key['Kategorien'] == 'Kleidung')
-                                      {
-                                             $kleidung++    ;               
-                                      }  
-                                    }
+                          
 
-                                 //  echo  $AnzahlVKPos; 
+                                $ac =     array_column($erg, 'Kategorien');
+
+                                // var_dump($ac);
+
+                               $AnzahlValues= array_count_values($ac);
+
+                              // var_dump($AnzahlValues); // ["Buecher"]=> int(3) ["Kleidung"]=> int(2) }
+
                                                                    
 
-                                   $anzahlSlider = $buecher/8;
+                                   $anzahlSlider = $AnzahlValues['Buecher']/8;
                                    
                                      echo '<ol class="carousel-indicators">';
 
@@ -266,7 +277,8 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                           echo '<li data-target="#my-slider" data-slide-to="0" class="active"></li>'; 
                                          }
 
-                                      for($y = 1; $y <= $anzahlSlider; $y++ )
+                                         for($y = 1; $y <= $anzahlSlider;$y++ )                                          
+
                                           {                                                
                                               echo' <li data-target="#my-slider" data-slide-to="'.$y.'"></li>';                                               
                                           }
@@ -278,22 +290,38 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                     echo '  <div class="item active" style="margin-left:100px;">  <!-- slide when we open the web page-->';
                                     $q = 0;
 
+                                    /*
 
-                                 foreach( $ArtikelArray as $key)
+                                        $anzPosArtikel =   $Hilfsmethode->array_Key_count($erg,'Kategorien');
+    $anzPosKleidung =  $Hilfsmethode->array_Key_count($erg,'idKleidung');
+    $anzPosStatus =    $Hilfsmethode->array_Key_count($erg,'Verfuegbarkeitsstatus');// evtl. nicht notwendig
+    $anzPosKosten =    $Hilfsmethode->array_Key_count($erg,'Preis');
+
+*/
+   // var_dump($anzPosArtikel);
+    //var_dump($erg);
+                                         //   echo $erg[$anzPosArtikel['0']]['Kategorien'];
+                                 for($i = 0; $i<count($anzPosArtikel) ;$i++)
                                         {
+
                                           $durchgaenge++;
                                           if($durchgaenge > 8)
                                           {
+                                            echo $i;
                                              echo' </div> '; 
                                              echo ' <div class="item" style="margin-left:100px;" >  <!-- slide when we open the web page-->';
                                              $durchgaenge = 0;
                                           }
                                           
-                                              if( $key['Kategorien'] == 'Buecher')
+
+                                              if( $erg[$anzPosArtikel[$i]]['Kategorien'] == 'Buecher') // wenn bücher dann das ausgeben
                                                 {                                    
-                                                echo' <button style="   background: transparent;  color: white;  border: none;"  type="submit" name="idArtikel" value="'.$key['idArtikel'].'"><img class="bild3" style="z-index:10; width:140px; height: 180px;   "'; echo $s . $key['Titelbild'] . $e ;  echo $a . $key['Bezeichnung'] .$e.'  /></button>';  
+                                                echo' <button style="   background: transparent;  color: black;  border: none;"  type="submit" name="idArtikel" value="'.$erg[$i]['idArtikel'].'"><img class="bild3" style="z-index:10; width:140px; height: 180px;" src="'. $erg[$anzPosArtikel[$i]]['Titelbild'].'" alt="'. $erg[$anzPosArtikel[$i]]['bezeichnung']. '"  ></button>';  
+
+                                               //S <img src="dummy-1.jpg" alt="Spaß in der Sonne"></button></li>
                                                 }  
-                                             $q++;                                               
+                                             $q++;   
+                                            $anzPosArtikel++;                                             
                                         }  
                                     
                                     
@@ -347,7 +375,7 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                 $p = 0;
                                    
                              
-                                  $anzahlSlider = $kleidung/7;    
+                                  $anzahlSlider = $AnzahlValues['Kleidung']/7;    
 
                                      echo ' <ol class="carousel-indicators">';
 
@@ -370,73 +398,28 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                     echo' <div class="carousel-inner" role="listbox">  ';              
                                     echo '  <div class="item active" style="margin-left:120px;margin-bottom:120px;" >  <!-- slide when we open the web page-->';
                                    echo '';
-                                    $q = 0;
+                                   
+
                                     
+                                  
+                                   //pos 5 und 6
 
-                                    //Schreibe alle idArtikel heraus die zu Kleidung gehören
-                                    //suche die idArtikel aus ArrayStatus heraus  und ermittel die id Verkäuferpsotition und Verfügbarkeit
-                                    // mache aus den genannten Variablen ein Array
-                                      $Kleidungsids = Array();
-                                      //zeige diee Artikeldeteils an der ersten id
-                                     // $idArtikel = Array();
-                                     // $idVerkaeuferposition =Array();
+                                    $listeKleidung = $Hilfsmethode->splitteEinenTeilInEineListe($erg, $anzPosKleidung);
 
-                                      $liste = array_keys($KleidungArray);                                  
+                                    $listeArtikel = $Hilfsmethode->splitteEinenTeilInEineListe($erg, $anzPosArtikel);
+                                    
+                                    $listeVerkaeuferpos = $Hilfsmethode->splitteEinenTeilInEineListe($erg,  $anzPosStatus);
 
-                                     $idArtikelKey= Array();
+                                    $listeKosten = $Hilfsmethode->splitteEinenTeilInEineListe($erg,  $anzPosKosten);
+
+                                    // ermittel die Position der idVerkaeuferposition von idArtikel $i
 
                                   
-                                     //
 
-                                    //var_dump($idArtikelKey);
+                                  
 
-                                    for ($i=0; $i < count($KleidungArray) ; $i++) { 
-                                          # code...
-
-                                              $Kleidungsids[$i]=  $KleidungArray[$liste[$i]]['idArtikel'];
-
-                                              //var_dump($Kleidungsids[$i]);                                         
-                                        }
-
-                                        $liste2 = array_keys($StatusArray);
-
-                                        // Wenn der Ferfügbarkeitstatus 0 oder 1  // also zur Verfügung oder im Warenkorb ist dann in idArtikelKey schreiben
-                                           $v= 0;
-
-                                        foreach ($StatusArray as $key => $value) {
-                                         
-                                          if( $value['Verfuegbarkeitsstatus'] != 2  )
-
-                                             { $idArtikelKey[$value['idArtikel']] = $value['idVerkaeuferposition'];
-                                                $idVerkaeuferpos[$v++] = $value['idVerkaeuferposition'];
-                                                
-                                              }
-
-                                            }  
-
-
-                                       
-
-                                        $schluessel = Array();
-
-                                       $schluessel =  array_keys($idArtikelKey);
-
-                                       //var_dump($schluessel);
-
-                                        //Gebe alle Kleidungsdetails zur idArray Array_Keys  an
-                                        // Speicher  alle Kaufarten zur Artikelnr bzw. Verkäuferposition in einem Array
-
-                                     //  array_search ( $Kleidungsids[$i] , $ArrayStatus);
-
-// wenn Array_Keys() $KleidungArray
-                                        $kleidungsKey = array_keys($KleidungArray);
-                                        $KaufaratenKey = array_keys($KaufartenArray);
-
-                                        $durchlaufvariable =  $kleidungsKey['0'];
-                                        $durchlaufvariableKaufarten =  $KaufaratenKey ['0'];
-
-                                 foreach( $ArtikelArray as $key)
-                                        { 
+                                 for($i = 0; $i<count($listeArtikel) ;$i++)
+                                        { #
 
 
 
@@ -449,44 +432,52 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                                    
                                                    $durchgaenge = 0;                                                   
                                                 }                                     
-                                                                                               
-                                            
-                                              if( $key['Kategorien'] == 'Kleidung' )
-                                                { 
-                                                  
+                                                                                             
+                                            if( $listeArtikel[$i]['Kategorien'] == 'Kleidung') // wenn bücher dann das ausgeben
+                                                {                                                 
                                                     
 
                                                     echo'<div class="" style="border-width: 1px; text-align:center; border-style: solid; border-radius: 4px; float:left; padding-left:20px; border-color:black; margin-bottom:10px;  margin-top:10px; margin-right:20px; padding-right:20px; padding-top: 20px; padding-bottom:20px;">';
 
-                                                    echo'<button style="   background: transparent;  color: white;  border: none; "  type="submit" name="idArtikel" value="'.$key['idArtikel'].'"><img style="margin-top:10px; z-index:10; width:180px; height: 170px;   "'; echo $s . $key['Titelbild'] . $e ;  echo $a . $key['Bezeichnung'] .$e.'  /></button>
+                                                    echo'<button style="   background: transparent;  color: white;  border: none; "  type="submit" name="idArtikel" value="'.$listeArtikel[$i]['idArtikel'].'"><img style="margin-top:10px; z-index:10; width:180px; height: 170px;   "'; echo $s . $listeArtikel[$i]['Titelbild'] . $e ;  echo $a . $listeArtikel[$i]['bezeichnung'] .$e.'  /></button>
                                                     
                                                     <div style="">'; 
 
-                                                    // wenn die id von Kaufarten und die id von  $schluessel(idArtikel) zusammenpassen ist Needel[$schluessel] die idVerkaufsposition 
-                                                    // dann suche im Array $KaufartenArray die idVerkaufsposition mit Rückgabe des Keys
 
-                                                    $PositionVerkaeuferpos = array_search($key['idArtikel'], $schluessel);
 
-                                                   
-                                                    
-                                                   //^1 q $idVerlaeuferpos[$PositionVerkaeuferpos]
-                                                    // neelde enthält idArtikel und idVerkaeuferposition
-                                                      $colors = array_column($KaufartenArray, 'idVerkaeuferposition');
-                                                      
-
-                                                    $PositionVerkaeuferposInKaufarten  = array_search($idVerkaeuferpos[$PositionVerkaeuferpos], $colors);
-                                                    
-                                                    $DiePosition =  $KaufaratenKey[$PositionVerkaeuferposInKaufarten];// gitbt die Position an                                                  
                                                     
 
-                                                    echo '</br> Tauschpreis: <b>'. $KaufartenArray[$DiePosition]['Preis']/100 .' € </b> </br> Kaufpreis: <b>'. $KaufartenArray[$DiePosition+1]['Preis']/100 .' €</b> </br> </br>Groesse: '.$KleidungArray[$durchlaufvariable]['Groesse'].' </br> Marke: ' . $KleidungArray[$durchlaufvariable]['Marke'].'</div></div>';
+                                                            // gebe die Daten aus den Listen aus wenn die $idArtikel = $i ist
 
+                                                    //1. suche die idVerkaeuferposition zu $idArtikel
+                                                    //2. suche die Position von listeKleidung wenn $idArtikel = $i ist
+                                                    //3. suche die Position von listeKosten wenn die $iVerkaeuferposition = $z ist
+
+
+                                                    $PositionId = $Hilfsmethode->findeDiePositionInDerListe($listeVerkaeuferpos, $listeArtikel[$i]['idArtikel']);
+                                                    //gibt den wert aus an deren Stelle sich die gesuchte Variable befindet
+                                                    $PositionId = $PositionId['0'];
+                                                    //var_dump($PositionId);     
+                                                  
+
+
+                                                  $PositionIdKosten = $Hilfsmethode->findeDiePositionInDerListe( $listeKosten,$listeVerkaeuferpos[$PositionId]['idVerkaeuferposition']);
+
+                                                   $PositionKleidung = $Hilfsmethode->findeDiePositionInDerListe( $listeKleidung,$listeArtikel[$i]['idArtikel']);
+                                              
+                                              
+                                                
+
+                                                   // echo '</br> Bezeichnung:  <b>'. $listeArtikel[$i]['bezeichnung'].'</b>
+                                                    echo'</br> Tauschpreis: <b>'. $listeKosten[$PositionIdKosten['0']]['Preis']/100 .' € </b> </br> Kaufpreis: <b>'.$listeKosten[$PositionIdKosten['1']]['Preis']/100 .' €</b> </br> </br>Groesse: '. $listeKleidung[$PositionKleidung['0']]['Groesse'].' </br> Marke: ' . $listeKleidung[$PositionKleidung['0']]['Marke'].'</div></div>';
                                                  
-                                                 $durchlaufvariable++;}
-                                             $q++;
-                                            
-                                           
+                                                  }                                                 
+                                                  
+                                          
                                         } //ende if
+
+
+                                       
                                         
                                    echo'  </div>
                                     
