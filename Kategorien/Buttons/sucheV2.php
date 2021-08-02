@@ -137,6 +137,8 @@ session_start();
     $erg = Array();
     if($erg != '')
     {$erg = $Suche->suche_allg($_SESSION['Kategorie'] ,$_SESSION['suchen']);}
+
+  //var_dump($erg);
  /* else{
 
     '<div class="alert alert-info alert-dismissible">Preis
@@ -146,6 +148,10 @@ session_start();
 
    gemerkteArtikeldP
   }*/
+ // var_dump($erg);
+
+  if(!is_null($erg) )
+  {
 
 
     $anzPosArtikel =   $Hilfsmethode->array_Key_count($erg,'Kategorien'); // Gibt die Array Positionen aus in denen Kategorie vorkommt
@@ -153,44 +159,7 @@ session_start();
     $anzPosStatus =    $Hilfsmethode->array_Key_count($erg,'Verfuegbarkeitsstatus');// evtl. nicht notwendig
     $anzPosKosten =    $Hilfsmethode->array_Key_count($erg,'Preis');
 
-   // var_dump($anzPosKleidung);
-
-
-
-    
-    //wenn kategorie Kleidung dann preis größe und Marke ausgeben
-                  
-                    // var_dump($kaufart);
-   // var_dump($erg);
-
-/*
-  $AnzahlderVariablen = count($erg);
-  
-
-// $AnzahlArtikel =  count($erg, $erg["Titelbild"]);
- // berechnung Anzahl Artikel
-
- $AnzahlArtikel =           $Suche->AnzahlderArrayVariablenzumSplitten('Titelbild', $erg);
-
-
- $Kleidung =                $Suche->AnzahlderArrayVariablenzumSplitten('Marke', $erg);
- $Verfuegbarkeitsstatus =   $Suche->AnzahlderArrayVariablenzumSplitten('Verfuegbarkeitsstatus', $erg);
- $Kaufarten =               $Suche->AnzahlderArrayVariablenzumSplitten('Kaufarten', $erg);
-
-*/
-
-//AlleListen
-
- 
-
-
-  
- /* if(preg_match('^[A-z0-9 \.,\/\(\)_-]+$', $meinString))
-{
-// Weitere verarbeitung des Strings
-} else {
-echo 'Der String enth&auml;lt nicht erlaubte Zeichen!';
-}*/
+}
 
 
 /*if($AnzahlArtikel!= null)
@@ -203,21 +172,6 @@ $StatusArray = ( array_slice($erg, $Kleidung+$AnzahlArtikel, $Verfuegbarkeitssta
 
 $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlArtikel, $Kaufarten, true));
 }*/
-
-//var_dump($ArtikelArray);
-//echo '---------------------------------------------------------------------------------------------------------------------------------------------------------';
-
-//var_dump($KleidungArray);
-
-//echo '---------------------------------------------------------------------------------------------------------------------------------------------------------';
-
-//var_dump($StatusArray);
-
-//echo '---------------------------------------------------------------------------------------------------------------------------------------------------------';
-
-//var_dump($KaufartenArray);
-
-//array_merge($ArtikelArray$KleidungArray);
 
 
 
@@ -248,14 +202,12 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                 <div id="my-slider" class="carousel slide" data-ride="carousel" data-interval="false" style="z-index: 200; margin-bottom:-20px;" >';
 
                                 // nach 8 Büchern soll das slide wechseln
-                                $z=0;
-                               // $counter =0;
-                                $AnzahlVKPos =0;
-                                
-                                $ArtikelArray = Array();
+                               
 
-                               $z = count($ArtikelAllg);
-                           
+                                $durchgaenge =0;
+                                $AnzahlVKPos =0;                                
+                                $ArtikelArray = Array();
+                                                         
                           
 
                                 $ac =     array_column($erg, 'Kategorien');
@@ -263,12 +215,14 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                 // var_dump($ac);
 
                                $AnzahlValues= array_count_values($ac);
+                              // echo ($AnzahlValues['Buecher'] );
 
                               // var_dump($AnzahlValues); // ["Buecher"]=> int(3) ["Kleidung"]=> int(2) }
 
-                                                                   
-
+                                 if(array_key_exists('Buecher',$AnzahlValues))                                  
+                                 {
                                    $anzahlSlider = $AnzahlValues['Buecher']/8;
+
                                    
                                      echo '<ol class="carousel-indicators">';
 
@@ -289,6 +243,7 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                     echo' <div class="carousel-inner" role="listbox">  ';              
                                     echo '  <div class="item active" style="margin-left:100px;">  <!-- slide when we open the web page-->';
                                     $q = 0;
+                                  }
 
                                     /*
 
@@ -299,7 +254,7 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
 
 */
    // var_dump($anzPosArtikel);
-    //var_dump($erg);
+   // var_dump($erg);
                                          //   echo $erg[$anzPosArtikel['0']]['Kategorien'];
                                  for($i = 0; $i<count($anzPosArtikel) ;$i++)
                                         {
@@ -316,11 +271,11 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
 
                                               if( $erg[$anzPosArtikel[$i]]['Kategorien'] == 'Buecher') // wenn bücher dann das ausgeben
                                                 {                                    
-                                                echo' <button style="   background: transparent;  color: black;  border: none;"  type="submit" name="idArtikel" value="'.$erg[$i]['idArtikel'].'"><img class="bild3" style="z-index:10; width:140px; height: 180px;" src="'. $erg[$anzPosArtikel[$i]]['Titelbild'].'" alt="'. $erg[$anzPosArtikel[$i]]['bezeichnung']. '"  ></button>';  
+                                                echo' <button style="   background: transparent;  color: black;  border: none;"  type="submit" name="idArtikel" value="'.$erg[$i]['idArtikel'].'"><img class="bild3" style="z-index:10; width:140px; height: 180px;" src="'. $erg[$anzPosArtikel[$i]]['Titelbild'].'" alt="'. $erg[$anzPosArtikel[$i]]['Bezeichnung']. '"  ></button>';  
 
                                                //S <img src="dummy-1.jpg" alt="Spaß in der Sonne"></button></li>
                                                 }  
-                                             $q++;   
+                                               
                                             $anzPosArtikel++;                                             
                                         }  
                                     
@@ -359,7 +314,7 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                               <button type="submit" name="Kategorie" value="Kleidungen" style="background-color:black; border-color:black;" href="alleKleidungen.php">Kleidung</button>   
                           </div> </form>';  
 
-                           if($erg !=null)
+                           if($erg !=null && array_key_exists('Kleidung',$AnzahlValues))
 
                             {
 
@@ -439,7 +394,7 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
 
                                                     echo'<div class="" style="border-width: 1px; text-align:center; border-style: solid; border-radius: 4px; float:left; padding-left:20px; border-color:black; margin-bottom:10px;  margin-top:10px; margin-right:20px; padding-right:20px; padding-top: 20px; padding-bottom:20px;">';
 
-                                                    echo'<button style="   background: transparent;  color: white;  border: none; "  type="submit" name="idArtikel" value="'.$listeArtikel[$i]['idArtikel'].'"><img style="margin-top:10px; z-index:10; width:180px; height: 170px;   "'; echo $s . $listeArtikel[$i]['Titelbild'] . $e ;  echo $a . $listeArtikel[$i]['bezeichnung'] .$e.'  /></button>
+                                                    echo'<button style="   background: transparent;  color: white;  border: none; "  type="submit" name="idArtikel" value="'.$listeArtikel[$i]['idArtikel'].'"><img style="margin-top:10px; z-index:10; width:180px; height: 170px;   "'; echo $s . $listeArtikel[$i]['Titelbild'] . $e ;  echo $a . $listeArtikel[$i]['Bezeichnung'] .$e.'  /></button>
                                                     
                                                     <div style="">'; 
 

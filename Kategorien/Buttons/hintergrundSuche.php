@@ -57,7 +57,7 @@ class Suche_Artikel // wird in suchev2 verwendet
   return $AnzahlStatus;
 }
 
- function suche_allg($Kategorie,   $Bezeichnung)
+ function suche_allg($Kategorie,   $Bezeichnung) // wird bei suche V2 ausgeführt
  { 
   $Abfragen = new Abfragen();
 
@@ -226,6 +226,8 @@ function sucheAlleArtikelEinerKategorie( $Kategorie)
 case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
                   
                    $Erg = $Abfragen->selectAlleArtikel($mysqli, $Bezeichnung);
+
+                   // gebe alle Artikel der Kategorie Kleidung aus
      # code...
      break;
    
@@ -234,30 +236,11 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
                  }// ende switch
 }// ende function
 
- function switch_allgSuche($mysqli, $Kategorie, $Abfragen,  $Bezeichnung)
- {
 
+function auslagerung_Suche_switch(Array $Ergebnis,  $Abfragen, $mysqli)
+{
 
-
- switch ($Kategorie) {
- case 'Alle':
-
- //Zeige alle verfügbaren Bücher und Kleidungen an. Limit setzten
-
- //gebe alle Artikel aus die den Verfügbarkeitsstatus 1 haben.
-
- //gebe anhand der idArtikel die Bücher aus
-
- //gebe anhand der idArtikel die Kleidung aus und anhand der Kategorie die Kategoriedetails
-
-
-
-              if($Bezeichnung !=null)
-             {
-               $Ergebnis= $Abfragen->selectAlleArtikel($mysqli, $Bezeichnung);
-               //var_dump($Ergebnis);
-
-               if($Ergebnis != null )
+   if($Ergebnis != null )
 
               { //$Ergebnis =  Ergebnissuche_Alles_Kleidung($mysqli,$Abfragen, $Erg); // $Ergebnis enthällt alle Artikel die Verfügbar sind.
 
@@ -288,7 +271,7 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
 
                //Zeige alle Preise von Kaufarten, für die liste idArtikel, an wo der Verfuegbarkeitsstatus 1 und 0 ist 
 
-               $AusgabeVerfügbarkeit = $Abfragen->SelectVerkaeuferposition_byArtikel_outIdVerkaeuferposition_Verfuegbarkeitsstatus01($mysqli,$ArtikelElemString);
+               $AusgabeVerfuegbarkeit = $Abfragen->SelectVerkaeuferposition_byArtikel_outIdVerkaeuferposition_Verfuegbarkeitsstatus01($mysqli,$ArtikelElemString);
 
                $i = 0;
                $ArtikelElemString = Array();
@@ -305,19 +288,21 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
                 $AusgabePreise = $Abfragen->selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$ArtikelElemString);
                // ausgabe des Preises
 
-              if(isset($Ergebnis ,$AusgabeKleidung, $AusgabeVerfügbarkeit, $AusgabePreise))
+              if(isset($Ergebnis ,$AusgabeKleidung, $AusgabeVerfuegbarkeit, $AusgabePreise))
               {
-                      $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfügbarkeit, $AusgabePreise );
+                      $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfuegbarkeit, $AusgabePreise );
+
               }
               else
               {
                 $Ergebnis = null;
 
-               echo'  <div class="container"><h4>Leider wurden keine Ergebnisse zu Deiner Suchanfrage gefunden.</h4></div>';
-
-                                                                
+               echo'  <div class="container"><h4>Leider wurden keine Ergebnisse zu Deiner Suchanfrage gefunden.</h4></div>';                                                              
                                                             
               }
+            }
+
+              return $Ergebnis;
                
              
               //$idListe = Array();
@@ -339,13 +324,13 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
                #Wenn Kategorie Kleidung dabei ist muss noch der Preis und die Größe und Marke ermittelt werden
 
                #schleife
-             }
+             
 
-                 
-             }
-              else
-             {
-               $Ergebnis= $Abfragen->selectAlleArtikel_Alle($mysqli);
+}
+
+function wenn_Bezeichnung_null(Array $Ergebnis,  $Abfragen, $mysqli)
+{
+
 
 
 
@@ -401,33 +386,90 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
 
                              $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfügbarkeit, $AusgabePreise );
                     }
+                    return $Ergebnis;
+                  
+}
 
+
+ function switch_allgSuche($mysqli, $Kategorie, $Abfragen,  $Bezeichnung)
+ {
+
+$Endergebnis = Array() ;
+
+ switch ($Kategorie) {
+ case 'Alle':
+
+ //Zeige alle verfügbaren Bücher und Kleidungen an. Limit setzten
+
+ //gebe alle Artikel aus die den Verfügbarkeitsstatus 1 haben.
+
+ //gebe anhand der idArtikel die Bücher aus
+
+ //gebe anhand der idArtikel die Kleidung aus und anhand der Kategorie die Kategoriedetails
+
+
+
+              if($Bezeichnung !=null)
+             {
+               $Ergebnis= $Abfragen->selectAlleArtikel($mysqli, $Bezeichnung);
+                $Endergebnis =  $this->auslagerung_Suche_switch($Ergebnis, $Abfragen, $mysqli);
+             }
+             else
+             {
+                $Ergebnis= $Abfragen->selectAlleArtikel_Alle($mysqli);
+                $Endergebnis =  $this->wenn_Bezeichnung_null( $Ergebnis,  $Abfragen, $mysqli);
+             }
+               //var_dump($Ergebnis);
+              
+              
                //echo ('ende Liste ---------------------------------------------');
-
+              
               
 
-             }
+             
               // Hersteller ist in diesem Fall der Autor
 
-              return($Ergebnis);
+              return($Endergebnis);
      break;
 
  case 'Buecher':
                if($Bezeichnung !=null)
              {
-               $Ergebnis =  $Abfragen->selectKategorie($mysqli,$Bezeichnung, $Kategorie);
-             }
-             else
+               $Ergebnis= $Abfragen->selectAlleArtikel_nur_Buecher($mysqli, $Bezeichnung);
+               //var_dump($Ergebnis);
+
+               $Endergebnis =  $this->auslagerung_Suche_switch($Ergebnis);
+              }
+               else
              {
-              $Ergebnis =  $Abfragen->selectKategoriealle($mysqli,$Kategorie);
+                $Ergebnis= $Abfragen->selectAlleBuecher_Alle($mysqli);
+                $Endergebnis =  $this->wenn_Bezeichnung_null( $Ergebnis,  $Abfragen, $mysqli);
              }
+            return  $Endergebnis;
  
 
-              return( $Ergebnis);
+              
      # code...
      break;
 
 case 'Kleidung': // group by idArtikel
+
+
+        
+             if($Bezeichnung !=null)
+             {
+               $Ergebnis= $Abfragen->selectAlleArtikel_nur_Kleidung($mysqli, $Bezeichnung);
+               //var_dump($Ergebnis);
+
+               $Endergebnis =  $this->auslagerung_Suche_switch($Ergebnis);
+              }
+               else
+             {
+                $Ergebnis= $Abfragen->selectAlleKleidung_Alle($mysqli);
+                $Endergebnis =  $this->wenn_Bezeichnung_null( $Ergebnis,  $Abfragen, $mysqli);
+             }
+            return  $Endergebnis;
+              
 
      # code...
      break;

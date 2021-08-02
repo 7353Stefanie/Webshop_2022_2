@@ -4,7 +4,7 @@ class Hilfsklasse
 {
 
 //Gibt die Anzahl der gemergeten Tabellen an
- function array_Key_count($gemerkteArtikeldP,String $Schluessel)
+ function array_Key_count(Array $gemerkteArtikeldP,String $Schluessel)
 {
                                                   $merkeStart = Array();
 

@@ -1186,9 +1186,71 @@ function selectBuecher_byArtikelid_Liste($mysqli, $idArtikel)
 
 //SUCHE
 
+function selectAlleArtikel_nur_Buecher($mysqli, $Suche)
+ {
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                                    And
+                                    Verfuegbarkeitsstatus = 1
+                                    and Kategorien = 'Buecher'
+                                    and Bezeichnung like '%s' Group by Bezeichnung order by Kategorien"
+                                      ,
+                           $mysqli->real_escape_string('%'.$Suche.'%')  ); 
+
+                 $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+                 $rows = Array(); 
+
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+                  
+                   mysqli_free_result( $result );  
+                   
+ //var_dump($rows);
+                   return $rows;
+ }
+
+function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
+ {
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                                    And
+                                    Verfuegbarkeitsstatus = 1
+                                    and Kategorien = 'Kleidung'
+                                    and Bezeichnung like '%s' Group by Bezeichnung order by Kategorien"
+                                      ,
+                           $mysqli->real_escape_string('%'.$Suche.'%')  ); 
+
+                 $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+                 $rows = Array(); 
+
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+                  
+                   mysqli_free_result( $result );  
+                   
+ //var_dump($rows);
+                   return $rows;
+ }
+
  function selectAlleArtikel($mysqli, $Suche)
  {
-                    $query = sprintf("select a.idArtikel, bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
                                     And
                                     Verfuegbarkeitsstatus = 1 
                                     and Bezeichnung like '%s' Group by Bezeichnung order by Kategorien"
@@ -1216,9 +1278,66 @@ function selectBuecher_byArtikelid_Liste($mysqli, $idArtikel)
                    return $rows;
  }
 
+ function selectAlleBuecher_Alle($mysqli)
+ {
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                                    And Kategorien = 'Buecher'
+                                    and Verfuegbarkeitsstatus = 1 Group by Bezeichnung ");
+                            
+
+                 $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+                 $rows = Array(); 
+
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+                  
+                   mysqli_free_result( $result );  
+                   
+ //var_dump($rows);
+                   return $rows;
+ }
+
+ function selectAlleKleidung_Alle($mysqli)
+ {
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                                    And Kategorien = 'Kleidung'
+                                    and Verfuegbarkeitsstatus = 1 Group by Bezeichnung ");
+                            
+
+                 $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+                 $rows = Array(); 
+
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+                  
+                   mysqli_free_result( $result );  
+                   
+ //var_dump($rows);
+                   return $rows;
+ }
+
+
  function selectAlleArtikel_Alle($mysqli)
  {
-                    $query = sprintf("select a.idArtikel, bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
                                     And
                                     Verfuegbarkeitsstatus = 1 Group by Bezeichnung ");
                             
@@ -1471,7 +1590,7 @@ function selectBuecher_byArtikelid_Liste($mysqli, $idArtikel)
 
   function selectAlleArtikelFinal($mysqli)
  {
-                    $query = sprintf("Select a.idArtikel, bezeichnung, Kategorien, Titelbild from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                    $query = sprintf("Select a.idArtikel, Bezeichnung, Kategorien, Titelbild from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
                                     And
                                     Verfuegbarkeitsstatus = 1
                                     Group by a.idArtikel");
