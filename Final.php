@@ -7,6 +7,7 @@ require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
 
     $Suche = new Suche();
     $Erg = $Suche->suche();
+    
 
     //$Suche = new Suche_Artikel();
 

@@ -30,6 +30,7 @@ class Suche
               // $_SESSION["Verkaeuferpositionen"]  =  $Pos;
               // $_SESSION["Kaufarten"]  =  $Kaufarten;
                  
+                 
                //$_SESSION["ErgebnisidArtikel"]  =  $ErgebnisidArtikel2;
                  mysqli_close($mysqli);
 
