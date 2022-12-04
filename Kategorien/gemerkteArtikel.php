@@ -1,5 +1,5 @@
 <?php
-   define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
+   define('__ROOT__', '../../Final/Kategorien/Buttons/Hilfsdokumente');
  require_once(__ROOT__.'/gemerkteArtikelAktuallisieren.php');
 // session_start();
 

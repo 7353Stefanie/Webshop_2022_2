@@ -1,6 +1,6 @@
 <?php
 
- define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/Hilfsdokumente/');
+ define('__ROOT__', '../../Final/Kategorien/Buttons/Hilfsdokumente');
  require_once(__ROOT__.'/VerkaufsartikelKommunikation.php');
 
  session_start();

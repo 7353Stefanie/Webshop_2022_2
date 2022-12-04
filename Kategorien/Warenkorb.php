@@ -1,6 +1,7 @@
 <?php
 
- define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/Hilfsdokumente');
+ define('__ROOT__', '../../Final/Kategorien/Buttons/Hilfsdokumente');
+
  require_once(__ROOT__.'/WarenkorbKommunikation.php');
 
   session_start();
@@ -238,10 +239,20 @@
                                                  <?php
 
                                                  $Warenkorb_Kom = new WarenkorbKommunikation();
+                                                
 
                                                 // $Guthaben =  $Warenkorb_Kom.Guthaben($_SESSION['idBenutzer']);
 
-                                                  $Guthaben =$Warenkorb_Kom::Guthaben($_SESSION['idBenutzer']);
+                                                  
+
+                                                  $Guthaben =$Warenkorb_Kom->Guthaben($_SESSION['idBenutzer']);
+
+                                                  if(is_null($Guthaben['Guthaben']) == true)
+                                                  {
+                                                    $Guthaben['Guthaben'] = 0;
+                                                  }
+
+                                                  
                                                   
 
                                                   
@@ -283,7 +294,7 @@
                                               <?php
                                                     // Zur Unterstützung der Methode Löschen können alle Datenbankausgaben in einem Array gespeichert werden
                                                   
-                                                 $Warenkorbartikel = $Warenkorb_Kom::Warenkorb($_SESSION['idBenutzer']);  
+                                                 $Warenkorbartikel = $Warenkorb_Kom->Warenkorb($_SESSION['idBenutzer']);  
                                                   $AnzahlWarenkorbartikel = count($Warenkorbartikel) ;
 
                                                   //var_dump($Warenkorbartikel);
