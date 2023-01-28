@@ -1,8 +1,20 @@
 <?php
- 		session_start();
- 		
 
- 		 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop03');
+
+      session_start()   
+ 		
+$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+$rest = substr(__DIR__,0,$pos);
+
+
+include $rest.'external_incl\my_incl.php';
+
+ 
+
+
+
+ 		 $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
           if ($mysqli->connect_error)
              {
@@ -36,3 +48,11 @@
 
 
  ?>
+
+
+
+
+
+
+
+

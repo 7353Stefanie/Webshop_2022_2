@@ -1,8 +1,8 @@
 <?php
 
-define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons');
-require_once(__ROOT__.'/hintergrundSuche.php');
-require_once(__ROOT__.'/Hilfsklasse.php');
+
+require_once(__DIR__.'/hintergrundSuche.php');
+require_once(__DIR__.'/Hilfsklasse.php');
 
 session_start();
 
@@ -162,6 +162,7 @@ session_start();
 }
 
 
+
 /*if($AnzahlArtikel!= null)
 {$ArtikelArray = ( array_slice($erg, 0, $AnzahlArtikel, true));// schreibt alle Artikel von 0 bis x in ein Array; Artikel
 
@@ -253,9 +254,10 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
     $anzPosKosten =    $Hilfsmethode->array_Key_count($erg,'Preis');
 
 */
-   // var_dump($anzPosArtikel);
+   //var_dump($anzPosArtikel);
    // var_dump($erg);
                                          //   echo $erg[$anzPosArtikel['0']]['Kategorien'];
+    
                                  for($i = 0; $i<count($anzPosArtikel) ;$i++)
                                         {
 
@@ -276,9 +278,10 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                                //S <img src="dummy-1.jpg" alt="Spaß in der Sonne"></button></li>
                                                 }  
                                                
-                                            $anzPosArtikel++;                                             
-                                        }  
-                                    
+                                                echo $durchgaenge;
+                                           // $anzPosArtikel++;                                             
+                                        } 
+                                
                                     
                                    echo'  </div>
                                     

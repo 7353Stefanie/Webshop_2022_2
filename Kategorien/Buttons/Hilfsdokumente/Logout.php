@@ -10,5 +10,5 @@
 
   session_destroy();
   
-   header('Location: http://' . $_SERVER['HTTP_HOST'] . '/Final/final.php');
+   header('Location: http://' . $_SERVER['HTTP_HOST'] . __DIR__);
 ?>

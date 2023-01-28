@@ -1,6 +1,17 @@
 <?php
+
+
+
+$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+$rest = substr(__DIR__,0,$pos);
+
+
+include $rest.'external_incl\my_incl.php';
+
+
 if (isset($_SESSION['login'])) {
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . '/index.php');
+	header('Location: http://' . $_SERVER['HTTP_HOST'] . '/final.index.php');
 } 
 else {
 
@@ -18,7 +29,7 @@ else {
 		 else {
 
 			#Datenbank zugriff
-			$mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+			$mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
 
 			if ($mysqli->connect_error) {

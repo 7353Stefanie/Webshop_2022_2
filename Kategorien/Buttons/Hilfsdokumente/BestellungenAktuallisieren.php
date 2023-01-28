@@ -3,6 +3,15 @@
 //define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/Hilfsdokumente/Abfragen');
 require_once(__ROOT__.'/Abfragen/Abfragen_Sammlung.php'); 
 
+
+$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+$rest = substr(__DIR__,0,$pos);
+
+
+include $rest.'external_incl\my_incl.php';
+
+
 // Verkäuferposition
 //Nr. Datum und Uhrzeit, Bezeichnung , Bild, Kosten, 
 //session_start();
@@ -20,7 +29,7 @@ public $Bestellposition = Array();
 			$Sammlung = Array();
 			$KostenSammeln = Array();
 		                                        
-		           $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+		           $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
 		           if ($mysqli->connect_error)
 		              {

@@ -1,0 +1,9 @@
+
+DirektoryIndex Final.php Final.html
+
+RewriteEngine On
+
+RewriteCond %{SERVER_PORT} !^443$	
+RewriteRule (.*) https://%{HTTP_HOST}/$1 [R=301,L]
+
+// nur Aufruf über https

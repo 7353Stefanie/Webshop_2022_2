@@ -2,6 +2,15 @@
 
 require_once(__ROOT__.'/Abfragen/Abfragen_Sammlung.php'); 
 
+$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+$rest = substr(__DIR__,0,$pos);
+
+
+include $rest.'external_incl\my_incl.php';
+
+
+
 class Suche
 {
 
@@ -9,8 +18,11 @@ class Suche
  { 
 
   $Abfragen = new Abfragen();
+  $Ergebnis= "";
 
-                 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+
+                 $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+                 
 
                  if ($mysqli->connect_error) {
 
@@ -19,12 +31,12 @@ class Suche
                    } else {  
 
                     $Egebnis = $Abfragen->selectAlleArtikelFinal($mysqli);
-                 
+                 echo($Ergebnis);
 
                  // Ziel: Ausgabe aller Kategorien, alle verfügbaren Artikel, Bild, titelname(falls das Bild nicht angezeigt wird.)
 
               
-
+                mysqli_close($mysqli);
                                  
                }   
               // $_SESSION["Verkaeuferpositionen"]  =  $Pos;
@@ -32,7 +44,7 @@ class Suche
                  
                  
                //$_SESSION["ErgebnisidArtikel"]  =  $ErgebnisidArtikel2;
-                 mysqli_close($mysqli);
+                 
 
             //  header('Location: http://' . $_SERVER['HTTP_HOST'] . '/Final/Kategorien/Buttons/sucheV2.php');
  }

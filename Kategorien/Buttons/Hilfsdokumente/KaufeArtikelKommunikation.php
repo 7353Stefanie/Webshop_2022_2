@@ -3,6 +3,15 @@
 // Radiobuttonwerte abfragen!! Adresse und Zahlungsart
 
  session_start();
+
+ $pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+$rest = substr(__DIR__,0,$pos);
+
+
+include $rest.'external_incl\my_incl.php';
+
+
   /* $_SESSION['Warenkorbartikel'] = "";  
 
    $_SESSION['Guthaben'] = ""; 
@@ -34,7 +43,7 @@ class KaufeArtikelK
   // $Warenkorbartikel = $Warenkorb_Kom::Warenkorb($_SESSION['idBenutzer']); 
 
                                                   
-           $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+           $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
            if ($mysqli->connect_error)
               {

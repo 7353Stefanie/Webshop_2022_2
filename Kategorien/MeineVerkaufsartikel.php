@@ -1,7 +1,9 @@
 <?php
 
- define('__ROOT__', '../../Final/Kategorien/Buttons/Hilfsdokumente');
- require_once(__ROOT__.'/VerkaufsartikelKommunikation.php');
+
+
+
+ require_once(__DIR__.'\Buttons\Hilfsdokumente\VerkaufsartikelKommunikation.php');
 
  session_start();
 
@@ -252,7 +254,7 @@
                                                <?php   
                                                     // Zur Unterstützung der Methode Löschen können alle Datenbankausgaben in einem Array gespeichert werden
                                                    $VerkaufsartikelKom = new VerkaufsartikelKommunikation();
-                                                   $Artikelinfos = $VerkaufsartikelKom::Verkaufsartikel($_SESSION['idBenutzer']); 
+                                                   $Artikelinfos = $VerkaufsartikelKom->Verkaufsartikel($_SESSION['idBenutzer']); 
                                                    
                                                   
                                                   

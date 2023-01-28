@@ -1,7 +1,16 @@
 <?php
-define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/Hilfsdokumente/Abfragen');
+define('__ROOT__', __DIR__.'/Kategorien/Buttons/Hilfsdokumente/Abfragen');
 require_once(__ROOT__.'/Abfragen_Sammlung.php'); 
 require_once(__ROOT__.'/EMail.php'); 
+
+$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+$rest = substr(__DIR__,0,$pos);
+
+
+include $rest.'external_incl\my_incl.php';
+
+
 
 
 							// 6. 	// Alle Verkausfsartikel auslesen, 
@@ -33,7 +42,7 @@ require_once(__ROOT__.'/EMail.php');
 
 		if (isset($_POST['Adresse']) && isset($_POST['Zahlungsart'] ))
 			{
-				 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+				 $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
 	           if ($mysqli->connect_error)
 	              {

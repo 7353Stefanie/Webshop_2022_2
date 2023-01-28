@@ -1,6 +1,14 @@
 <?php
 
 require_once(__ROOT__.'/Abfragen/Abfragen_Sammlung.php'); 
+$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+$rest = substr(__DIR__,0,$pos);
+
+
+include $rest.'external_incl\my_incl.php';
+
+//echo $DBserver,$DBuser,$DBpassword,$DBname;
 
 class Suche
 {
@@ -10,7 +18,10 @@ class Suche
 
   $Abfragen = new Abfragen();
 
-                 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+                  mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
+
+                 $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+
 
                  if ($mysqli->connect_error) {
 

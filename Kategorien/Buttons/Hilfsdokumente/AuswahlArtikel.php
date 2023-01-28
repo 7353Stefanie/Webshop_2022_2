@@ -21,6 +21,7 @@
 //Session true wenn 
 
 Session_start();
+include __DIR__ . '/../external_incl/my_incl.php';
 
 
 $Aktion =  $_POST['Aktion'];
@@ -58,7 +59,7 @@ function Warenkorb()
 	  var_dump($Zeit . "Zeit");
 
 
-	$mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+	$mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
                  if ($mysqli->connect_error) {
 
@@ -136,7 +137,7 @@ function Merken()
     var_dump($Zeit . "Zeit");
 
 	
-	$mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+	$mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
                  if ($mysqli->connect_error) {
 

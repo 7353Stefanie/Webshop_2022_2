@@ -1,9 +1,17 @@
 <?php
 
-require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php'); 
-require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Kategorien.php'); 
+require_once(__DIR__.'\Hilfsdokumente\Abfragen\Abfragen_Sammlung.php'); 
+require_once(__DIR__.'\Hilfsdokumente\Abfragen\Kategorien.php'); 
 
- 
+$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+$rest = substr(__DIR__,0,$pos);
+
+echo $rest;
+include $rest.'external_incl\my_incl.php';
+
+echo $DBserver,$DBuser,$DBpassword,$DBname;
+
 
 class Suche_Artikel // wird in suchev2 verwendet
 {
@@ -13,7 +21,9 @@ class Suche_Artikel // wird in suchev2 verwendet
  { 
   $Abfragen = new Abfragen();
 
-                 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+                mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
+
+                $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
                  if ($mysqli->connect_error) {
 
@@ -24,8 +34,9 @@ class Suche_Artikel // wird in suchev2 verwendet
 
                     //charakerUeberpruefung($Ergebnis);
                     $ErgebnisidArtikel = $this->switchIt($mysqli, $Kategorie, $Abfragen , $Bezeichnung);  
-               }   
-                 mysqli_close($mysqli);
+                     mysqli_close($mysqli);
+                    }   
+                
                 return $ErgebnisidArtikel;
  } // ende function
 
@@ -57,11 +68,21 @@ class Suche_Artikel // wird in suchev2 verwendet
   return $AnzahlStatus;
 }
 
+
+
+
  function suche_allg($Kategorie,   $Bezeichnung) // wird bei suche V2 ausgeführt
  { 
   $Abfragen = new Abfragen();
 
-                 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+
+
+
+
+// $mysqli = @new mysqli('localhost','Webshop','','');
+  mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
+
+                  $mysqli = @new mysqli($DBserver, $DBuser, $DBpassword,$DBname);
 
                  if ($mysqli->connect_error) {
 
@@ -71,10 +92,10 @@ class Suche_Artikel // wird in suchev2 verwendet
 
                      $ErgebnisidArtikel = $this->switch_allgSuche($mysqli, $Kategorie, $Abfragen,  $Bezeichnung);
 
-                 
+                  mysqli_close($mysqli);
 
                }   
-                 mysqli_close($mysqli);
+                
                 return $ErgebnisidArtikel;
  } // ende function
 
@@ -155,7 +176,7 @@ function sucheAlleArtikelEinerKategorie( $Kategorie)
  # gebe alle  Bücher aus
    $Abfragen = new Abfragen();
 
-                 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+                 $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
                  if ($mysqli->connect_error) {
 
@@ -239,8 +260,10 @@ case 'Kleidung': // größe marke und preis wird benötigt group by idArtikel
 
 function auslagerung_Suche_switch(Array $Ergebnis,  $Abfragen, $mysqli)
 {
+      try{
+   
 
-   if($Ergebnis != null )
+            if($Ergebnis != null )
 
               { //$Ergebnis =  Ergebnissuche_Alles_Kleidung($mysqli,$Abfragen, $Erg); // $Ergebnis enthällt alle Artikel die Verfügbar sind.
 
@@ -267,11 +290,16 @@ function auslagerung_Suche_switch(Array $Ergebnis,  $Abfragen, $mysqli)
               // echo ('hallo');
                //var_dump( $ArtikelElemString); 
 
-               //var_dump($AusgabeKleidung);
+               var_dump($AusgabeKleidung);
 
                //Zeige alle Preise von Kaufarten, für die liste idArtikel, an wo der Verfuegbarkeitsstatus 1 und 0 ist 
+             
+
+          
 
                $AusgabeVerfuegbarkeit = $Abfragen->SelectVerkaeuferposition_byArtikel_outIdVerkaeuferposition_Verfuegbarkeitsstatus01($mysqli,$ArtikelElemString);
+
+
 
                $i = 0;
                $ArtikelElemString = Array();
@@ -288,19 +316,23 @@ function auslagerung_Suche_switch(Array $Ergebnis,  $Abfragen, $mysqli)
                 $AusgabePreise = $Abfragen->selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$ArtikelElemString);
                // ausgabe des Preises
 
-              if(isset($Ergebnis ,$AusgabeKleidung, $AusgabeVerfuegbarkeit, $AusgabePreise))
-              {
-                      $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfuegbarkeit, $AusgabePreise );
+                    if(isset($Ergebnis ,$AusgabeKleidung, $AusgabeVerfuegbarkeit, $AusgabePreise))
+                    {
+                            $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfuegbarkeit, $AusgabePreise );
 
-              }
+                    }
               else
-              {
-                $Ergebnis = null;
+                    {
+                      $Ergebnis = null;
 
-               echo'  <div class="container"><h4>Leider wurden keine Ergebnisse zu Deiner Suchanfrage gefunden.</h4></div>';                                                              
-                                                            
-              }
-            }
+                     echo'  <div class="container"><h4>Leider wurden keine Ergebnisse zu Deiner Suchanfrage gefunden.</h4></div>';
+                    }
+            } 
+           }
+            catch(Exception $err)
+            {echo $err;}
+
+            
 
               return $Ergebnis;
                
@@ -326,7 +358,7 @@ function auslagerung_Suche_switch(Array $Ergebnis,  $Abfragen, $mysqli)
                #schleife
              
 
-}
+}  // ende funktion
 
 function wenn_Bezeichnung_null(Array $Ergebnis,  $Abfragen, $mysqli)
 {

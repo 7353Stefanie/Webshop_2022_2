@@ -827,7 +827,8 @@ function selectVerkaeuferposition_Zahlungsvorgang($mysqli,$idVerkaeuferposition 
                 while ($row = $result->fetch_array(MYSQLI_ASSOC))
                    {
                           $rows[] = $row;  
-                   }                                                   
+                   }  
+                                        
 
                 mysqli_free_result( $result );               
 

@@ -1,8 +1,12 @@
 <?php
 
 
- define('__ROOT__', '../Final/Kategorien/Buttons/Hilfsdokumente');
+ define('__ROOT__', __DIR__ .'/Kategorien/Buttons/Hilfsdokumente');
 require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
+
+ 
+
+
 
  session_start();
 

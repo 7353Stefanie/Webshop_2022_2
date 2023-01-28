@@ -15,7 +15,7 @@
 			if (isset($_POST['Post']))
 			{
 
-				  $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+				  $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
 				   if ($mysqli->connect_error) {
 
@@ -293,7 +293,7 @@ function Merken()
 	if (isset($_POST['Post']))
 	{
 
-				  $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+				  $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
 
 				   if ($mysqli->connect_error) {
 
