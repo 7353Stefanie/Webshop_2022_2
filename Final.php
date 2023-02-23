@@ -11,7 +11,7 @@ echo $rest;
 echo __DIR__;
 
 
-//abc
+//abc defg hijk
 
  define('__ROOT__', __DIR__ .'/Kategorien/Buttons/Hilfsdokumente');
 require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
