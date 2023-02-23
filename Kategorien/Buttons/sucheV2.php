@@ -1,5 +1,12 @@
 <?php
 
+$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+$rest = substr(__DIR__,0,$pos);
+
+
+include $rest.'external_incl\my_incl.php';
+
 
 require_once(__DIR__.'/hintergrundSuche.php');
 require_once(__DIR__.'/Hilfsklasse.php');

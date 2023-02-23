@@ -11,7 +11,7 @@ include $rest.'external_incl\my_incl.php';
 
 
 if (isset($_SESSION['login'])) {
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . '/final.index.php');
+	header('Location: https://sb-box42.de/final/index.php');
 } 
 else {
 
@@ -76,7 +76,7 @@ else {
 					#	echo  'Anmeldung erfolgreich, <a href="/test/willkommen2_funktioniert.php">weiter zum Inhalt.';
 
 
-						header('Location: http://' . $_SERVER['HTTP_HOST'] . '/Final/Kategorien/StartseitenAnmeldung.php');
+						header('Location: https://sb-box42.de/Final/Kategorien/StartseitenAnmeldung.php');
 
 
 					} else {
@@ -93,7 +93,7 @@ else {
 		}
 	} else {
 		echo  'Geben Sie Ihre Zugangsdaten ein um sich anzumelden.<br />' .
-			'Wenn Sie noch kein Konto haben, gehen Sie <a href="./register.php">zur Registrierung</a>.';
+			'Wenn Sie noch kein Konto haben, gehen Sie <a href="https://sb-box42.de/Final">zur Registrierung</a>.';
 	}
 }
 ?>

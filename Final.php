@@ -1,5 +1,17 @@
 <?php
 
+$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+$rest = substr(__DIR__,0,$pos);
+
+
+include $rest.'external_incl\my_incl.php';
+
+echo $rest;
+echo __DIR__;
+
+
+
 
  define('__ROOT__', __DIR__ .'/Kategorien/Buttons/Hilfsdokumente');
 require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
