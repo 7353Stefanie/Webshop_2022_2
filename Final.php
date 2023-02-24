@@ -2,13 +2,8 @@
 
 $pos=strpos(__DIR__,'Final'); // suche im String nach Final
 
-$rest = substr(__DIR__,0,$pos);
 
-
-include $rest.'external_incl\my_incl.php';
-
-echo $rest;
-echo __DIR__;
+//echo __DIR__;
 
 
 //abc defg hijk
@@ -33,6 +28,72 @@ require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
 
 <html lang="de">
   <head>
+                          <div class="row full-width-row" >
+                          <div class="col-sm-12">  
+                              <div class="format">
+                                <div id='my-slider_head' class='carousel slide' data-ride='carousel' data-interval='20000' style="z-index: 200;" >
+                                       
+                                    <!-- Indikator dot nov -->   
+                                    
+                                          <ol class="carousel-indicators">
+                                               <li data-target="#my-slider_head" data-slide-to="0" class="active"></li>  
+                                               <li data-target="#my-slider_head" data-slide-to="1"></li> 
+                                               <li data-target="#my-slider_head" data-slide-to="2"></li>
+                                          </ol>                   
+                                          <!-- wrapper for slides-->   
+                                    
+                                     <div class="carousel-inner" role="listbox">
+                                     
+                                         <div class="item active">  <!-- slide when we open the web page-->
+                                     
+                                                <img src="Kategorien/Buttons/Hilfsdokumente/Bilder/Tierbild.jpg"  alt="Tierbild"  />
+                                                <div class="carousel-caption"> <!-- hier kann Text kommen-->
+                                                
+                                                </div>
+                                          </div>  
+                                          
+                                          <div class="item">  <!-- slide when we open the web page-->
+                                     
+                                                <img src="Kategorien/Buttons/Hilfsdokumente/Bilder/Toilet.jpg" alt="Toilet"  />
+                                                <div class="carousel-caption">
+                                                
+                                                </div>
+                                          </div> 
+                                          
+                                          <div class="item">  <!-- slide when we open the web page-->
+                                                <img src="Kategorien/Buttons/Hilfsdokumente/Bilder/Brisbane.jpg"  alt="Brisbane" />
+                                                <div class="carousel-caption">  
+                                                
+                                                </div>
+                                          </div>
+                                     </div>
+                                    
+                                     <a class="left carousel-control" href="#my-slider_head" role="button" data-slide="prev">  
+                                     
+                                         <!--  width="150" height="250" die Rolle in Verbindung mit herf bedeutet, dass der Link als Button verwendet wird-->
+                                         <!-- der Link mit herf 'my-slide' muss die gleiche bezeichnung besitzen wie oben die Carousel inner classe damit die slides wieder von vorne anfangen können.-->
+                                         <!-- hierzu wird außerdem data-slide "prev" notwendig, preview bedeutet es fängt mit der ersten Folie wieder an. --> 
+                                     
+                                        <!-- controller or next and prev buttons      -->  
+                                        
+                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"> </span>
+                                        <span class="sr-only">Previous</span>    
+                                        
+                                        <!-- sr-only = screen reader only-->
+                                     </a>    
+                                     
+                                      <a class="right carousel-control" href="#my-slider_head" role="button" data-slide="next">  
+                                      
+                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"> </span>
+                                        <span class="sr-only">Previous</span>    
+                                       
+                                     </a>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+
+
             <meta charset="utf-8"/>
             <title>Finale Startseite</title>   
                             
@@ -202,70 +263,6 @@ require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
          
    </div>
 </div>  
-                      <div class="row full-width-row" >
-                          <div class="col-sm-12">  
-                              <div class="format">
-                                <div id='my-slider_head' class='carousel slide' data-ride='carousel' data-interval='20000' style="z-index: 200;" >
-                                       
-                                    <!-- Indikator dot nov -->   
-                                    
-                                          <ol class="carousel-indicators">
-                                               <li data-target="#my-slider_head" data-slide-to="0" class="active"></li>  
-                                               <li data-target="#my-slider_head" data-slide-to="1"></li> 
-                                               <li data-target="#my-slider_head" data-slide-to="2"></li>
-                                          </ol>                   
-                                          <!-- wrapper for slides-->   
-                                    
-                                     <div class="carousel-inner" role="listbox">
-                                     
-                                         <div class="item active">  <!-- slide when we open the web page-->
-                                     
-                                                <img src="Kategorien/Buttons/Hilfsdokumente/Bilder/Tierbild.jpg"  alt="Tierbild"  />
-                                                <div class="carousel-caption"> <!-- hier kann Text kommen-->
-                                                
-                                                </div>
-                                          </div>  
-                                          
-                                          <div class="item">  <!-- slide when we open the web page-->
-                                     
-                                                <img src="Kategorien/Buttons/Hilfsdokumente/Bilder/Toilet.jpg" alt="Toilet"  />
-                                                <div class="carousel-caption">
-                                                
-                                                </div>
-                                          </div> 
-                                          
-                                          <div class="item">  <!-- slide when we open the web page-->
-                                                <img src="Kategorien/Buttons/Hilfsdokumente/Bilder/Brisbane.jpg"  alt="Brisbane" />
-                                                <div class="carousel-caption">  
-                                                
-                                                </div>
-                                          </div>
-                                     </div>
-                                    
-                                     <a class="left carousel-control" href="#my-slider_head" role="button" data-slide="prev">  
-                                     
-                                         <!--  width="150" height="250" die Rolle in Verbindung mit herf bedeutet, dass der Link als Button verwendet wird-->
-                                         <!-- der Link mit herf 'my-slide' muss die gleiche bezeichnung besitzen wie oben die Carousel inner classe damit die slides wieder von vorne anfangen können.-->
-                                         <!-- hierzu wird außerdem data-slide "prev" notwendig, preview bedeutet es fängt mit der ersten Folie wieder an. --> 
-                                     
-                                        <!-- controller or next and prev buttons      -->  
-                                        
-                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"> </span>
-                                        <span class="sr-only">Previous</span>    
-                                        
-                                        <!-- sr-only = screen reader only-->
-                                     </a>    
-                                     
-                                      <a class="right carousel-control" href="#my-slider_head" role="button" data-slide="next">  
-                                      
-                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"> </span>
-                                        <span class="sr-only">Previous</span>    
-                                       
-                                     </a>
-                                    </div>
-                                </div>
-                              </div>
-                          </div>
 
 
                  <header class="carouselbuecher">

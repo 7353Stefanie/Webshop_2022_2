@@ -1,5 +1,5 @@
 <?php
-  define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
+ // define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
 require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php'); 
 
 

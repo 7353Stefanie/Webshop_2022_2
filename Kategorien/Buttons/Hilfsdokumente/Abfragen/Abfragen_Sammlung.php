@@ -1100,6 +1100,33 @@ function sucheAlleArtikelEinerKategorie($mysqli, $Kategorie)
                 return $rows;
 }
 
+function alle_Artikel_einer_Kategorie($mysqli,$Buch)
+{
+     $query = sprintf("select Kategorien from Artikel where idArtikel = '%s'" ,
+
+                           $mysqli->real_escape_string($Buch) 
+                          ); 
+
+                  $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+                  $rows = Array();
+
+                while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                   
+
+                mysqli_free_result( $result );               
+
+                return $rows;               
+
+}
+
 
 function selectBestellpostion_by_Benutzerid($mysqli,$idBenutzer)// Alle Artikel von Kaufarten nach id Verkäuferposition
 {
@@ -1150,6 +1177,12 @@ function selectBuecher_byArtikelid($mysqli, $idArtikel)
                 return $row;  
 
 }
+
+
+
+
+
+
 
 function selectBuecher_byArtikelid_Liste($mysqli, $idArtikel)
 {
@@ -1780,6 +1813,36 @@ function  deleteWarenkorbartikel($mysqli, $idBenutzer)
                 }            
 }
 
+function  adresseHinzufiügen($mysqli, $idBenutzer, $Ort,  $Bundesland , $Strasse, $Postleitzahl,  $Land, $Vorname,$Nachname, $Hausnummer)
+{
+
+       
+
+                 //alle zahlungsmittel von Benutzerid x holen
+                                                           
+               $query = sprintf("INSERT INTO adresse ( Ort,  Bundesland , Strasse, Postleitzahl, idBenutzer,  Land, Vorname,Nachname, Hausnummer)
+                   VALUES ('%s','', '%s', '%s', '%s','%s', '%s','%s','%s') ",   
+
+                    $mysqli->real_escape_string($Ort),
+                    $mysqli->real_escape_string($Strasse),
+                    $mysqli->real_escape_string($Postleitzahl),
+                    $mysqli->real_escape_string($idBenutzer),
+                    $mysqli->real_escape_string($Land),
+                    $mysqli->real_escape_string($Vorname), 
+                    $mysqli->real_escape_string($Nachname),
+                    $mysqli->real_escape_string($Hausnummer)
+                ); 
+
+                $result = $mysqli->query($query2);
+
+                 if ( !  $result )
+                    {
+                       die('Ungültige Abfrage: ' . mysqli_error());
+                    }
+
+                 header('Location: http://' . $_SERVER['HTTP_HOST'] . '/test/ZuDenZahlungsdetails.php');
+             
+}
 
 }//ende class
 

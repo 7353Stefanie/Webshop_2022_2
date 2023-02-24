@@ -21,7 +21,7 @@ class Suche
   $Ergebnis= "";
 
 
-                 $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+                 $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
                  
 
                  if ($mysqli->connect_error) {

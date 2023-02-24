@@ -1,16 +1,21 @@
 <?php
 
-require_once(__DIR__.'\Hilfsdokumente\Abfragen\Abfragen_Sammlung.php'); 
-require_once(__DIR__.'\Hilfsdokumente\Abfragen\Kategorien.php'); 
+require_once(__DIR__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php'); 
+require_once(__DIR__.'/Hilfsdokumente/Abfragen/Kategorien.php'); 
 
 $pos=strpos(__DIR__,'Final'); // suche im String nach Final
 
 $rest = substr(__DIR__,0,$pos);
 
-echo $rest;
-include $rest.'external_incl\my_incl.php';
+//echo $rest;
+include $rest.'external_incl/my_incl.php';
 
-echo $DBserver,$DBuser,$DBpassword,$DBname;
+
+
+
+
+
+
 
 
 class Suche_Artikel // wird in suchev2 verwendet
@@ -21,9 +26,19 @@ class Suche_Artikel // wird in suchev2 verwendet
  { 
   $Abfragen = new Abfragen();
 
-                mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
+                 
 
-                $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+                  //$db_link = mysqli_connect (DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME ); // teste verbindung
+                  
+
+
+                   //mysqli_set_charset($db_link, 'utf8');
+
+                   mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
+
+
+
+                $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error) {
 
@@ -82,7 +97,7 @@ class Suche_Artikel // wird in suchev2 verwendet
 // $mysqli = @new mysqli('localhost','Webshop','','');
   mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
 
-                  $mysqli = @new mysqli($DBserver, $DBuser, $DBpassword,$DBname);
+                  $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error) {
 

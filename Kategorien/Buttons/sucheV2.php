@@ -2,10 +2,10 @@
 
 $pos=strpos(__DIR__,'Final'); // suche im String nach Final
 
-$rest = substr(__DIR__,0,$pos);
+//$rest = substr(__DIR__,0,$pos);
 
 
-include $rest.'external_incl\my_incl.php';
+
 
 
 require_once(__DIR__.'/hintergrundSuche.php');
@@ -96,6 +96,7 @@ session_start();
                                              <li class="dropdown">
                                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menü<span class="caret"></span></a>
                                                 <ul class="dropdown-menu">
+
                                                   <?php
                                               if(isset($_SESSION['benutzername']))
                                               {                                                  
@@ -285,7 +286,7 @@ $KaufartenArray = ( array_slice($erg, $Verfuegbarkeitsstatus+$Kleidung+$AnzahlAr
                                                //S <img src="dummy-1.jpg" alt="Spaß in der Sonne"></button></li>
                                                 }  
                                                
-                                                echo $durchgaenge;
+                                              //  echo $durchgaenge;
                                            // $anzPosArtikel++;                                             
                                         } 
                                 
