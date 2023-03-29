@@ -3,13 +3,32 @@
 
  session_start();
 
+ if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
+
+
+//echo ('pos'.$pos);
+
+$rest = substr(__DIR__,0,$pos);
+
+//echo ('rest'.$rest);
+
+
+include($rest.'/external_incl/my_incl.php');
+
 
 if(isset($_POST))
 {
 	// try catch am Ende
 	try{
 
-	  $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+	  $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
           if ($mysqli->connect_error)
              {

@@ -4,12 +4,23 @@
 
  session_start();
 
- $pos=strpos(__DIR__,'Final'); // suche im String nach Final
+if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
+
+
+//echo ('pos'.$pos);
 
 $rest = substr(__DIR__,0,$pos);
 
 
-include $rest.'external_incl\my_incl.php';
+
+include $rest.'external_incl/my_incl.php';
 
 
   /* $_SESSION['Warenkorbartikel'] = "";  
@@ -43,7 +54,7 @@ class KaufeArtikelK
   // $Warenkorbartikel = $Warenkorb_Kom::Warenkorb($_SESSION['idBenutzer']); 
 
                                                   
-           $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+           $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
            if ($mysqli->connect_error)
               {
@@ -92,7 +103,7 @@ class KaufeArtikelK
 
                        //schleife
 
-                                                                  $Kaufinfos = $Abfragen->Kaufinfos_Array($mysqli,  $comma_separated);
+                         $Kaufinfos = $Abfragen->Kaufinfos_Array($mysqli,  $comma_separated);
 
                                                                  //var_dump($Kaufinfos);
                   $doppelt = Array();
@@ -221,7 +232,7 @@ function Zahlungsart( $idBenutzer)
 
    $Abfragen = new Abfragen();
 
-         $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+         $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error)
                     {
@@ -241,7 +252,7 @@ function updateWarenkorb($Radio, $ToderK)
  {
    $Abfragen = new Abfragen();
 
-         $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+         $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error)
                     {
@@ -257,7 +268,7 @@ function updateWarenkorb($Radio, $ToderK)
     {
        $Abfragen = new Abfragen();
 
-         $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+         $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error)
                     {

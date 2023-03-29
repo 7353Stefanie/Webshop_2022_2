@@ -3,12 +3,26 @@
 
 require_once(__DIR__.'\Abfragen\Abfragen_Sammlung.php');
 
-$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+
+ if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
+
+
+//echo ('pos'.$pos);
 
 $rest = substr(__DIR__,0,$pos);
 
+//echo ('rest'.$rest);
 
-include $rest.'external_incl\my_incl.php';
+
+include($rest.'/external_incl/my_incl.php');
 
             // Alle Verkaufsartikel eines Verkäufers (idVerkaufsartikel) (Verkausmenge,idArtikel, Zustand, Artikelbeschreibung)
             // Preise zu den Verkaufsartikeln (idVerkaufsartikel)#
@@ -32,7 +46,7 @@ include $rest.'external_incl\my_incl.php';
           $Artikelinfos = Array();
 
                                                    
-           $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+          $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
            if ($mysqli->connect_error)
               {

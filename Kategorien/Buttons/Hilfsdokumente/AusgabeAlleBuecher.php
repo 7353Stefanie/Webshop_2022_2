@@ -6,15 +6,27 @@ Session_start();
 
 //echo $_POST['Kategorie'];
 
-$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
+
+
+//echo ('pos'.$pos);
 
 $rest = substr(__DIR__,0,$pos);
 
 
-include $rest.'external_incl\my_incl.php';
+
+include($rest.'/external_incl/my_incl.php');
 
 
-$mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+
+ $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error) {
 

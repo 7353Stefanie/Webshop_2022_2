@@ -1,10 +1,14 @@
 <?php
 
-   define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
- require_once(__ROOT__.'/hintergrundSuche.php');
-  require_once(__ROOT__.'/Hilfsklasse.php');
-
  session_start();
+
+  // define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
+
+
+ require_once(__DIR__.'/hintergrundSuche.php');
+  require_once(__DIR__.'/Hilfsklasse.php');
+
+
 
 
 

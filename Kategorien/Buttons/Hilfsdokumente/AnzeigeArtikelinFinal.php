@@ -2,12 +2,31 @@
 
 require_once(__ROOT__.'/Abfragen/Abfragen_Sammlung.php'); 
 
-$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+
+if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
+
+
+//echo ('pos'.$pos);
 
 $rest = substr(__DIR__,0,$pos);
 
+//echo ('rest'.$rest);
 
-include $rest.'external_incl\my_incl.php';
+
+include($rest.'/external_incl/my_incl.php');
+
+
+
+
+
 
 
 
@@ -30,8 +49,10 @@ class Suche
 
                    } else {  
 
-                    $Egebnis = $Abfragen->selectAlleArtikelFinal($mysqli);
-                 echo($Ergebnis);
+                    $Ergebnis = $Abfragen->selectAlleArtikelFinal($mysqli);
+
+                    
+                 return $Ergebnis;
 
                  // Ziel: Ausgabe aller Kategorien, alle verfügbaren Artikel, Bild, titelname(falls das Bild nicht angezeigt wird.)
 

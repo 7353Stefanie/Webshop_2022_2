@@ -1,10 +1,5 @@
 <?php
 
-$pos=strpos(__DIR__,'Final'); // suche im String nach Final
-
-//$rest = substr(__DIR__,0,$pos);
-
-
 
 
 

@@ -7,13 +7,27 @@
   $Zeit =  (date('Y-m-d').' '. $date['hours'].':'.$date['minutes'].':'.$date['seconds']);
   var_dump($Zeit . "Zeit");
 
+
+if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
+
+
+$rest = substr(__DIR__,0,$pos);
+
+include($rest.'/external_incl/my_incl.php');
  // echo $_SESSION['Buch'];
  
 
 if(isset($_POST))
 {
 
-	  $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+	  $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
           if ($mysqli->connect_error)
              {

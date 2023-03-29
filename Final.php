@@ -1,33 +1,58 @@
 <?php
 
-$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+//define('__DIR__', '/homepages/27/d879709790/htdocs/Webshop');
+
+if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
 
 
-//echo __DIR__;
 
 
-//abc defg hijk
-
- define('__ROOT__', __DIR__ .'/Kategorien/Buttons/Hilfsdokumente');
+ define('__ROOT__', __DIR__ .'/Kategorien/Buttons/Hilfsdokumente'); 
 require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
-
- 
-
 
 
  session_start();
 
 
+
     $Suche = new Suche();
     $Erg = $Suche->suche();
-    
+
+
+    //$_SESSION["RegistrierungStatus"]
 
     //$Suche = new Suche_Artikel();
 
+    //nach registrierung login
+    //session timeout generieren --> automatisches ausloggen
+   //  IP-Adresse oder die Web-Browser Kennung abfragen nach neuen Webseitenaufruf
+
+    //http only --> kein Zugriff auf die Cookies
+    //  Cookie-Option secure verwenden
+
+    // wenn session  _SESSION["RegistrierungStatus"] auf true ist dann soll 
+
 ?>
+            <meta charset="utf-8"/>
+            <title>Finale Startseite</title>   
+                            
+            <link href="Kategorien/Buttons/Hilfsdokumente/css/bootstrap.min.css" rel="stylesheet"> 
+            <link rel="stylesheet" href="Kategorien/Buttons/Hilfsdokumente/css/bootstrap-theme.min.css">
+          <link rel="stylesheet" href="Kategorien/Buttons/Hilfsdokumente/css/FinalStyle.css">
+
 
 <html lang="de">
+<header class = "abstsand" >
   <head>
+                          <div class="abstsand">
                           <div class="row full-width-row" >
                           <div class="col-sm-12">  
                               <div class="format">
@@ -92,16 +117,43 @@ require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
                                 </div>
                               </div>
                           </div>
+                      </div>
+                        
+                        
+</header>
+
+<?php
+    
+    if(isset($_SESSION["RegistrierungStatus"]) && $_SESSION["RegistrierungStatus"] == 'true')
+    {
+
+     echo'<div class="alert alert-info alert-dismissible" name="info_Regist" id="info_Regist">';
+
+     echo'<button type="button" class="close" data-dismiss="alert" aria-label="Schließen"><span aria-hidden="true">&times;</span></button>
+      <strong>Hinweis!</strong> Deine Registrierung war erfolgreich. Viel Spaß beim Einkaufen!!
+    </div>';
+    $_SESSION["RegistrierungStatus"] = 'false';
+    }
 
 
-            <meta charset="utf-8"/>
-            <title>Finale Startseite</title>   
-                            
-            <link href="Kategorien/Buttons/Hilfsdokumente/css/bootstrap.min.css" rel="stylesheet"> 
-            <link rel="stylesheet" href="Kategorien/Buttons/Hilfsdokumente/css/bootstrap-theme.min.css">
-          <link rel="stylesheet" href="Kategorien/Buttons/Hilfsdokumente/css/FinalStyle.css">
+    if(isset(  $_SESSION['LoginDat'] ) && $_SESSION['LoginDat'] == 1)
+    {
 
-           <header> 
+     echo'<div class="alert alert-info alert-dismissible" name="info_Dat" id="info_Dat">';
+
+     echo'<button type="button" class="close" data-dismiss="alert" aria-label="Schließen"><span aria-hidden="true">&times;</span></button>
+      <strong>Hinweis!</strong> Der Benutzername oder Passwort ist falsch!!
+    </div>';
+    $_SESSION['LoginDat'] = 0 ;
+    }
+
+
+
+
+
+?>
+       
+<header>
                   <nav class="navbar navbar-default ">
                         <div class="container-fluid"><!-- padding: 15px 15px 25px 15px; -->
                                 <!-- Brand and toggleget grouped for better mobile display -->
@@ -499,7 +551,8 @@ require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
                        </div>
                   </header>  
 
-           <form action="http://localhost/Final/Kategorien/Buttons/Hilfsdokumente/Teste_Registrieren.php" method="post">
+            <!--<form action="Kategorien/Buttons/Hilfsdokumente/Teste_Registrieren.php" method="post">-->
+           <form action="Kategorien/Buttons/Hilfsdokumente/Teste_Registrieren.php" method="post">
           <div class="container">          
                       <div class="row">
                       <div class="col-md-3">  
@@ -583,8 +636,8 @@ require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
           </form>    
 
 
-
-          <form action="http://localhost/Final/Kategorien/Buttons/Hilfsdokumente/login.php" method="post">
+      <!--   <form action= "Kategorien/Buttons/Hilfsdokumente/login.php" method="post">--> 
+          <form action= "Kategorien/Buttons/Hilfsdokumente/login.php" method="post">
           <div class="container">          
                       <div class="row">
                       <div class="col-md-3">  
@@ -690,6 +743,9 @@ require_once(__ROOT__.'/AnzeigeArtikelinFinal.php');
          });
 
       }); 
+
+     //document.getElementById('info').style.visibility = "visible"; // show
+     //document.getElementById(id).style.visibility = "hidden"; // hide
 
     </script>   
    

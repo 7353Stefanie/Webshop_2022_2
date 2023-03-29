@@ -26,7 +26,7 @@
 
   function VerkaufspositionsInfos($mysqli, $ArraygemerkterArtikel)
 {
- $query = sprintf("select idVerkaeuferposition, idBenutzer, idArtikel, Zustand , Kauf, Tausch, Verfuegbarkeitsstatus from Verkaeuferposition where idVerkaeuferposition IN ('$ArraygemerkterArtikel')  "
+ $query = sprintf("select idVerkaeuferposition, idBenutzer, idArtikel, Zustand , Kauf, Tausch, Verfuegbarkeitsstatus from verkaeuferposition where idVerkaeuferposition IN ('$ArraygemerkterArtikel')  "
 
                                                           
                          ); 
@@ -56,7 +56,7 @@
 
 function Verkaufspositionsstatus($mysqli, $ArraygemerktArtikel)
 {
- $query = sprintf("select idVerkaeuferposition, Verfuegbarkeitsstatus from Verkaeuferposition where idVerkaeuferposition IN ('$ArraygemerktArtikel')  "
+ $query = sprintf("select idVerkaeuferposition, Verfuegbarkeitsstatus from verkaeuferposition where idVerkaeuferposition IN ('$ArraygemerktArtikel')  "
 
                                                           
                          ); 
@@ -86,7 +86,7 @@ function Verkaufspositionsstatus($mysqli, $ArraygemerktArtikel)
 
 function liegtImWarenkorb($mysqli)
 {
-   $query = sprintf("select idVerkaeuferposition, idBenutzer from Warenkorb "
+   $query = sprintf("select idVerkaeuferposition, idBenutzer from warenkorb "
 
                    ); 
 
@@ -113,7 +113,7 @@ function liegtImWarenkorb($mysqli)
 function selectMerken($mysqli, $idBenutzer)
 {
 
-      $query = sprintf("select * from Merken where idBenutzer = '%s' " ,                                                          
+      $query = sprintf("select * from merken where idBenutzer = '%s' " ,                                                          
                                                           
                          $mysqli->real_escape_string($idBenutzer) ); 
 
@@ -152,7 +152,7 @@ function selectMerken($mysqli, $idBenutzer)
 function selectAdresse_Zahlungsvorgang($mysqli)
 {
 
-      $query = sprintf("select idAdresse, ausgewaehlt from Adresse where ausgewaehlt NOT LIKE 0 "                 
+      $query = sprintf("select idAdresse, ausgewaehlt from adresse where ausgewaehlt NOT LIKE 0 "                 
                 
               );
 
@@ -235,7 +235,7 @@ function Warenkorbinfos_Id($mysqli, $idBenutzer)
 {
 
       $query =sprintf("SELECT   w.idVerkaeuferposition
-                from Warenkorb w
+                from warenkorb w
                where w.idBenutzer = %s",
                 
                 $mysqli->real_escape_string($idBenutzer)
@@ -266,7 +266,7 @@ function Warenkorbinfos($mysqli, $idBenutzer)
 {
 
       $query =sprintf("SELECT   w.idVerkaeuferposition, w.idBenutzer, idWarenkorb
-                from Warenkorb w
+                from warenkorb w
                where w.idBenutzer = %s",
                 
                 $mysqli->real_escape_string($idBenutzer)
@@ -323,7 +323,7 @@ function selectKaufarten_by_idVerkaeuferposition_und_Kaufarten($mysqli, $idVerka
 function selectZahlungsart_by_Benuzter($mysqli, $idBenutzer) // alle Zahlungsarten eines Benutzers
 {
 
-      $query = sprintf("select * from Zahlungsart where idBenutzer = '%s' ",
+      $query = sprintf("select * from zahlungsart where idBenutzer = '%s' ",
                $mysqli->real_escape_string($idBenutzer) 
               );
 
@@ -348,7 +348,7 @@ function selectZahlungsart_by_Benuzter($mysqli, $idBenutzer) // alle Zahlungsart
 function selectWarenkorbartikel_by_Benuzter($mysqli, $idBenutzer) // alle Warenkorbartikel eines Bentuzers
 {
 
-      $query = sprintf("select * from Warenkorb where idBenutzer = '%s' ",
+      $query = sprintf("select * from warenkorb where idBenutzer = '%s' ",
                $mysqli->real_escape_string($idBenutzer) 
               );
 
@@ -397,7 +397,7 @@ function selectArtikel_by_ArtikelId($mysqli, $idArtikel ) // alle Artikel sortie
 function selectArtikel_by_ArtikelId_Array($mysqli, $idArtikel ) // alle Artikel sortiert nach der Artikelid
 {
 
-      $query = sprintf("select * from artikel where idArtikel IN ('$idArtikel') order by Kategorien "
+      $query = sprintf("select * from artikel where idArtikel IN ('$idArtikel') order by kategorien "
                
               );
 
@@ -493,7 +493,7 @@ function selectKategorie_by_Kategorie_und_ArtikelId_Array($mysqli, $Kategorie, $
 
  function selectKleidung($mysqli, $idArtikel)
  {
-                    $query = sprintf("select * from  Kleidung k  where k.idArtikel = '%s'" ,
+                    $query = sprintf("select * from  kleidung k  where k.idArtikel = '%s'" ,
                            $mysqli->real_escape_string($idArtikel) 
                           ); 
 
@@ -523,7 +523,7 @@ function selectKategorie_by_Kategorie_und_ArtikelId_Array($mysqli, $Kategorie, $
  {
                  $rows = null;
 
-                    $query = sprintf("select * from Kleidung a where idArtikel IN ('$idArtikel')" ,
+                    $query = sprintf("select * from kleidung a where idArtikel IN ('$idArtikel')" ,
                            $mysqli->real_escape_string($idArtikel) 
                           ); 
 
@@ -553,7 +553,7 @@ function selectKategorie_by_Kategorie_und_ArtikelId_Array($mysqli, $Kategorie, $
  function SelectWeitereArtikel($mysqli,$Kategorien, $Bezeichnung)
  { 
 
-                    $query = sprintf("select * from Artikel where Kategorien = '%s' and Bezeichnung = '%s' " ,
+                    $query = sprintf("select * from artikel where Kategorien = '%s' and Bezeichnung = '%s' " ,
                            $mysqli->real_escape_string($Kategorien) ,
                            $mysqli->real_escape_string($Bezeichnung) 
                           ); 
@@ -582,7 +582,7 @@ function selectKategorie_by_Kategorie_und_ArtikelId_Array($mysqli, $Kategorie, $
   function SelectGemerkteArtikel($mysqli)
 {
 
-      $query = sprintf("select * from Merken"); 
+      $query = sprintf("select * from merken"); 
 
                   $result = $mysqli->query($query);
 
@@ -608,7 +608,7 @@ function selectKategorie_by_Kategorie_und_ArtikelId_Array($mysqli, $Kategorie, $
 function selectBenutzername($mysqli,$idBenutzer)
 {
 
-      $query = sprintf("select idBenutzer, Benutzername from Benutzer where idBenutzer IN ('$idBenutzer') ",
+      $query = sprintf("select idBenutzer, Benutzername from benutzer where idBenutzer IN ('$idBenutzer') ",
                $mysqli->real_escape_string($idBenutzer) 
               );
 
@@ -631,7 +631,7 @@ function selectBenutzername($mysqli,$idBenutzer)
 function selectBenutzer_Zahlungsvorgang($mysqli,$idBenutzer)
 {
 
-      $query = sprintf("select  idBenutzer, Benutzername, Vorname, EMail from Benutzer where idBenutzer = '%s' ",
+      $query = sprintf("select  idBenutzer, Benutzername, Vorname, EMail from benutzer where idBenutzer = '%s' ",
                $mysqli->real_escape_string($idBenutzer) 
               );
 
@@ -650,9 +650,39 @@ function selectBenutzer_Zahlungsvorgang($mysqli,$idBenutzer)
                 return $row;                     
 }
 
+function SelectBenutzer_Bentuzer($mysqli,$benutzername)
+{
+
+         $query = sprintf(" SELECT benutzername, idBenutzer FROM benutzer WHERE  benutzername = '%s'",
+                    $mysqli->real_escape_string($benutzername)   
+                );
+
+         $result = $mysqli->query($query);
+
+                  if ( ! $result )
+                {
+                     die('Ungültige Abfrage: ' . mysqli_error());
+                }
+
+      
+               while ($row = $result->fetch_array(MYSQLI_ASSOC))
+                   {
+                          $rows[] = $row;  
+                   }                                                  
+            
+                    mysqli_free_result( $result );               
+
+                return $rows;     
+
+}
+
+
+
+
+
 function SelectBenutzer_Name_Guthaben($mysqli,$idBenutzer)
  {
-  $query = sprintf("select idBenutzer,Benutzername, Guthaben from Benutzer where idBenutzer = '%s'" ,
+  $query = sprintf("select idBenutzer,Benutzername, Guthaben from benutzer where idBenutzer = '%s'" ,
                            $mysqli->real_escape_string($idBenutzer)  
                           ); 
 
@@ -663,7 +693,7 @@ function SelectBenutzer_Name_Guthaben($mysqli,$idBenutzer)
                      die('Ungültige Abfrage: ' . mysqli_error());
                 }
 
-               
+                 $rows[]  = "";
 
 
                 while ($row = $result->fetch_array(MYSQLI_ASSOC))
@@ -679,7 +709,7 @@ function SelectBenutzer_Name_Guthaben($mysqli,$idBenutzer)
 
  function SelectBenutzer_Name($mysqli,$idBenutzer)
  {
-  $query = sprintf("select Benutzername from Benutzer where idBenutzer = '%s'" ,
+  $query = sprintf("select Benutzername from benutzer where idBenutzer = '%s'" ,
                            $mysqli->real_escape_string($idBenutzer)  
                           ); 
 
@@ -691,7 +721,7 @@ function SelectBenutzer_Name_Guthaben($mysqli,$idBenutzer)
                 }
 
                
-
+             
 
                 while ($row = $result->fetch_array(MYSQLI_ASSOC))
                    {
@@ -708,7 +738,7 @@ function SelectBenutzer_Name_Guthaben($mysqli,$idBenutzer)
 function selectBenutzer_Guthaben($mysqli,$idBenutzer)
 {
 
-      $query = sprintf("select  idBenutzer, Guthaben from Benutzer where idBenutzer = '%s' ",
+      $query = sprintf("select  idBenutzer, Guthaben from benutzer where idBenutzer = '%s' ",
                $mysqli->real_escape_string($idBenutzer) 
               );
 
@@ -730,7 +760,7 @@ function selectBenutzer_Guthaben($mysqli,$idBenutzer)
  
   function buecher_und_Artikel_by_idArtikel($idArtikel)
  {
-                    $query = sprintf("select * from Artikel a, Buecher b  where a.idArtikel = b.idArtikel and a.idArtikel = '%s'" ,
+                    $query = sprintf("select * from artikel a, buecher b  where a.idArtikel = b.idArtikel and a.idArtikel = '%s'" ,
                            $mysqli->real_escape_string($idArtikel) 
                           ); 
 
@@ -760,7 +790,7 @@ function selectBenutzer_Guthaben($mysqli,$idBenutzer)
 function selectVerkaeuferposition_Zahlungsvorgang($mysqli,$idVerkaeuferposition )
 {
 
-  $query = sprintf("select idArtikel, idBenutzer, Zustand, Artikelbeschreibung from Verkaeuferposition where idVerkaeuferposition = '%s' ",
+  $query = sprintf("select idArtikel, idBenutzer, Zustand, Artikelbeschreibung from verkaeuferposition where idVerkaeuferposition = '%s' ",
                $mysqli->real_escape_string($idVerkaeuferposition) 
               );
 
@@ -783,7 +813,7 @@ function selectVerkaeuferposition_Zahlungsvorgang($mysqli,$idVerkaeuferposition 
  function SelectVerkaeuferposition_byArtikel($mysqli,$idArtikel)
  {
 
-    $query = sprintf("select *  from Verkaeuferposition where idArtikel = '%s'" ,
+    $query = sprintf("select *  from verkaeuferposition where idArtikel = '%s'" ,
                            $mysqli->real_escape_string($idArtikel)  
                           ); 
 
@@ -810,7 +840,7 @@ function selectVerkaeuferposition_Zahlungsvorgang($mysqli,$idVerkaeuferposition 
   function SelectVerkaeuferposition_byArtikel_outIdVerkaeuferposition_Verfuegbarkeitsstatus01($mysqli,$idArtikel) //Gib alle idVerkaeuferposition und Verfuegbarkeitsstatus 1 und 0 aus, von der Liste idArtikel
  {
 
-    $query = sprintf("select idVerkaeuferposition, Verfuegbarkeitsstatus,idArtikel from Verkaeuferposition where Verfuegbarkeitsstatus = '1' and idArtikel IN ('$idArtikel')" ,
+    $query = sprintf("select idVerkaeuferposition, Verfuegbarkeitsstatus,idArtikel from verkaeuferposition where Verfuegbarkeitsstatus = '1' and idArtikel IN ('$idArtikel')" ,
                            $mysqli->real_escape_string($idArtikel)  
                           ); 
 
@@ -839,7 +869,7 @@ function selectVerkaeuferposition_Zahlungsvorgang($mysqli,$idVerkaeuferposition 
   function SelectVerkaufsbilder($mysqli,$idVerkaeuferposition)
  {
 
-    $query = sprintf("select * from Verkaeuferbild where idVerkaeuferposition = '%s'" ,
+    $query = sprintf("select * from verkaeuferbild where idVerkaeuferposition = '%s'" ,
                            $mysqli->real_escape_string($idVerkaeuferposition)  
                           ); 
 
@@ -865,7 +895,7 @@ function selectVerkaeuferposition_Zahlungsvorgang($mysqli,$idVerkaeuferposition 
  function Artikelinformationen_byidBenutzer_sort_idVk($mysqli, $idBenutzer)
 {
 
-    $query = sprintf("Select * from Verkaeuferposition v where idBenutzer = '%s' group by v.idVerkaeuferposition",
+    $query = sprintf("Select * from verkaeuferposition v where idBenutzer = '%s' group by v.idVerkaeuferposition",
                                                             
     $mysqli->real_escape_string($idBenutzer));
   
@@ -893,7 +923,7 @@ function selectVerkaeuferposition_Zahlungsvorgang($mysqli,$idVerkaeuferposition 
 function selectVerkaeuferposition_idArtikel($mysqli,$idVerkaeuferposition)
 {
 
-  $query = sprintf("select idArtikel from Verkaeuferposition where idVerkaeuferposition = '%s' ",
+  $query = sprintf("select idArtikel from verkaeuferposition where idVerkaeuferposition = '%s' ",
                $mysqli->real_escape_string($idVerkaeuferposition) 
               );
 
@@ -919,7 +949,7 @@ function Kaufinfos_Array($mysqli, $idVerkaeuferposition)
       
 
       $query = sprintf("SELECT  Preis, Zustand, Verkaufsmenge,  Kaufarten, v.idVerkaeuferposition, idArtikel, Kauf, Tausch, Verfuegbarkeitsstatus
-                         from    Kaufarten k, Verkaeuferposition v
+                         from    kaufarten k, verkaeuferposition v
                          where  v.idVerkaeuferposition = k.idVerkaeuferposition 
                          and    v.idVerkaeuferposition IN ('$idVerkaeuferposition')
                          Group by v.idVerkaeuferposition, Kaufarten " 
@@ -950,7 +980,7 @@ function Kaufinfos_Array($mysqli, $idVerkaeuferposition)
 function Kaufinfos($mysqli, $idVerkaeuferposition)
 {
       $query = sprintf("SELECT  Preis, Zustand, Verkaufsmenge,  Kaufarten, v.idVerkaeuferposition, idArtikel, Kauf, Tausch, Verfuegbarkeitsstatus
-                         from    Kaufarten k, Verkaeuferposition v
+                         from    kaufarten k, verkaeuferposition v
                          where  v.idVerkaeuferposition = k.idVerkaeuferposition 
                          and    v.idVerkaeuferposition = '%s'
                          Group by v.idVerkaeuferposition, Kaufarten",                                                         
@@ -984,7 +1014,7 @@ function Kaufinfos($mysqli, $idVerkaeuferposition)
 function selectKaufarten_by_idVerkaeuferposition($mysqli,$idVerkaeuferposition )// Alle Artikel von Kaufarten nach id Verkäuferposition
 {
 
-      $query = sprintf("select * from Kaufarten where idVerkaeuferposition = '%s' ",
+      $query = sprintf("select * from kaufarten where idVerkaeuferposition = '%s' ",
                $mysqli->real_escape_string($idVerkaeuferposition) 
               );
 
@@ -1010,7 +1040,7 @@ function selectKaufarten_by_idVerkaeuferposition($mysqli,$idVerkaeuferposition )
 function selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$idVerkaeuferposition )// Alle Artikel von Kaufarten nach id Verkäuferposition
 {
 
-      $query = sprintf("select * from Kaufarten where idVerkaeuferposition in ('$idVerkaeuferposition') ",
+      $query = sprintf("select * from kaufarten where idVerkaeuferposition in ('$idVerkaeuferposition') ",
                $mysqli->real_escape_string($idVerkaeuferposition) 
               );
 
@@ -1045,7 +1075,7 @@ function selectKaufarten_by_idVerkaeuferposition_Array($mysqli,$idVerkaeuferposi
 function selectKaufarten_by_idKaufarten($mysqli,$idKaufarten)// Alle Artikel von Kaufarten nach id Verkäuferposition
 {
 
-      $query = sprintf("select * from Kaufarten where idKaufarten = '%s' ",
+      $query = sprintf("select * from kaufarten where idKaufarten = '%s' ",
                $mysqli->real_escape_string($idKaufarten) 
               );
 
@@ -1074,7 +1104,7 @@ function selectKaufarten_by_idKaufarten($mysqli,$idKaufarten)// Alle Artikel von
 function sucheAlleArtikelEinerKategorie($mysqli, $Kategorie)
 {// ändern
 
-   $query = sprintf("Select * from Verkaeuferposition v, Artikel a where v.idArtikel= a.idArtikel and Verfuegbarkeitsstatus = '0' and Kategorien = '%s' Group by a.idArtikel",
+   $query = sprintf("Select * from verkaeuferposition v, artikel a where v.idArtikel= a.idArtikel and Verfuegbarkeitsstatus = '0' and Kategorien = '%s' Group by a.idArtikel",
                    $mysqli->real_escape_string($Kategorie) 
               );
 
@@ -1102,7 +1132,7 @@ function sucheAlleArtikelEinerKategorie($mysqli, $Kategorie)
 
 function alle_Artikel_einer_Kategorie($mysqli,$Buch)
 {
-     $query = sprintf("select Kategorien from Artikel where idArtikel = '%s'" ,
+     $query = sprintf("select Kategorien from artikel where idArtikel = '%s'" ,
 
                            $mysqli->real_escape_string($Buch) 
                           ); 
@@ -1131,7 +1161,7 @@ function alle_Artikel_einer_Kategorie($mysqli,$Buch)
 function selectBestellpostion_by_Benutzerid($mysqli,$idBenutzer)// Alle Artikel von Kaufarten nach id Verkäuferposition
 {
 
-      $query = sprintf("select * from Bestellposition where idBenutzer = '%s' ",
+      $query = sprintf("select * from bestellposition where idBenutzer = '%s' ",
                $mysqli->real_escape_string($idBenutzer) 
               );
 
@@ -1159,7 +1189,7 @@ function selectBestellpostion_by_Benutzerid($mysqli,$idBenutzer)// Alle Artikel 
 function selectBuecher_byArtikelid($mysqli, $idArtikel)
 {
 
-    $query = sprintf("select * from Buecher where idArtikel = '%s' ",
+    $query = sprintf("select * from buecher where idArtikel = '%s' ",
                $mysqli->real_escape_string($idArtikel) 
               );
 
@@ -1187,7 +1217,7 @@ function selectBuecher_byArtikelid($mysqli, $idArtikel)
 function selectBuecher_byArtikelid_Liste($mysqli, $idArtikel)
 {
 
-    $query = sprintf("select * from Buecher where idArtikel IN ('$idArtikel')  ",
+    $query = sprintf("select * from buecher where idArtikel IN ('$idArtikel')  ",
                $mysqli->real_escape_string($idArtikel) 
               );
 
@@ -1222,7 +1252,7 @@ function selectBuecher_byArtikelid_Liste($mysqli, $idArtikel)
 
 function selectAlleArtikel_nur_Buecher($mysqli, $Suche)
  {
-                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
                                     And
                                     Verfuegbarkeitsstatus = 1
                                     and Kategorien = 'Buecher'
@@ -1253,7 +1283,7 @@ function selectAlleArtikel_nur_Buecher($mysqli, $Suche)
 
 function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
  {
-                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
                                     And
                                     Verfuegbarkeitsstatus = 1
                                     and Kategorien = 'Kleidung'
@@ -1284,7 +1314,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
  function selectAlleArtikel($mysqli, $Suche)
  {
-                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
                                     And
                                     Verfuegbarkeitsstatus = 1 
                                     and Bezeichnung like '%s' Group by Bezeichnung order by Kategorien"
@@ -1314,7 +1344,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
  function selectAlleBuecher_Alle($mysqli)
  {
-                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
                                     And Kategorien = 'Buecher'
                                     and Verfuegbarkeitsstatus = 1 Group by Bezeichnung ");
                             
@@ -1342,7 +1372,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
  function selectAlleKleidung_Alle($mysqli)
  {
-                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
                                     And Kategorien = 'Kleidung'
                                     and Verfuegbarkeitsstatus = 1 Group by Bezeichnung ");
                             
@@ -1371,7 +1401,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
  function selectAlleArtikel_Alle($mysqli)
  {
-                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                    $query = sprintf("select a.idArtikel, Bezeichnung, Kategorien, Titelbild  from artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
                                     And
                                     Verfuegbarkeitsstatus = 1 Group by Bezeichnung ");
                             
@@ -1399,7 +1429,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
   function selectAlleArtikel_Alle_Liste($mysqli, $idArtikel)
  {
-                    $query = sprintf("select * from Artikel  where idArtikel IN ('$idArtikel') ");
+                    $query = sprintf("select * from artikel  where idArtikel IN ('$idArtikel') ");
                             
 
                  $result = $mysqli->query($query);
@@ -1426,7 +1456,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
  function selectKleidung_Suche($mysqli, $Suche)
  {
-                     $query = sprintf("select * from Artikel a, Kleidung k where a.idArtikel = k.idArtikel and 
+                     $query = sprintf("select * from artikel a, kleidung k where a.idArtikel = k.idArtikel and 
                                        (Marke like '%s'                                    
                                       or Geschlecht like '%s'  )",
 
@@ -1459,7 +1489,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
   function selectKategorie($mysqli,  $Suche, $Tabelle)
  {
-                    $query = sprintf("select * from Artikel a, %s k  where a.idArtikel = k.idArtikel and 
+                    $query = sprintf("select * from artikel a, %s k  where a.idArtikel = k.idArtikel and 
                                        
                                      Bezeichnung like '%s' 
                                      ",
@@ -1492,7 +1522,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
  function selectKategoriealle($mysqli, $Tabelle)
  {
-                    $query = sprintf("select * from Artikel a, %s k  where a.idArtikel = k.idArtikel Group by Bezeichnung
+                    $query = sprintf("select * from artikel a, %s k  where a.idArtikel = k.idArtikel Group by Bezeichnung
                                      ",
                            $mysqli->real_escape_string($Tabelle) 
                           ); 
@@ -1556,7 +1586,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
   function selectBuecher_AllgemeineSuche($mysqli, $Suche)
  {
-                     $query = sprintf("select a.idArtikel, Kategorien , Titelbild, Bezeichnung, Zeitstempel from Artikel a, Buecher b  where a.idArtikel = b.idArtikel and 
+                     $query = sprintf("select a.idArtikel, Kategorien , Titelbild, Bezeichnung, Zeitstempel from artikel a, buecher b  where a.idArtikel = b.idArtikel and 
                                        (ISBN like '%s' or Autor like'%s' or Bezeichnung like '%s'  Group by Bezeichnung ) ",
                            $mysqli->real_escape_string('%'. $Suche . '%') ,
                            $mysqli->real_escape_string('%'. $Suche. '%'),
@@ -1589,7 +1619,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
  function selectBuecher($mysqli, $Suche)
  {
-                    $query = sprintf("select * from Artikel a, Buecher b  where a.idArtikel = b.idArtikel and 
+                    $query = sprintf("select * from artikel a, buecher b  where a.idArtikel = b.idArtikel and 
                                        (ISBN like '%s'                                    
                                       or Autor like'%s' 
                                       or Bezeichnung like '%s' )
@@ -1624,7 +1654,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
 
   function selectAlleArtikelFinal($mysqli)
  {
-                    $query = sprintf("Select a.idArtikel, Bezeichnung, Kategorien, Titelbild from Artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
+                    $query = sprintf("Select a.idArtikel, Bezeichnung, Kategorien, Titelbild from artikel a,  verkaeuferposition v  where a.idArtikel  = v.idArtikel
                                     And
                                     Verfuegbarkeitsstatus = 1
                                     Group by a.idArtikel");
@@ -1664,7 +1694,7 @@ function selectAlleArtikel_nur_Kleidung($mysqli, $Suche)
  function updateWarenkorbButton($mysqli, $idVerkaeuferposition, $Zahlungsart)
 {
    
-            $query = sprintf("UPDATE Warenkorb SET  Kaufart= '%s'  where idVerkaeuferposition = '%s' " , 
+            $query = sprintf("UPDATE warenkorb SET  Kaufart= '%s'  where idVerkaeuferposition = '%s' " , 
               
               $mysqli->real_escape_string($Zahlungsart),
               $mysqli->real_escape_string($idVerkaeuferposition)
@@ -1701,7 +1731,7 @@ function  updateGuthaben_Plausibilitaet($mysqli, $idBenutzer, $Guthaben) // derz
 function  upadteAdresse_Zahlungsvorgang($mysqli, $numbers, $letters)
 {
 
-            $query = sprintf("UPDATE Adresse SET  ausgewaehlt= '%s'  where idAdresse = '%s' " , 
+            $query = sprintf("UPDATE adresse SET  ausgewaehlt= '%s'  where idAdresse = '%s' " , 
               
               $mysqli->real_escape_string($letters),
               $mysqli->real_escape_string($numbers)  
@@ -1719,7 +1749,7 @@ function  upadteAdresse_Zahlungsvorgang($mysqli, $numbers, $letters)
 function  upadteVerkaeuferposition_Zahlungsvorgang($mysqli, $idVerkaeuferposition)
 {
 
-            $query = sprintf("UPDATE Verkaeuferposition SET  Verfuegbarkeitsstatus= '2'  where idVerkaeuferposition = '%s' " , 
+            $query = sprintf("UPDATE verkaeuferposition SET  Verfuegbarkeitsstatus= '2'  where idVerkaeuferposition = '%s' " , 
               
               $mysqli->real_escape_string($idVerkaeuferposition)
                       
@@ -1736,7 +1766,7 @@ function  upadteVerkaeuferposition_Zahlungsvorgang($mysqli, $idVerkaeuferpositio
 function  updateZahlungsart($mysqli,$Zahlungsart, $idBenutzer)
 {
 
-            $query = sprintf("UPDATE Zahlungsart SET Zahlungsart = '%s'  where idBenutzer = '%s' " , 
+            $query = sprintf("UPDATE zahlungsart SET Zahlungsart = '%s'  where idBenutzer = '%s' " , 
               
               $mysqli->real_escape_string($Zahlungsart),  
               $mysqli->real_escape_string($idBenutzer)
@@ -1772,10 +1802,34 @@ function  updateVerkaeuferposition($mysqli,$Preis, $idVerkaeuferposition)
 
 // insert
 
+function  insertRegistrierung($mysqli,$Benutzername,$Vorname, $Nachname, $EMail, $Passwort) // verwendet in Zahlungsborgang unf Plausibilität
+{
+
+$query = sprintf("INSERT INTO benutzer (Benutzername, Vorname, Nachname, EMail ,Passwort)
+                            VALUES ('%s', '%s', '%s', '%s', '%s')",
+                                $mysqli->real_escape_string($Benutzername),
+                                $mysqli->real_escape_string($Vorname),
+                                $mysqli->real_escape_string($Nachname),
+                                $mysqli->real_escape_string($EMail),
+                                $mysqli->real_escape_string($Passwort)
+                            );
+  $result = $mysqli->query($query);
+
+                 if ($mysqli->affected_rows == 1) 
+                {$result == true;
+                }
+                else
+                {
+                   $result == false;
+                }  
+                return $result;
+}
+
+
 function  insertBestellposition($mysqli,$Zeit, $idBenutzer, $idVerkaeuferposition, $idKaufarten) // verwendet in Zahlungsborgang unf Plausibilität
 {
 
-            $query = sprintf("INSERT INTO Bestellposition ( Bestelldatum, Bestellstatus, idBenutzer, idVerkaeuferposition, idKaufarten ) 
+            $query = sprintf("INSERT INTO bestellposition ( Bestelldatum, Bestellstatus, idBenutzer, idVerkaeuferposition, idKaufarten ) 
                       VALUES ('%s', 0, '%s', '%s', '%s') " ,              
             
             $mysqli->real_escape_string($Zeit),    
@@ -1799,7 +1853,7 @@ function  insertBestellposition($mysqli,$Zeit, $idBenutzer, $idVerkaeuferpositio
 function  deleteWarenkorbartikel($mysqli, $idBenutzer)
 {
 
-		        $query = sprintf("DELETE FROM Warenkorb where idBenutzer = '%s'  " ,          
+		        $query = sprintf("DELETE FROM warenkorb where idBenutzer = '%s'  " ,          
 		        
 		          
 		        $mysqli->real_escape_string($idBenutzer)
