@@ -12,8 +12,39 @@ wenn $_POST daten angekommen sind dann
 
 Annahme : Zahlungs ist erfolgreich abgeschlossen worden.
 			Tausch Guthaben muss evtl. angepasst werden.!!!
+
 */
+
+            
  session_start();
+
+require_once(__ROOT__.'/Abfragen/Abfragen_Sammlung.php'); 
+
+
+
+ if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
+
+
+//echo ('pos'.$pos);
+
+$rest = substr(__DIR__,0,$pos);
+
+//echo ('rest'.$rest);
+
+
+include($rest.'/external_incl/my_incl.php');
+
+
+
+
+
 
   $date = getdate();
 
@@ -24,7 +55,7 @@ Annahme : Zahlungs ist erfolgreich abgeschlossen worden.
 
 		if (isset($_SESSION['AdressePar']) && isset($_SESSION['Zahlungsart'] ))
 			{
-				 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+				  $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
 	           if ($mysqli->connect_error)
 	              {

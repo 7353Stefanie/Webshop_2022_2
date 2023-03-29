@@ -1,10 +1,38 @@
 <?php
 
-	$message = array();
+
+require_once(__DIR__.'/Abfragen/Abfragen_Sammlung.php'); 
+
+
+if(  strpos(__DIR__,'Final') == false)
+  {     $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {    $pos=strpos(__DIR__,'Final');
+  }
+
+
+$rest = substr(__DIR__,0,$pos);
+include($rest.'/external_incl/my_incl.php');
+
+ $Abfragen = new Abfragen();
+
+ $Ergebnis= "";
+
+  session_start();
+
+ 
+
+
+  $_SESSION["RegistrierungStatus"]= false;
+
+
+	
 
 #sind die eingebefelder leer?
 
-	if (!empty($_POST)) {
+	if (!empty($_POST))
+	{
 		if (
 			empty($_POST['benutzername']) ||
 			empty($_POST['vorname']) ||
@@ -18,73 +46,89 @@
 			echo  'Es wurden nicht alle Felder ausgefüllt.';
 		 } else if ($_POST['passwort'] != $_POST['passwort_again']) {
 			echo  'Die eingegebenen Passwörter stimmen nicht überein.';
-		 } else {
-			unset($_POST['password_again']);
-			$salt = ''; 
+		 } else 
+		 	{
+					unset($_POST['password_again']);
+					$salt = ''; 
 
 #passwort verschlüsseln
 
-			$_POST['passwort'] = password_hash($_POST['passwort'],PASSWORD_DEFAULT, ['cost' => 13]);	
+					$_POST['passwort'] = password_hash($_POST['passwort'],PASSWORD_DEFAULT, ['cost' => 13]);	
 		
 
 #Datenbankverbindung aufbauen
 
-			$mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+			
+           			$mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
 #DB Verbindung Prüfen
-			if ($mysqli->connect_error) {
-
-				echo  'Datenbankverbindung fehlgeschlagen: ' . $mysqli->connect_error;
-			}
-
-#SQL Abfrage 
-
-#			$query = sprintf(
-#				"INSERT INTO benutzer (benutzername, vorname, nachname, email ,password)
-#				SELECT * FROM (SELECT '%s', '%s', '%s', '%s', '%s') as new_user
-#				WHERE NOT EXISTS (
-#					SELECT benutzername FROM benutzer WHERE benutzername = '%s'
-#				) LIMIT 1;",
-#				$mysqli->real_escape_string($_POST['benutzername']),
-#				$mysqli->real_escape_string($_POST['vorname']),
-#				$mysqli->real_escape_string($_POST['nachname']),
-#				$mysqli->real_escape_string($_POST['email']),
-#				$mysqli->real_escape_string($_POST['passwort']),
-#				$mysqli->real_escape_string($_POST['benutzername'])
-#			);
-
-			$query = sprintf("INSERT INTO benutzer (Benutzername, Vorname, Nachname, EMail ,Passwort)
-							VALUES ('%s', '%s', '%s', '%s', '%s')",
-								$mysqli->real_escape_string($_POST['benutzername']),
-								$mysqli->real_escape_string($_POST['vorname']),
-								$mysqli->real_escape_string($_POST['nachname']),
-								$mysqli->real_escape_string($_POST['email']),
-								$mysqli->real_escape_string($_POST['passwort'])
-							);
+					if ($mysqli->connect_error) 
+					{
+						echo  'Datenbankverbindung fehlgeschlagen: ' . $mysqli->connect_error;
+					}
+					else
+					{
+						$Ergebnis = $Abfragen->insertRegistrierung($mysqli,$_POST['benutzername'],$_POST['vorname'], $_POST['nachname'], $_POST['email'], $_POST['passwort']);
 
 
 #SQL Abfrage übermitteln
-			$mysqli->query($query);
+			
 
 #Überprüfen ob der Nutzername noch vorhanden ist
 
-			if ($mysqli->affected_rows == 1) {
-				#echo  ' Ein Neuer Benutzer (' . htmlspecialchars($_POST['benutzername']) . ') wurde erfolgreich angelegt.
-				#Zur Bestätigung Ihrer Registrierung werden Sie in kürze eine E-Mail auf die folgende E-Mail-Adresse erhalten : ' . htmlspecialchars($_POST['email']) . '.
-				#Nach der Bestätigung Ihrer E-Mail-Adresse können Sie sich über folgenden link anmelden. 
-				#, <a href="http:localhost/test/01_Bauteile/Final.html">weiter zur Anmeldung</a>.';
+							if ($Ergebnis == true)
+							{
+								#echo  ' Ein Neuer Benutzer (' . htmlspecialchars($_POST['benutzername']) . ') wurde erfolgreich angelegt.
+								#Zur Bestätigung Ihrer Registrierung werden Sie in kürze eine E-Mail auf die folgende E-Mail-Adresse erhalten : ' . htmlspecialchars($_POST['email']) . '.
+								#Nach der Bestätigung Ihrer E-Mail-Adresse können Sie sich über folgenden link anmelden. 
+								#, <a href="http:localhost/test/01_Bauteile/Final.html">weiter zur Anmeldung</a>.';
 
-		header('Location: http://' . $_SERVER['HTTP_HOST'] . '/Final/Final.html');
+								// Wenn die Registrierung erfolgreich war wird der Anwender direkt in den Kontoübersichtsm
 
-			} else {
-				echo 'Der Benutzername ist bereits vergeben.';
-			}
+						//header('Location: /Final/Kategorien/StartseitenAnmeldung.php');
 
+								// Login muss beginnen
+
+								 $_SESSION["RegistrierungStatus"]= 'true';
+								 // damit login 
+
+								 //ausgabe ID
+
+								 $Ergebnis_Select = $Abfragen->SelectBenutzer_Bentuzer($mysqli,$_POST['benutzername']);	// damit login klappt
+
+								 
+
+								 if(is_null($Ergebnis_Select) == false)
+								 {	
+										 	$_SESSION['idBentuzer'] = $Ergebnis_Select['0']['idBenutzer'];
+											$_SESSION['benutzername'] = $_POST['benutzername']; 															
+
+
+
+											if ($name = 'Final')
+											{
+											 header('Location: /Final/Final.php');								 
+											}
+											else
+												{
+													header('Location: /Webshop/Final.php');
+											    }
+								 }
+							} 
+
+							else 
+							{
+								echo 'Die Registrierung war leider nicht erfolgreich.';
+							}
 #Datenbank schließen
 			  
-			$mysqli->close();
-		}
-	} else {
+						$mysqli->close();
+					} // ende else
+			}  // ende else
+	} // ende if
+
+	 else {
 		echo 'Übermitteln Sie das ausgefüllte Formular um ein neues Benutzerkonto zu erstellen.';
 	}
+
 ?>

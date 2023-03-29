@@ -1,19 +1,28 @@
 <?php
- // define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
-require_once(__ROOT__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php'); 
+ //define('__ROOT__', 'C:/xampp/htdocs/Final/Kategorien/Buttons/');
+
+require_once(__DIR__.'/Abfragen/Abfragen_Sammlung.php'); 
 
 
-/*
-if(isset($_SESSION["Erg"]) )
- {  
-          $_SESSION["Erg"] = "";  
-          $_SESSION["Sammlung"] = "";  
-          $_SESSION['gemerkteArtikel'] ="" ; 
-          $_SESSION["AnzArtikel"] = ""; 
-          $_SESSION["Artikel"] = "";
-}*/
+ if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
 
-// id Artikel in Session speichern
+
+//echo ('pos'.$pos);
+
+$rest = substr(__DIR__,0,$pos);
+
+//echo ('rest'.$rest);
+
+
+include($rest.'/external_incl/my_incl.php');
+
 
 
 class Anzeige
@@ -28,8 +37,8 @@ function gemerkteArtikel()
 
     $Abfragen = new Abfragen();
 
-                 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
-
+                  $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
+                  
                  if ($mysqli->connect_error) {
 
                    echo 'Datenbankverbindung fehlgeschlagen: ' . $mysqli->connect_error;
@@ -59,7 +68,7 @@ function Erg()
   else
     { $idArtikel = $_SESSION['idArtikel'] ;}
 
-                 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+                  $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error) {
 
@@ -99,7 +108,7 @@ function gesamteArtikel()
     { $idArtikel = $_SESSION['idArtikel'] ;}
   
 
-                 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+                  $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error) {
 
@@ -134,7 +143,7 @@ function Sammlung()
 
     
 
-                 $mysqli = @new mysqli('localhost', 'Webshop', 'Dolby?!Audio000', 'webshop04');
+                 $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error) {
 
@@ -224,9 +233,10 @@ function Sammlung()
                           //   $_SESSION["Artikel"] = $Artikel;  // Arikel
 
                              //var_dump($_SESSION["Verkaeuferposition"]); 
+                    mysqli_close($mysqli);
                }   
 
-                 mysqli_close($mysqli);
+                 
 
                    // $serial_arr=urlencode(base64_encode(serialize($Gesammelt)));
                // header('Location: http://' . $_SERVER['HTTP_HOST'] . '/Final/Kategorien/Buttons/ArtikelDetailsVerkauf.php');

@@ -3,14 +3,21 @@ define('__ROOT__', __DIR__.'/Kategorien/Buttons/Hilfsdokumente/Abfragen');
 require_once(__ROOT__.'/Abfragen_Sammlung.php'); 
 require_once(__ROOT__.'/EMail.php'); 
 
-$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+
+if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
+
 
 $rest = substr(__DIR__,0,$pos);
 
-
-include $rest.'external_incl\my_incl.php';
-
-
+include($rest.'/external_incl/my_incl.php');
 
 
 							// 6. 	// Alle Verkausfsartikel auslesen, 
@@ -42,7 +49,7 @@ include $rest.'external_incl\my_incl.php';
 
 		if (isset($_POST['Adresse']) && isset($_POST['Zahlungsart'] ))
 			{
-				 $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+				 $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
 	           if ($mysqli->connect_error)
 	              {

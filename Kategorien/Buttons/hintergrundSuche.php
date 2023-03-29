@@ -3,15 +3,25 @@
 require_once(__DIR__.'/Hilfsdokumente/Abfragen/Abfragen_Sammlung.php'); 
 require_once(__DIR__.'/Hilfsdokumente/Abfragen/Kategorien.php'); 
 
-$pos=strpos(__DIR__,'Final'); // suche im String nach Final
+
+if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
+
+
+//echo ('pos'.$pos);
 
 $rest = substr(__DIR__,0,$pos);
 
-//echo $rest;
-include $rest.'external_incl/my_incl.php';
+//echo ('rest'.$rest);
 
 
-
+include($rest.'/external_incl/my_incl.php');
 
 
 
@@ -191,7 +201,7 @@ function sucheAlleArtikelEinerKategorie( $Kategorie)
  # gebe alle  Bücher aus
    $Abfragen = new Abfragen();
 
-                 $mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+                  $mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error) {
 
@@ -224,11 +234,13 @@ function sucheAlleArtikelEinerKategorie( $Kategorie)
 
                  $Ergebnis = array_merge($AusgabeArtikel, $AusgabeBuecher);
 
+                  mysqli_close($mysqli);
+
               }
 
          //speichere alle idArtikel in einer Datei und lasse alle Bücher dieser Artikel aus
 
-          mysqli_close($mysqli);
+         
 
 
          return  $Ergebnis;
@@ -305,7 +317,7 @@ function auslagerung_Suche_switch(Array $Ergebnis,  $Abfragen, $mysqli)
               // echo ('hallo');
                //var_dump( $ArtikelElemString); 
 
-               var_dump($AusgabeKleidung);
+              // var_dump($AusgabeKleidung);
 
                //Zeige alle Preise von Kaufarten, für die liste idArtikel, an wo der Verfuegbarkeitsstatus 1 und 0 ist 
              
@@ -432,6 +444,8 @@ function wenn_Bezeichnung_null(Array $Ergebnis,  $Abfragen, $mysqli)
                              // ausgabe des Preises
 
                              $Ergebnis = array_merge($Ergebnis ,$AusgabeKleidung, $AusgabeVerfügbarkeit, $AusgabePreise );
+                             
+                              mysqli_close($mysqli);
                     }
                     return $Ergebnis;
                   

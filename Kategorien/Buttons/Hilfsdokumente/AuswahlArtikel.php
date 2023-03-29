@@ -21,7 +21,24 @@
 //Session true wenn 
 
 Session_start();
-include __DIR__ . '/../external_incl/my_incl.php';
+
+if(  strpos(__DIR__,'Final') == false)
+  { 
+    $pos=strpos(__DIR__,'Webshop');
+  }
+  else
+  {
+    $pos=strpos(__DIR__,'Final');
+  }
+
+
+//echo ('pos'.$pos);
+
+$rest = substr(__DIR__,0,$pos);
+
+
+
+include $rest.'/external_incl/my_incl.php';
 
 
 $Aktion =  $_POST['Aktion'];
@@ -59,7 +76,7 @@ function Warenkorb()
 	  var_dump($Zeit . "Zeit");
 
 
-	$mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+	$mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error) {
 
@@ -137,7 +154,7 @@ function Merken()
     var_dump($Zeit . "Zeit");
 
 	
-	$mysqli = @new mysqli($DBserver,$DBuser,$DBpassword,$DBname);
+	$mysqli = @new mysqli(DB_SERVER,DB_USER,DB_PASSWORD,DB_NAME);
 
                  if ($mysqli->connect_error) {
 

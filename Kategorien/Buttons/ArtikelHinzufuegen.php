@@ -13,7 +13,10 @@
 function Select($mysqli)
 { 
    echo '<script type="text/javascript">send('.$_POST["idArtikel"].');</script>';
-  $query = sprintf("select Kategorien from Artikel  where idArtikel = %s" ,
+
+
+  $query = sprintf("select Kategorien from Artikel where idArtikel = %s" ,
+
                            $mysqli->real_escape_string($_POST['Buch']) 
                           ); 
 
